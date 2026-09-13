@@ -1,8 +1,14 @@
-# Backend — Condomínio Sol e Mar
+# Supabase administration scripts
 
-Passos para rodar o backend localmente
+This directory no longer contains an application server. The frontend connects directly to Supabase from GitHub Pages.
 
-1. Instalar dependências
+The remaining scripts use `DIRECT_URL` from the local `.env` file. Keep that file private.
+
+```bash
+ npm install
+ npm run db:frontend
+ npm run db:promote-admin -- admin@solemar.local
+```
 
 ```bash
 cd backend
