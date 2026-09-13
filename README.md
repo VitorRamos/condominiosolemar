@@ -22,8 +22,9 @@ npm run build:pages
 ```
 
 O deploy automático usa `.github/workflows/deploy-pages.yml` e publica `frontend/dist`.
-No GitHub, configure `Settings > Pages > Source` como `GitHub Actions` e crie a variável
-de repositório `VITE_SUPABASE_PUBLISHABLE_KEY` em `Settings > Secrets and variables > Actions > Variables`.
+No GitHub, configure `Settings > Pages > Source` como `GitHub Actions` e crie
+`VITE_SUPABASE_PUBLISHABLE_KEY` em `Settings > Secrets and variables > Actions`,
+como **Variable** ou **Secret**. O workflow aceita os dois formatos.
 
 Scripts Supabase:
 
