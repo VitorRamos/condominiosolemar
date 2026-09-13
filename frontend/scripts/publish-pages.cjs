@@ -9,9 +9,9 @@ if (!fs.existsSync(distDir)) {
   throw new Error(`Build output not found: ${distDir}`)
 }
 
-for (const entry of fs.readdirSync(distDir)) {
-  fs.cpSync(path.join(distDir, entry), path.join(repositoryRoot, entry), { recursive: true })
-}
+fs.copyFileSync(path.join(distDir, 'index.html'), path.join(distDir, '404.html'))
 
-fs.copyFileSync(path.join(distDir, 'index.html'), path.join(repositoryRoot, '404.html'))
-console.log(`Published ${distDir} to ${repositoryRoot}`)
+const cnamePath = path.join(repositoryRoot, 'CNAME')
+if (fs.existsSync(cnamePath)) fs.copyFileSync(cnamePath, path.join(distDir, 'CNAME'))
+
+console.log(`Prepared GitHub Pages artifact at ${distDir}`)
