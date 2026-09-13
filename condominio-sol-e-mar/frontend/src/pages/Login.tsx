@@ -1,23 +1,21 @@
 import React, { useState } from 'react'
-import api from '../services/api'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     try {
-      const res = await api.post('/auth/login', { email, password })
-      const { token } = res.data
-      localStorage.setItem('token', token)
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      await login(email, password)
       navigate('/dashboard')
     } catch (err: any) {
-      setError(err?.response?.data?.error || 'Erro ao efetuar login')
+      setError(err?.message || 'Erro ao efetuar login')
     }
   }
 

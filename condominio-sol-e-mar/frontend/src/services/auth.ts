@@ -1,14 +1,12 @@
-import api from './api'
+import { supabase } from './supabase'
 
 export async function login(email: string, password: string) {
-  const res = await api.post('/auth/login', { email, password })
-  const { token } = res.data
-  localStorage.setItem('token', token)
-  api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-  return token
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  if (error) throw error
+  return data.session
 }
 
-export function logout() {
-  localStorage.removeItem('token')
-  delete api.defaults.headers.common['Authorization']
+export async function logout() {
+  const { error } = await supabase.auth.signOut()
+  if (error) throw error
 }
