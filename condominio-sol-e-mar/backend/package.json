@@ -8,7 +8,8 @@
     "build": "tsc",
     "seed": "node prisma/seed.js",
     "db:generate": "prisma generate",
-    "db:deploy": "prisma migrate deploy"
+    "db:deploy": "prisma migrate deploy",
+    "db:frontend": "node scripts/apply-frontend-migration.cjs"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
