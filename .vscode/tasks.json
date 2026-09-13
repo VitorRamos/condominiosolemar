@@ -7,7 +7,7 @@
       "command": "npm",
       "args": ["run", "dev"],
       "options": {
-        "cwd": "${workspaceFolder}/condominio-sol-e-mar/frontend"
+        "cwd": "${workspaceFolder}/frontend"
       },
       "isBackground": true,
       "problemMatcher": [],
@@ -26,7 +26,7 @@
         "-ExecutionPolicy",
         "Bypass",
         "-Command",
-        "Push-Location '${workspaceFolder}/condominio-sol-e-mar/frontend'; npm run build:pages; if ($LASTEXITCODE -ne 0) { Pop-Location; exit $LASTEXITCODE }; Pop-Location; git add -A; git diff --cached --quiet; if ($LASTEXITCODE -eq 0) { Write-Host 'No changes to commit.'; exit 0 }; git commit -m 'Publish frontend to GitHub Pages'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin master"
+        "Push-Location '${workspaceFolder}/frontend'; npm run build:pages; if ($LASTEXITCODE -ne 0) { Pop-Location; exit $LASTEXITCODE }; Pop-Location; git add -A; git diff --cached --quiet; if ($LASTEXITCODE -eq 0) { Write-Host 'No changes to commit.'; exit 0 }; git commit -m 'Publish frontend to GitHub Pages'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin master"
       ],
       "options": {
         "cwd": "${workspaceFolder}"

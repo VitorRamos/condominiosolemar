@@ -5,7 +5,7 @@ const { Client } = require('pg')
 
 dotenv.config()
 
-const migrationPath = path.resolve(__dirname, '..', '..', '..', 'supabase', 'migrations', '20260913000100_frontend_schema.sql')
+const migrationPath = path.resolve(__dirname, '..', '..', 'supabase', 'migrations', '20260913000100_frontend_schema.sql')
 const client = new Client({
   connectionString: process.env.DIRECT_URL,
   ssl: { rejectUnauthorized: false }

@@ -2,7 +2,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 
 const frontendDir = path.resolve(__dirname, '..')
-const repositoryRoot = path.resolve(frontendDir, '..', '..')
+const repositoryRoot = path.resolve(frontendDir, '..')
 const distDir = path.join(frontendDir, 'dist')
 
 if (!fs.existsSync(distDir)) {
