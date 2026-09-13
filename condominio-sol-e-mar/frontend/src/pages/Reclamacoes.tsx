@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import api from '../services/api'
+import { useAuth } from '../hooks/useAuth'
+import { supabase } from '../services/supabase'
 
 export default function Reclamacoes() {
   const [nome, setNome] = useState('')
@@ -9,11 +10,30 @@ export default function Reclamacoes() {
   const [data, setData] = useState('')
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
+  const { session } = useAuth()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    setSuccess('')
+    setError('')
+
+    if (!session?.user) {
+      setError('Sua sessão expirou. Entre novamente para enviar uma reclamação.')
+      return
+    }
+
     try {
-      await api.post('/reclamacoes', { nome, apartamento, assunto, descricao, data })
+      const { error: insertError } = await supabase.from('reclamacoes').insert({
+        user_id: session.user.id,
+        nome,
+        apartamento,
+        assunto,
+        descricao,
+        data: data || undefined
+      })
+
+      if (insertError) throw insertError
+
       setSuccess('Reclamação enviada com sucesso')
       setNome('')
       setApartamento('')
@@ -21,7 +41,7 @@ export default function Reclamacoes() {
       setDescricao('')
       setData('')
     } catch (err: any) {
-      setError(err?.response?.data?.error || 'Erro ao enviar')
+      setError(err?.message || 'Erro ao enviar')
     }
   }
 
