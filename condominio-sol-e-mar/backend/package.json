@@ -9,7 +9,8 @@
     "seed": "node prisma/seed.js",
     "db:generate": "prisma generate",
     "db:deploy": "prisma migrate deploy",
-    "db:frontend": "node scripts/apply-frontend-migration.cjs"
+    "db:frontend": "node scripts/apply-frontend-migration.cjs",
+    "db:promote-admin": "node scripts/promote-admin.cjs"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
