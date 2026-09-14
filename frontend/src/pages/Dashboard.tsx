@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 type Profile = {
   name: string | null
@@ -98,66 +100,119 @@ export default function Dashboard() {
     navigate('/login')
   }
 
-  if (loading) return <div className="container"><p>Carregando dashboard...</p></div>
+  if (loading) return (
+    <div className="site-root">
+      <Header />
+      <main className="dashboard-shell container">
+        <div className="dashboard-loading">Carregando seu painel...</div>
+      </main>
+      <Footer />
+    </div>
+  )
 
   return (
-    <div className="container dashboard-page">
-      <div className="dashboard-header">
-        <div>
-          <h2>Dashboard do Morador</h2>
-          <p>{profile?.name || session?.user.email} · {profile?.role || 'MORADOR'}</p>
+    <div className="site-root">
+      <Header />
+      <main className="dashboard-shell container">
+        <div className="dashboard-header">
+          <div>
+            <span className="dashboard-kicker">Área do morador</span>
+            <h1>Seu condomínio, em um só lugar</h1>
+            <p>{profile?.name || session?.user.email} <span className="role-badge">{profile?.role || 'MORADOR'}</span></p>
+          </div>
+          <button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button>
         </div>
-        <button type="button" onClick={handleLogout}>Sair</button>
-      </div>
 
-      {error && <div className="error">{error}</div>}
+        {error && <div className="error" role="alert">{error}</div>}
 
-      <section className="section">
-        <h2>Imóveis publicados</h2>
-        <div className="info-grid">
-          {properties.length === 0 && <p>Nenhum imóvel publicado.</p>}
-          {properties.map(property => (
-            <article className="card" key={property.id}>
-              <h3>{property.title}</h3>
-              <p><strong>{property.type}</strong> · {property.location}</p>
-              <p>{property.description}</p>
-              <p><strong>{property.price}</strong></p>
-              {property.photos[0] && <img className="service-photo" src={property.photos[0]} alt={property.title} />}
-            </article>
-          ))}
-        </div>
-      </section>
+        <section className="dashboard-summary" aria-label="Resumo do painel">
+          <div className="summary-card summary-primary">
+            <span>Imóveis disponíveis</span>
+            <strong>{properties.length}</strong>
+            <small>anúncios publicados</small>
+          </div>
+          <div className="summary-card">
+            <span>Serviços no condomínio</span>
+            <strong>{services.length}</strong>
+            <small>prestadores cadastrados</small>
+          </div>
+          <div className="summary-card">
+            <span>Acesso</span>
+            <strong>{profile?.role === 'ADMIN' ? 'Admin' : 'Morador'}</strong>
+            <small>perfil ativo</small>
+          </div>
+        </section>
 
-      <section className="section">
-        <h2>Prestadores de serviços</h2>
-        <div className="info-grid">
-          {services.length === 0 && <p>Nenhum prestador publicado.</p>}
-          {services.map(service => (
-            <article className="card" key={service.id}>
-              <h3>{service.name}</h3>
-              <p><strong>{service.category}</strong> · {service.phone}</p>
-              <p>{service.description}</p>
-              {service.photo && <img className="service-photo" src={service.photo} alt={service.name} />}
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {profile?.role === 'ADMIN' && (
-        <section className="section">
-          <h2>Financeiro</h2>
-          <div className="info-grid">
-            {entries.length === 0 && <p>Nenhum lançamento financeiro.</p>}
-            {entries.map(entry => (
-              <article className="card" key={entry.id}>
-                <h3>{entry.description}</h3>
-                <p>{entry.entry_date} · {entry.category}</p>
-                <p><strong>{entry.type}: R$ {Number(entry.value).toFixed(2)}</strong></p>
+        <section className="dashboard-section">
+          <div className="section-heading">
+            <div>
+              <span className="section-label">Mural do condomínio</span>
+              <h2>Imóveis publicados</h2>
+            </div>
+            <span className="section-count">{properties.length} {properties.length === 1 ? 'item' : 'itens'}</span>
+          </div>
+          <div className="dashboard-grid">
+            {properties.length === 0 && <div className="dashboard-empty"><strong>Nenhum imóvel disponível ainda</strong><span>Novos anúncios aparecerão aqui quando forem publicados.</span></div>}
+            {properties.map(property => (
+              <article className="dashboard-card" key={property.id}>
+                {property.photos[0] && <img src={property.photos[0]} alt={property.title} />}
+                <div className="dashboard-card-body">
+                  <span className="card-tag">{property.type}</span>
+                  <h3>{property.title}</h3>
+                  <p>{property.location} · {property.description}</p>
+                  <strong className="card-price">{property.price}</strong>
+                </div>
               </article>
             ))}
           </div>
         </section>
-      )}
+
+        <section className="dashboard-section">
+          <div className="section-heading">
+            <div>
+              <span className="section-label">Rede local</span>
+              <h2>Prestadores de serviços</h2>
+            </div>
+            <span className="section-count">{services.length} {services.length === 1 ? 'item' : 'itens'}</span>
+          </div>
+          <div className="dashboard-grid">
+            {services.length === 0 && <div className="dashboard-empty"><strong>Nenhum prestador cadastrado ainda</strong><span>Quando houver serviços disponíveis, eles aparecerão neste espaço.</span></div>}
+            {services.map(service => (
+              <article className="dashboard-card" key={service.id}>
+                {service.photo && <img src={service.photo} alt={service.name} />}
+                <div className="dashboard-card-body">
+                  <span className="card-tag">{service.category}</span>
+                  <h3>{service.name}</h3>
+                  <p>{service.description}</p>
+                  <strong className="card-contact">{service.phone}</strong>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {profile?.role === 'ADMIN' && (
+          <section className="dashboard-section dashboard-financial">
+            <div className="section-heading">
+              <div>
+                <span className="section-label">Gestão</span>
+                <h2>Financeiro</h2>
+              </div>
+              <span className="section-count">{entries.length} lançamentos</span>
+            </div>
+            <div className="dashboard-grid">
+              {entries.length === 0 && <div className="dashboard-empty"><strong>Nenhum lançamento financeiro</strong><span>Os registros financeiros do condomínio aparecerão aqui.</span></div>}
+              {entries.map(entry => (
+                <article className="financial-row" key={entry.id}>
+                  <div><strong>{entry.description}</strong><span>{entry.entry_date} · {entry.category}</span></div>
+                  <strong className={entry.type === 'Entrada' ? 'amount-positive' : 'amount-negative'}>{entry.type}: R$ {Number(entry.value).toFixed(2)}</strong>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </main>
+      <Footer />
     </div>
   )
 }
