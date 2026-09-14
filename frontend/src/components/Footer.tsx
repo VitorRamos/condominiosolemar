@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container">
         <div>© {new Date().getFullYear()} Condomínio Sol e Mar</div>
-        <div>Endereço — Praia, Cidade, Estado</div>
+        <div>Capim Macio · Natal/RN</div>
       </div>
     </footer>
   )
