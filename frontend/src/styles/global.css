@@ -83,26 +83,11 @@ form button:disabled{opacity:0.65;cursor:wait}
 .success{background:#ecfdf3;color:#047857;padding:0.8rem 1rem;border-radius:12px}
 .error{background:#fef2f2;color:#b91c1c;padding:0.8rem 1rem;border-radius:12px}
 
-.login-page{min-height:100vh;background:linear-gradient(135deg,#effbfa 0%,#fffaf2 58%,#e8f3fb 100%);color:var(--text)}
-.login-header{padding:1rem 0;border-bottom:1px solid rgba(15,23,42,0.1);background:rgba(255,255,255,0.72);backdrop-filter:blur(12px)}
-.login-header-inner{display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.login-brand{font-weight:800;color:var(--deep);letter-spacing:0.02em}
-.login-header nav{display:flex;gap:1rem;flex-wrap:wrap;justify-content:flex-end}
-.login-header nav a{color:#44606f;font-size:0.94rem}
-.login-header nav a:hover,.login-back-link:hover,.login-home-link:hover{color:var(--sea)}
-.login-main{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,0.9fr);align-items:center;gap:clamp(2rem,7vw,6rem);min-height:calc(100vh - 74px);padding-top:3rem;padding-bottom:4rem}
-.login-visual{padding:2rem 0}
-.login-visual h1{max-width:520px;margin:1rem 0 0.8rem;color:var(--deep);font-size:clamp(2.5rem,5vw,4.8rem);line-height:1.05}
-.login-visual p{max-width:480px;font-size:1.12rem;color:#44606f}
-.login-home-link{display:inline-block;margin-top:1.2rem;color:var(--sea);font-weight:700}
-.login-card{background:rgba(255,255,255,0.92);border:1px solid var(--border);border-radius:20px;padding:clamp(1.4rem,4vw,2.4rem);box-shadow:0 24px 60px rgba(15,23,42,0.12)}
-.login-card-heading{margin-bottom:1.5rem}
-.login-kicker{color:#087f81;text-transform:uppercase;font-size:0.75rem;font-weight:800;letter-spacing:0.12em}
-.login-card h2{margin:0.4rem 0 0.35rem;color:var(--deep);font-size:1.8rem}
-.login-card-heading p{margin:0;color:#607684}
-.login-card form{max-width:none}
-.login-card form input{background:#fff}
-.login-back-link{display:block;margin-top:1.2rem;text-align:center;color:#44606f;font-weight:700;font-size:0.94rem}
+.login-page{padding-top:3rem;padding-bottom:4rem}
+.login-page h2{margin-bottom:0.35rem;color:var(--deep)}
+.login-page > p{margin-top:0;color:#44606f}
+.login-back-link{display:inline-block;margin-bottom:1.2rem;color:var(--sea);font-weight:700}
+.login-back-link:hover{color:var(--brand-blue)}
 
 .site-footer{background:#0f172a;color:#dce7ee;padding:1.5rem 0;margin-top:auto}
 .site-footer .container{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
@@ -112,9 +97,6 @@ form button:disabled{opacity:0.65;cursor:wait}
   .banner{padding:3rem 0 2rem}
   .site-header .container{justify-content:center}
   .site-header nav{justify-content:center}
-  .login-main{grid-template-columns:1fr;min-height:auto;gap:1rem;padding-top:2.5rem}
-  .login-visual{padding:1rem 0 0}
-  .login-visual h1{font-size:clamp(2.4rem,12vw,4rem)}
 }
 
 @media (max-width: 480px){
@@ -122,6 +104,4 @@ form button:disabled{opacity:0.65;cursor:wait}
   .banner-card{padding:1.2rem}
   .section{padding:2rem 0}
   .site-header nav a{padding:0.4rem 0.6rem;font-size:0.95rem}
-  .login-header-inner{align-items:flex-start;flex-direction:column}
-  .login-header nav{justify-content:flex-start;gap:0.7rem}
 }
