@@ -197,6 +197,11 @@ export default function PortalTransparencia() {
   const [importOpen, setImportOpen] = useState(false)
 
   useEffect(() => {
+    if (!importOpen) return
+    document.getElementById('transparency-import')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [importOpen])
+
+  useEffect(() => {
     if (!session?.user) return
     supabase.from('profiles').select('role').eq('id', session.user.id).single().then(({ data }) => {
       setCanManage(data?.role === 'ADMIN' || data?.role === 'SINDICO')
@@ -615,16 +620,8 @@ export default function PortalTransparencia() {
           )}
         </section>
 
-        <section className="transparency-summary" aria-label="Resumo financeiro">
-          <div><span>Entradas</span><strong className="amount-positive">{formatCurrency(totals.Entrada)}</strong></div>
-          <div><span>Saídas</span><strong className="amount-negative">{formatCurrency(totals.Saída)}</strong></div>
-          <div className="transparency-total"><span>Saldo de {monthShortNames[month - 1]}</span><strong>{formatCurrency(totals.Entrada - totals.Saída)}</strong></div>
-        </section>
-
-        <ExpensePieChart items={expenseSlices} periodLabel={`${monthNames[month - 1]} de ${year}`} />
-
         {canManage && importOpen && (
-          <section className="transparency-section transparency-import">
+          <section id="transparency-import" className="transparency-section transparency-import">
             <div className="section-heading">
               <div>
                 <span className="section-label">Prestação de contas</span>
@@ -669,6 +666,14 @@ export default function PortalTransparencia() {
             )}
           </section>
         )}
+
+        <section className="transparency-summary" aria-label="Resumo financeiro">
+          <div><span>Entradas</span><strong className="amount-positive">{formatCurrency(totals.Entrada)}</strong></div>
+          <div><span>Saídas</span><strong className="amount-negative">{formatCurrency(totals.Saída)}</strong></div>
+          <div className="transparency-total"><span>Saldo de {monthShortNames[month - 1]}</span><strong>{formatCurrency(totals.Entrada - totals.Saída)}</strong></div>
+        </section>
+
+        <ExpensePieChart items={expenseSlices} periodLabel={`${monthNames[month - 1]} de ${year}`} />
 
         {importStatus && <div className="success">{importStatus}</div>}
         {error && <div className="error" role="alert">{error}</div>}
