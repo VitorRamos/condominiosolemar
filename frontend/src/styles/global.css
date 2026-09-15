@@ -90,9 +90,8 @@ form button:disabled{opacity:0.65;cursor:wait}
 .login-page{padding-top:3rem;padding-bottom:4rem}
 .login-page h2{margin-bottom:0.35rem;color:var(--deep)}
 .login-page > p{margin-top:0;color:#44606f}
-.login-back-link{display:inline-block;margin-bottom:1.2rem;color:var(--sea);font-weight:700}
-.login-back-link:hover{color:var(--brand-blue)}
-.dashboard-back-link{display:inline-flex;align-items:center;width:max-content;margin-bottom:1.2rem;color:var(--sea);font-weight:800}.dashboard-back-link:hover{color:var(--brand-blue)}
+.login-back-link,.dashboard-back-link{display:inline-block;margin-bottom:1.2rem;color:var(--sea);font-weight:700}
+.login-back-link:hover,.dashboard-back-link:hover{color:var(--brand-blue)}
 .password-field{position:relative}.password-field input{padding-right:3.2rem}.password-toggle{position:absolute;right:0.35rem;top:50%;width:2.4rem!important;padding:0.35rem!important;transform:translateY(-50%);background:transparent!important;color:var(--sea)!important;border:0!important;font-size:1.15rem;line-height:1;cursor:pointer}.password-toggle:hover{color:var(--brand-blue)!important}
 .reclamacoes-page{padding-top:3rem;padding-bottom:4rem}.reclamacoes-heading{max-width:700px;margin-bottom:1.5rem}.reclamacoes-heading h1{margin:0.4rem 0 0.55rem;color:var(--deep);font-size:clamp(2rem,4vw,3rem);line-height:1.08}.reclamacoes-heading p{margin:0;color:#44606f;font-size:1.05rem}.reclamacoes-card{max-width:760px;padding:1.5rem;background:white;border:1px solid var(--border);border-radius:18px;box-shadow:0 14px 30px rgba(15,23,42,0.06)}.reclamacoes-card form{max-width:none}.reclamacoes-card textarea{resize:vertical;min-height:150px}.complaint-submit{margin-top:0.25rem}
 
