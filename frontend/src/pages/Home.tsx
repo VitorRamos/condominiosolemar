@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 const googleMapsPlaceUrl = 'https://www.google.com/maps/search/?api=1&query=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN'
+const googleMapsEmbedUrl = 'https://www.google.com/maps?q=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN&output=embed'
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
               <a className="btn" href="#imoveis">Ver imóveis</a>
             </div>
             <div className="hero-visual">
-              <img src="https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1200" alt="Paisagem litorânea de contexto do Rio Grande do Norte" />
+              <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
               <div className="hero-visual-caption">
                 <strong>Capim Macio, Natal/RN</strong>
                 <span>Um endereço residencial na capital potiguar</span>
@@ -47,15 +48,32 @@ export default function Home() {
           <div className="container">
             <h2>Galeria</h2>
             <div className="gallery-grid">
-              <a className="gallery-card gallery-photo" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">
-                <img src="https://images.unsplash.com/photo-1615571022219-eb45cf7faa9d?auto=format&fit=crop&w=900&q=85" alt="Paisagem urbana de Natal, Rio Grande do Norte" />
-                <span>Ver fotos públicas do condomínio</span>
-              </a>
+              <div className="gallery-card gallery-photo">
+                <img src="/condominio-google-1.jpg" alt="Área externa do Condomínio Residencial Sol e Mar" />
+                <span>Foto pública do condomínio</span>
+              </div>
+              <div className="gallery-card gallery-photo gallery-photo-secondary">
+                <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
+                <span>Convivência e espaços internos</span>
+              </div>
               <div className="gallery-card">Capim Macio, Natal/RN</div>
-              <div className="gallery-card">Endereço confirmado no mapa</div>
-              <div className="gallery-card">Informações públicas do empreendimento</div>
+              <div className="gallery-card">Perto da praia e de serviços</div>
             </div>
-            <p className="section-note">As imagens de contexto mostram Natal/RN. As fotos específicas do condomínio estão disponíveis no Google Maps.</p>
+            <p className="section-note">Imagens locais do condomínio e do entorno. A primeira foto foi obtida na ficha pública do Google Maps. <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Ver origem e mais fotos →</a></p>
+          </div>
+        </section>
+
+        <section id="localizacao" className="section location-section">
+          <div className="container location-grid">
+            <div className="location-copy">
+              <span className="section-label">Onde estamos</span>
+              <h2>Localização no Google Maps</h2>
+              <p>Encontre o Condomínio Sol e Mar na Rua Desembargador José Gomes da Costa, em Capim Macio, Natal/RN.</p>
+              <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Abrir no Google Maps →</a>
+            </div>
+            <div className="map-frame">
+              <iframe title="Localização do Condomínio Sol e Mar no Google Maps" src={googleMapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            </div>
           </div>
         </section>
 

@@ -73,6 +73,7 @@ main{flex:1}
 .gallery-card{background:linear-gradient(135deg,#dff7f5, #fff8ef);border:1px solid var(--border);border-radius:18px;padding:1rem;min-height:130px;display:flex;align-items:flex-end;font-weight:700;color:#0f4b67}
 .gallery-photo{position:relative;overflow:hidden;padding:0;color:white;isolation:isolate}.gallery-photo::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,rgba(2,37,58,0.8));z-index:-1}.gallery-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}.gallery-photo span{padding:1rem;z-index:1}.section-note{font-size:0.9rem;color:#607684!important;margin:0.8rem 0 0!important}
 .facts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.8rem;margin-top:1.4rem}.facts-grid div{display:flex;flex-direction:column;gap:0.25rem;padding:0.8rem;background:#f8fcff;border:1px solid var(--border);border-radius:12px}.facts-grid strong{font-size:0.78rem;color:var(--sea);text-transform:uppercase;letter-spacing:0.04em}.facts-grid span{font-size:0.9rem;color:#44606f}.source-link{display:inline-block;margin-top:0.75rem;color:var(--sea);font-weight:700;font-size:0.92rem}.source-link:hover{color:var(--brand-blue)}
+.location-section{background:#f3eadc}.location-grid{display:grid;grid-template-columns:0.8fr 1.2fr;gap:2rem;align-items:center}.location-copy h2{margin:0.35rem 0 0.7rem;color:var(--deep)}.location-copy p{max-width:500px}.map-frame{overflow:hidden;min-height:360px;border:8px solid white;border-radius:20px;box-shadow:0 18px 35px rgba(15,23,42,0.12)}.map-frame iframe{display:block;width:100%;height:360px;border:0}
 
 .contact-card{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:1rem}
 .contact-card > div{background:white;border:1px solid var(--border);border-radius:18px;padding:1rem}
@@ -233,6 +234,7 @@ form button:disabled{opacity:0.65;cursor:wait}
   .period-current{flex:1;min-width:0}
   .admin-actions{width:100%}
   .facts-grid{grid-template-columns:1fr}
+  .location-grid{grid-template-columns:1fr}.map-frame,.map-frame iframe{min-height:300px;height:300px}
 }
 
 @media (max-width: 480px){
