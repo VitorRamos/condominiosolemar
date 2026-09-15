@@ -6,7 +6,8 @@
     "db:frontend": "node scripts/apply-frontend-migration.cjs",
     "db:security": "node scripts/apply-security-migration.cjs",
     "db:audit-rls": "node scripts/audit-rls.cjs",
-    "db:promote-admin": "node scripts/promote-admin.cjs"
+    "db:promote-admin": "node scripts/promote-admin.cjs",
+    "db:delete-user": "node scripts/delete-user.cjs"
   },
   "dependencies": {
     "dotenv": "^16.0.0",

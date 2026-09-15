@@ -60,6 +60,22 @@ async function main() {
     console.log('Supabase resident property ads migration already applied')
   }
 
+  const userDeletionResult = await client.query(`
+    select exists (
+      select 1 from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'financial_documents'
+        and column_name = 'uploaded_by'
+        and is_nullable = 'YES'
+    ) as applied
+  `)
+  if (!userDeletionResult.rows[0].applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260915000400_allow_user_deletion.sql'), 'utf8'))
+    console.log('Supabase user deletion migration applied')
+  } else {
+    console.log('Supabase user deletion migration already applied')
+  }
+
   await client.query(`
     insert into public.profiles (id, name)
     select id, coalesce(raw_user_meta_data ->> 'name', email)
