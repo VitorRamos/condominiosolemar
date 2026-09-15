@@ -153,7 +153,7 @@ export default function AnunciarImovel() {
     <div className="site-root">
       <Header />
       <main className="property-page container">
-        <Link className="login-back-link" to="/dashboard">← Voltar para a Área do Morador</Link>
+        <Link className="dashboard-back-link" to="/dashboard">← Voltar para a Área do Morador</Link>
         <div className="property-heading">
           <div><span className="dashboard-kicker">Classificados do condomínio</span><h1>Anunciar imóvel</h1><p>Você pode manter até {MAX_ADS} anúncios ativos. As fotos são comprimidas antes do salvamento.</p></div>
           <button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button>

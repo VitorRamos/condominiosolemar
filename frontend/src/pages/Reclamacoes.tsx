@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
 import Header from '../components/Header'
@@ -51,6 +52,7 @@ export default function Reclamacoes() {
     <div className="site-root">
       <Header />
       <main className="reclamacoes-page container">
+        <Link className="dashboard-back-link" to="/dashboard">← Voltar para a Área do Morador</Link>
         <div className="reclamacoes-heading">
           <span className="dashboard-kicker">Área do morador</span>
           <h1>Registrar reclamação</h1>

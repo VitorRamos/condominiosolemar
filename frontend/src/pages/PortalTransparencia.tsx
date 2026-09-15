@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import * as pdfjsLib from 'pdfjs-dist'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
@@ -591,6 +591,7 @@ export default function PortalTransparencia() {
     <div className="site-root">
       <Header />
       <main className="transparency-shell container">
+        <Link className="dashboard-back-link" to="/dashboard">← Voltar para a Área do Morador</Link>
         <div className="dashboard-header">
           <div>
             <span className="dashboard-kicker">Acesso restrito a moradores</span>
