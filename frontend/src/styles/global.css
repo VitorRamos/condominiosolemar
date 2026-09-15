@@ -161,6 +161,21 @@ form button:disabled{opacity:0.65;cursor:wait}
 .transparency-summary strong{display:block;margin-top:0.35rem;font-size:1.55rem}
 .transparency-total{background:linear-gradient(135deg,#e8fbf8,#f8fffe)!important;border-color:rgba(14,165,166,0.2)!important}
 .transparency-total strong{color:var(--deep)}
+.expense-chart{display:grid;grid-template-columns:240px minmax(0,1fr);gap:1.4rem;align-items:center;padding:1.2rem;background:white;border:1px solid var(--border);border-radius:16px}
+.expense-chart-visual{width:min(220px,100%);margin:0 auto}
+.expense-chart-visual svg{display:block;width:100%;height:auto;overflow:visible}
+.expense-chart-visual path,.expense-chart-visual circle{cursor:pointer;outline:none;transition:opacity 0.15s ease, stroke-width 0.15s ease}
+.expense-chart-visual path:focus-visible{filter:brightness(1.05)}
+.expense-chart-center-label{fill:#607684;font-size:10px;font-weight:700}
+.expense-chart-center-value{fill:#0f172a;font-size:12px;font-weight:800}
+.expense-legend{list-style:none;margin:0;padding:0;display:grid;gap:0.4rem}
+.expense-legend-item{width:100%;display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:0.7rem;align-items:center;padding:0.55rem 0.65rem;border:1px solid transparent;border-radius:10px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.expense-legend-item:hover,.expense-legend-item.is-active{background:#f8fcff;border-color:rgba(15,23,42,0.08)}
+.expense-swatch{width:12px;height:12px;border-radius:999px}
+.expense-legend-copy{display:flex;flex-direction:column;gap:0.1rem;min-width:0}
+.expense-legend-copy strong{color:var(--deep);font-size:0.92rem;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.expense-legend-copy span{color:#607684;font-size:0.78rem}
+.expense-legend-value{color:var(--deep);font-weight:800;white-space:nowrap}
 .transparency-section{margin-bottom:2.5rem}
 .transparency-import{padding:1.2rem;background:linear-gradient(135deg,#fffdf7,#f8fffe);border:1px solid rgba(14,165,166,0.2);border-radius:16px}
 .transparency-import .section-heading{margin-bottom:0.35rem}
@@ -209,6 +224,7 @@ form button:disabled{opacity:0.65;cursor:wait}
   .dashboard-summary{grid-template-columns:1fr;margin-bottom:2.3rem}
   .dashboard-grid{grid-template-columns:1fr}
   .transparency-summary{grid-template-columns:1fr}
+  .expense-chart{grid-template-columns:1fr}
   .transparency-toolbar{align-items:stretch}
   .period-nav{width:100%}
   .period-current{flex:1;min-width:0}

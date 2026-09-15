@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import ExpensePieChart from '../components/ExpensePieChart'
 
 type FinancialEntry = {
   id: number
@@ -357,6 +358,10 @@ export default function PortalTransparencia() {
     return result
   }, { Entrada: 0, Saída: 0 }), [entries])
 
+  const expenseSlices = useMemo(() => entries
+    .filter(entry => entry.type === 'Saída')
+    .map(entry => ({ category: entry.category, value: Number(entry.value) })), [entries])
+
   const { firstDay, lastDay } = periodBounds(year, month)
 
   function resetForm() {
@@ -615,6 +620,8 @@ export default function PortalTransparencia() {
           <div><span>Saídas</span><strong className="amount-negative">{formatCurrency(totals.Saída)}</strong></div>
           <div className="transparency-total"><span>Saldo de {monthShortNames[month - 1]}</span><strong>{formatCurrency(totals.Entrada - totals.Saída)}</strong></div>
         </section>
+
+        <ExpensePieChart items={expenseSlices} periodLabel={`${monthNames[month - 1]} de ${year}`} />
 
         {canManage && importOpen && (
           <section className="transparency-section transparency-import">
