@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+
+function postLoginPath(from: string | undefined) {
+  return from && from !== '/login' ? from : '/dashboard'
+}
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -11,7 +15,8 @@ export default function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-  const { login } = useAuth()
+  const { login, isAuthenticated, loading } = useAuth()
+  const destination = postLoginPath((location.state as { from?: string } | null)?.from)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -19,13 +24,28 @@ export default function Login() {
     setIsSubmitting(true)
     try {
       await login(email, password)
-      const destination = (location.state as { from?: string } | null)?.from || '/dashboard'
-      navigate(destination)
+      navigate(destination, { replace: true })
     } catch (err: any) {
       setError(err?.message || 'Erro ao efetuar login')
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="site-root">
+        <Header />
+        <main className="login-page container">
+          <p>Carregando sessão...</p>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to={destination} replace />
   }
 
   return (
