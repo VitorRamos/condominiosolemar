@@ -45,6 +45,21 @@ async function main() {
     console.log('Supabase financial documents migration already applied')
   }
 
+  const propertyPolicyResult = await client.query(`
+    select exists (
+      select 1 from pg_policies
+      where schemaname = 'public'
+        and tablename = 'property_ads'
+        and policyname = 'Residents can create their own property ads'
+    ) as applied
+  `)
+  if (!propertyPolicyResult.rows[0].applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260915000300_property_ads_resident_management.sql'), 'utf8'))
+    console.log('Supabase resident property ads migration applied')
+  } else {
+    console.log('Supabase resident property ads migration already applied')
+  }
+
   await client.query(`
     insert into public.profiles (id, name)
     select id, coalesce(raw_user_meta_data ->> 'name', email)
