@@ -9,31 +9,41 @@ export default function Home() {
   return (
     <div className="site-root">
       <Header />
-      <main>
+      <main className="home-page">
         <section className="banner">
           <div className="container">
             <div className="banner-card">
-              <span className="pill">Natal, Rio Grande do Norte</span>
-              <h1>Condomínio Sol e Mar</h1>
-              <p>Informações públicas, localização e referências do Condomínio Residencial Sol e Mar em Natal/RN.</p>
-              <a className="btn" href="#imoveis">Ver imóveis</a>
+              <span className="pill">Capim Macio · Natal/RN</span>
+              <h1>Mais que um condomínio, um jeito de viver.</h1>
+              <p>Segurança, ambiente familiar e a tranquilidade de estar perto da praia, com escolas, clínicas, compras e natureza ao redor.</p>
+              <div className="hero-actions"><a className="btn" href="#localizacao">Conheça a localização</a><a className="hero-text-link" href="#sobre">Viver bem é aqui ↓</a></div>
             </div>
             <div className="hero-visual">
               <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
               <div className="hero-visual-caption">
                 <strong>Capim Macio, Natal/RN</strong>
-                <span>Um endereço residencial na capital potiguar</span>
+                <span>Um endereço familiar perto do mar</span>
               </div>
             </div>
           </div>
         </section>
 
+        <section id="sobre" className="home-values-section">
+          <div className="container home-values">
+            <div className="home-values-intro"><span className="section-label">Condomínio Sol e Mar</span><h2>Viver bem é aqui.</h2><p>Um endereço pensado para oferecer qualidade de vida, integração com a natureza e um ambiente seguro e acolhedor para toda a família.</p></div>
+            <div className="home-value"><span>◌</span><strong>Segurança</strong><small>Tranquilidade para sua família</small></div>
+            <div className="home-value"><span>≈</span><strong>Praia por perto</strong><small>Mais tempo para aproveitar Natal</small></div>
+            <div className="home-value"><span>♧</span><strong>Comunidade</strong><small>Um ambiente familiar e acolhedor</small></div>
+            <div className="home-value"><span>✧</span><strong>Praticidade</strong><small>Shopping, escolas e clínicas próximas</small></div>
+          </div>
+        </section>
+
         <section id="history" className="section">
           <div className="container section-card">
-            <h2>História</h2>
+              <span className="section-label">Nossa história</span><h2>Um endereço para chamar de lar</h2>
             <p>
               O Condomínio Residencial Sol e Mar está localizado no bairro Capim Macio, em Natal, no Rio Grande do Norte.
-              A página reúne informações públicas do empreendimento e referências para moradores, visitantes e interessados em imóveis na região.
+              Um endereço residencial para famílias que valorizam segurança, sossego e praticidade. O condomínio fica perto da praia, do Shopping Seaway, do Parque Ecológico, de clínicas e escolas.
             </p>
             <div className="facts-grid">
               <div><strong>Endereço</strong><span>R. Des. José Gomes da Costa, 1887</span></div>
@@ -88,7 +98,7 @@ export default function Home() {
               </div>
               <div className="card">
                 <h3>Localização</h3>
-                <p>Capim Macio é uma região residencial de Natal, com acesso a serviços, comércio e vias importantes da cidade.</p>
+                <p>Capim Macio reúne praia, Shopping Seaway, Parque Ecológico, clínicas, escolas e serviços que deixam a vida mais prática.</p>
                 <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Abrir no mapa →</a>
               </div>
             </div>

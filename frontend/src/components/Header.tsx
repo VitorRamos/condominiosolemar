@@ -1,13 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 export default function Header() {
   const { isAuthenticated, loading } = useAuth()
+  const location = useLocation()
   const residentPath = !loading && isAuthenticated ? '/dashboard' : '/login'
 
   return (
-    <header className="site-header">
+    <header className={`site-header${location.pathname === '/' ? ' home-header' : ''}`}>
       <div className="container">
         <a className="brand" href="/">Condomínio Sol e Mar</a>
         <nav>
