@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default function Reclamacoes() {
   const [nome, setNome] = useState('')
@@ -46,33 +48,43 @@ export default function Reclamacoes() {
   }
 
   return (
-    <div className="container reclamacoes-page">
-      <h2>Registrar Reclamação</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="site-root">
+      <Header />
+      <main className="reclamacoes-page container">
+        <div className="reclamacoes-heading">
+          <span className="dashboard-kicker">Área do morador</span>
+          <h1>Registrar reclamação</h1>
+          <p>Envie sua mensagem para a administração do condomínio. Todos os campos são obrigatórios.</p>
+        </div>
+        <section className="reclamacoes-card">
+          <form onSubmit={handleSubmit}>
         <div>
-          <label>Nome</label>
-          <input value={nome} onChange={e => setNome(e.target.value)} required />
+          <label htmlFor="complaint-name">Nome</label>
+          <input id="complaint-name" value={nome} onChange={e => setNome(e.target.value)} autoComplete="name" required />
         </div>
         <div>
-          <label>Apartamento</label>
-          <input value={apartamento} onChange={e => setApartamento(e.target.value)} required />
+          <label htmlFor="complaint-apartment">Apartamento</label>
+          <input id="complaint-apartment" value={apartamento} onChange={e => setApartamento(e.target.value)} required />
         </div>
         <div>
-          <label>Assunto</label>
-          <input value={assunto} onChange={e => setAssunto(e.target.value)} required />
+          <label htmlFor="complaint-subject">Assunto</label>
+          <input id="complaint-subject" value={assunto} onChange={e => setAssunto(e.target.value)} required />
         </div>
         <div>
-          <label>Descrição</label>
-          <textarea value={descricao} onChange={e => setDescricao(e.target.value)} required />
+          <label htmlFor="complaint-description">Descrição</label>
+          <textarea id="complaint-description" value={descricao} onChange={e => setDescricao(e.target.value)} rows={6} required />
         </div>
         <div>
-          <label>Data</label>
-          <input type="date" value={data} onChange={e => setData(e.target.value)} />
+          <label htmlFor="complaint-date">Data</label>
+          <input id="complaint-date" type="date" value={data} onChange={e => setData(e.target.value)} required />
         </div>
         {success && <div className="success">{success}</div>}
         {error && <div className="error">{error}</div>}
-        <button type="submit">Enviar</button>
+        <button className="complaint-submit" type="submit">Enviar reclamação</button>
       </form>
+        </section>
+      </main>
+      <Footer />
     </div>
   )
 }
