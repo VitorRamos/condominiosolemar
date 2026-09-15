@@ -11,6 +11,7 @@ export default function Header() {
           <a href="/#imoveis">Imóveis</a>
           <a href="/#contacts">Contato</a>
           <a href="/reclamacoes">Reclamações</a>
+          <a href="/transparencia">Portal da Transparência</a>
           <a href="/login" className="btn">Área do Morador</a>
         </nav>
       </div>

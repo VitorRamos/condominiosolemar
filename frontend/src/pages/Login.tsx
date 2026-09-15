@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -10,6 +10,7 @@ export default function Login() {
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
   const { login } = useAuth()
 
   async function handleSubmit(e: React.FormEvent) {
@@ -18,7 +19,8 @@ export default function Login() {
     setIsSubmitting(true)
     try {
       await login(email, password)
-      navigate('/dashboard')
+      const destination = (location.state as { from?: string } | null)?.from || '/dashboard'
+      navigate(destination)
     } catch (err: any) {
       setError(err?.message || 'Erro ao efetuar login')
     } finally {
