@@ -44,6 +44,7 @@ export default function PortalTransparencia() {
   const [canManage, setCanManage] = useState(false)
   const [pdfFile, setPdfFile] = useState<File | null>(null)
   const [importing, setImporting] = useState(false)
+  const [deletingAll, setDeletingAll] = useState(false)
   const [importStatus, setImportStatus] = useState('')
   const [extractedText, setExtractedText] = useState('')
   const [documentId, setDocumentId] = useState<number | null>(null)
@@ -279,6 +280,48 @@ export default function PortalTransparencia() {
     if (editingId === id) resetForm()
   }
 
+  async function deleteAllForPeriod() {
+    const periodName = `${monthNames[month - 1]} de ${year}`
+    if (!window.confirm(`Excluir todos os lançamentos e PDFs de ${periodName}? Esta ação não pode ser desfeita.`)) return
+
+    setDeletingAll(true)
+    setError('')
+    setImportStatus('Excluindo registros do período...')
+    try {
+      const firstDay = `${year}-${String(month).padStart(2, '0')}-01`
+      const lastDay = new Date(year, month, 0).toISOString().slice(0, 10)
+      const documentsResult = await supabase
+        .from('financial_documents')
+        .select('id, storage_path')
+        .eq('reference_month', month)
+        .eq('reference_year', year)
+      if (documentsResult.error) throw documentsResult.error
+
+      const storagePaths = (documentsResult.data || []).map(document => document.storage_path)
+      if (storagePaths.length > 0) {
+        const storageResult = await supabase.storage.from('financial-documents').remove(storagePaths)
+        if (storageResult.error) throw storageResult.error
+      }
+
+      const entriesResult = await supabase.from('financial_entries').delete().gte('entry_date', firstDay).lte('entry_date', lastDay)
+      if (entriesResult.error) throw entriesResult.error
+      const documentsDeleteResult = await supabase.from('financial_documents').delete().eq('reference_month', month).eq('reference_year', year)
+      if (documentsDeleteResult.error) throw documentsDeleteResult.error
+
+      setEntries([])
+      setDocumentId(null)
+      setParsedEntries([])
+      setExtractedText('')
+      setImportStatus(`Todos os registros de ${periodName} foram excluídos.`)
+      resetForm()
+    } catch (deleteError: any) {
+      setError(deleteError?.message || 'Não foi possível excluir os registros do período.')
+      setImportStatus('')
+    } finally {
+      setDeletingAll(false)
+    }
+  }
+
   async function handleLogout() {
     await logout()
     navigate('/login')
@@ -326,6 +369,7 @@ export default function PortalTransparencia() {
               {Array.from({ length: 7 }, (_, index) => currentDate.getFullYear() - 3 + index).map(optionYear => <option value={optionYear} key={optionYear}>{optionYear}</option>)}
             </select>
           </div>
+          {canManage && <button className="delete-period-button" type="button" onClick={deleteAllForPeriod} disabled={deletingAll}>{deletingAll ? 'Excluindo...' : 'Excluir tudo do período'}</button>}
         </section>
 
         <section className="transparency-summary" aria-label="Resumo financeiro">
@@ -354,7 +398,7 @@ export default function PortalTransparencia() {
               <tbody>
                 {!loading && entries.length === 0 && <tr><td className="table-empty" colSpan={6}>Nenhum registro encontrado neste período.</td></tr>}
                 {loading && <tr><td className="table-empty" colSpan={6}>Carregando registros...</td></tr>}
-                {entries.map(entry => <tr key={entry.id}><td>{new Date(`${entry.entry_date}T12:00:00`).toLocaleDateString('pt-BR')}</td><td><strong>{entry.description}</strong></td><td>{entry.category}</td><td className="amount-positive">{entry.type === 'Entrada' ? formatCurrency(Number(entry.value)) : '-'}</td><td className="amount-negative">{entry.type === 'Saída' ? formatCurrency(Number(entry.value)) : '-'}</td><td className="table-actions">{canManage && <><button type="button" onClick={() => editEntry(entry)}>Editar</button><button type="button" onClick={() => deleteEntry(entry.id)}>Excluir</button></>}</td></tr>)}
+                {entries.map(entry => <tr key={entry.id}><td>{new Date(`${entry.entry_date}T12:00:00`).toLocaleDateString('pt-BR', { month: '2-digit', year: 'numeric' })}</td><td><strong>{entry.description}</strong></td><td>{entry.category}</td><td className="amount-positive">{entry.type === 'Entrada' ? formatCurrency(Number(entry.value)) : '-'}</td><td className="amount-negative">{entry.type === 'Saída' ? formatCurrency(Number(entry.value)) : '-'}</td><td className="table-actions">{canManage && <><button type="button" onClick={() => editEntry(entry)}>Editar</button><button type="button" onClick={() => deleteEntry(entry.id)}>Excluir</button></>}</td></tr>)}
               </tbody>
             </table>
           </div>
