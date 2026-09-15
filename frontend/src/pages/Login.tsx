@@ -11,6 +11,7 @@ function postLoginPath(from: string | undefined) {
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
@@ -62,7 +63,12 @@ export default function Login() {
           </div>
           <div>
             <label htmlFor="password">Senha</label>
-            <input id="password" value={password} onChange={e => setPassword(e.target.value)} type="password" autoComplete="current-password" required />
+            <div className="password-field">
+              <input id="password" value={password} onChange={e => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} autoComplete="current-password" required />
+              <button className="password-toggle" type="button" onClick={() => setShowPassword(current => !current)} aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'} title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}>
+                &#128065;
+              </button>
+            </div>
           </div>
           {error && <div className="error" role="alert">{error}</div>}
           <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Entrando...' : 'Entrar'}</button>
