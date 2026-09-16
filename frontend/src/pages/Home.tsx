@@ -117,13 +117,13 @@ export default function Home() {
             </div>
             <div className="contact-form-panel">
               <h2>Contato</h2>
-              <p>Envie uma mensagem para saber mais sobre o Condomínio Sol e Mar.</p>
+              <p>Envie uma mensagem para anunciar seu serviço ou imóvel.</p>
               <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
-                <label htmlFor="contact-name">Nome</label>
+                <label htmlFor="contact-name">Nome <span className="required-mark" aria-hidden="true">*</span></label>
                 <input id="contact-name" name="name" type="text" placeholder="Seu nome" required />
-                <label htmlFor="contact-email">E-mail</label>
+                <label htmlFor="contact-email">E-mail <span className="required-mark" aria-hidden="true">*</span></label>
                 <input id="contact-email" name="email" type="email" placeholder="seuemail@exemplo.com" required />
-                <label htmlFor="contact-message">Mensagem</label>
+                <label htmlFor="contact-message">Mensagem <span className="required-mark" aria-hidden="true">*</span></label>
                 <textarea id="contact-message" name="message" rows={4} placeholder="Como podemos ajudar?" required />
                 <button type="submit">Enviar mensagem</button>
               </form>

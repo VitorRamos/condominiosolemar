@@ -79,11 +79,11 @@ export default function AnunciarServicos() {
         </div>
         <section className="service-manager">
           <form className="service-manager-form" onSubmit={handleSubmit}>
-            <label htmlFor="service-name">Título do anúncio</label>
+            <label htmlFor="service-name">Título do anúncio <span className="required-mark" aria-hidden="true">*</span></label>
             <input id="service-name" value={form.name} onChange={event => setForm({ ...form, name: event.target.value })} placeholder="Ex.: Eletricista residencial" required />
-            <label htmlFor="service-description">Descrição</label>
+            <label htmlFor="service-description">Descrição <span className="required-mark" aria-hidden="true">*</span></label>
             <textarea id="service-description" value={form.description} onChange={event => setForm({ ...form, description: event.target.value })} placeholder="Descreva o serviço" rows={3} required />
-            <label htmlFor="service-phone">Telefone</label>
+            <label htmlFor="service-phone">Telefone <span className="required-mark" aria-hidden="true">*</span></label>
             <input id="service-phone" value={form.phone} onChange={event => setForm({ ...form, phone: event.target.value })} placeholder="(84) 99999-0000" required />
             <button type="submit" disabled={ads.length >= 6}>Publicar anúncio</button>
           </form>
