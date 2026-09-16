@@ -248,7 +248,7 @@ form button:disabled{opacity:0.65;cursor:wait}
   .admin-actions .button-secondary,.admin-actions .delete-period-button{flex:1}
 }
 
-@media (max-width:480px){.site-header .container{width:calc(100% - 4rem)}}
+@media (max-width:480px){.site-header .container{width:calc(100% - 1rem)}}
 @media (max-width:480px){.home-page .banner-card h1{color:#fff;text-shadow:0 2px 12px rgba(7,89,133,0.85)}.home-page .banner-card p{color:#fff;text-shadow:0 1px 8px rgba(7,89,133,0.85)}.home-page .banner-card .pill{background:#facc15;color:#173f55;border-color:#fde68a;box-shadow:0 4px 10px rgba(7,89,133,0.25)}}
 
 .site-header{background:#e7d7bf;color:#263b45;box-shadow:0 8px 24px rgba(87,67,43,0.12)}.site-header .brand{color:#263b45}.site-header nav a:hover{background:rgba(23,81,109,0.1)}.site-header .btn{background:#17516d;border-color:#17516d;color:white;box-shadow:0 6px 16px rgba(23,81,109,0.18)}.site-header .btn:hover{background:#103d53}
@@ -378,3 +378,9 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:780px){.home-page .banner{background:linear-gradient(180deg,rgba(228,220,200,0.84) 0%,rgba(228,220,200,0.7) 58%,rgba(228,220,200,0.42) 100%),url('/solemar-banner.png') center/cover}.home-page .banner-card h1{color:#075985;text-shadow:0 2px 10px rgba(255,253,249,0.82)}.home-page .banner-card p{color:#174d68;text-shadow:0 1px 8px rgba(255,253,249,0.75)}}
 .home-page .banner-card h1{font-family:"Segoe UI",Arial,sans-serif;font-weight:700;letter-spacing:0}
 @media (min-width:781px){.site-header .brand-logo{width:3.6rem;height:3.6rem}}
+@media (max-width:780px){.site-header .container{width:calc(100% - 1rem);justify-content:space-between}.site-header nav{margin-left:0}}
+@media (max-width:780px){.site-header nav .btn{padding:0.58rem 0.86rem;font-size:0.86rem}}
+@media (max-width:780px){.site-header .container{width:calc(100% - 2rem);flex-wrap:nowrap;justify-content:space-between}.site-header .brand{order:1;flex:0 0 auto}.site-header nav{order:2;flex:0 0 auto;margin:0;justify-content:flex-end}.site-header nav a:not(.btn){display:none}}
+@media (max-width:780px){.site-header .brand{margin-left:-1rem}}
+@media (max-width:780px){.site-header nav{margin-right:-1rem}}
+@media (max-width:480px){.site-header .container{width:calc(100% - 4rem)}}
