@@ -452,8 +452,8 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .home-value,.home-page .facts-grid div{background:#223366!important;background-image:none!important}
 .home-page #sobre,.home-page #history,.home-page #gallery,.home-page #imoveis,.home-page .home-values-section{background:#223366!important;background-image:none!important}
 .home-page .banner::after{background:#223366}
-@media (min-width:781px){.home-page .banner{background-position:center 60%}}
-@media (max-width:780px){.home-page .banner{background-position:center 58%}}
+@media (min-width:781px){.home-page .banner{background-position:center 70%}}
+@media (max-width:780px){.home-page .banner{background-position:center 68%}}
 @media (min-width:781px){
   .home-page .contact-card{
     display:grid;
