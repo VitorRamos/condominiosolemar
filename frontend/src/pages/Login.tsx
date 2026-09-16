@@ -8,6 +8,12 @@ function postLoginPath(from: string | undefined) {
   return from && from !== '/login' ? from : '/dashboard'
 }
 
+function getLoginErrorMessage(error: any) {
+  const message = String(error?.message || '').toLowerCase()
+  if (message.includes('invalid login credentials')) return 'E-mail ou senha inválidos.'
+  return error?.message || 'Erro ao efetuar login'
+}
+
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -27,7 +33,7 @@ export default function Login() {
       await login(email, password)
       navigate(destination, { replace: true })
     } catch (err: any) {
-      setError(err?.message || 'Erro ao efetuar login')
+      setError(getLoginErrorMessage(err))
     } finally {
       setIsSubmitting(false)
     }
