@@ -278,3 +278,12 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:780px){.home-page .home-values-section{margin-top:-2rem;padding-top:2.5rem}.home-page .home-values{padding:1.3rem 1rem}.home-page .home-values-intro{padding-right:0}.home-page .home-value{min-height:105px}}
 @media (max-width:780px){.home-page .banner-card{max-width:620px;margin:0;padding:2.5rem 2.4rem 2.7rem}}
 @media (max-width:480px){.home-page .home-values-section{margin-top:-1rem;border-radius:30px 30px 0 0}.home-page .home-values{width:min(100% - 1rem,1120px);padding:1.2rem 0.9rem}.home-page .home-value{min-height:0;padding:1rem 0}.site-footer .container{align-items:flex-start;flex-direction:column}.home-page .banner-card{padding:2rem 1.35rem 2.2rem}.home-page .banner-card .pill{margin-bottom:1.1rem}.home-page .banner-card h1{font-size:2.05rem}.home-page .banner-card p{margin:1.1rem 0 1.5rem;font-size:1rem;line-height:1.65}}
+
+/* History fact cards share the fixed menu palette. */
+.facts-grid div{
+  background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%);
+  border:1px solid rgba(255,255,255,0.16);
+  box-shadow:0 5px 18px rgba(18,59,80,0.18);
+}
+.facts-grid strong{color:#e7c887}
+.facts-grid span{color:#f6f1e7}
