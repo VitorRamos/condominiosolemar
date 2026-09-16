@@ -16,7 +16,7 @@ export default function Home() {
               <span className="pill">Capim Macio · Natal/RN</span>
               <h1>Um condomínio no coração de Capim Macio</h1>
               <p>Um condomínio seguro e familiar, a poucos minutos da praia, para viver com tranquilidade, conforto e mais tempo para aproveitar Natal.</p>
-              <div className="hero-actions"><a className="btn" href="#localizacao">Conheça a localização</a><a className="hero-text-link" href="#sobre">Viver bem é aqui ↓</a></div>
+              <div className="hero-actions"><a className="btn" href="#localizacao">Conheça a localização</a></div>
             </div>
             <div className="hero-visual">
               <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
