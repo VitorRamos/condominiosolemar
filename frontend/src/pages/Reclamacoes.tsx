@@ -84,7 +84,14 @@ export default function Reclamacoes() {
         </div>
         <div>
           <label htmlFor="complaint-subject">Assunto <span className="required-mark" aria-hidden="true">*</span></label>
-          <input id="complaint-subject" value={assunto} onChange={e => setAssunto(e.target.value)} required />
+          <select id="complaint-subject" value={assunto} onChange={e => setAssunto(e.target.value)} required>
+            <option value="" disabled>Selecione o assunto</option>
+            <option value="Problemas com vizinhos">Problemas com vizinhos</option>
+            <option value="Manutenções">Manutenções</option>
+            <option value="Dúvidas">Dúvidas</option>
+            <option value="Boleto">Boleto</option>
+            <option value="Outros">Outros</option>
+          </select>
         </div>
         <div>
           <label htmlFor="complaint-description">Descrição <span className="required-mark" aria-hidden="true">*</span></label>
