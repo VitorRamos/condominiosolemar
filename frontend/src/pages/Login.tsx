@@ -5,13 +5,13 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 function postLoginPath(from: string | undefined) {
-  return from && from !== '/login' ? from : '/dashboard'
+  return from && from.startsWith('/') && !from.startsWith('//') && from !== '/login' ? from : '/dashboard'
 }
 
 function getLoginErrorMessage(error: any) {
   const message = String(error?.message || '').toLowerCase()
   if (message.includes('invalid login credentials')) return 'E-mail ou senha inválidos.'
-  return error?.message || 'Erro ao efetuar login'
+  return 'Não foi possível entrar. Verifique seus dados e tente novamente.'
 }
 
 export default function Login() {
@@ -30,7 +30,7 @@ export default function Login() {
     setError('')
     setIsSubmitting(true)
     try {
-      await login(email, password)
+      await login(email.trim().toLowerCase(), password)
       navigate(destination, { replace: true })
     } catch (err: any) {
       setError(getLoginErrorMessage(err))
