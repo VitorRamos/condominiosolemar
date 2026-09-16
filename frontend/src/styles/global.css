@@ -266,10 +266,10 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:480px){.site-header .container{align-items:center;justify-content:space-between;flex-direction:row;flex-wrap:nowrap;gap:0;width:calc(100% - 2rem);padding:0.65rem 0.5rem}.site-header .brand{align-self:auto;min-width:0;gap:0.35rem;font-size:0.92rem;white-space:nowrap}.brand-logo{width:2.2rem;height:2.2rem}.site-header nav{flex:0 0 auto;justify-content:flex-end;flex-wrap:nowrap;gap:0}.site-header nav a:not(.btn){display:none}.site-header nav .btn{padding:0.45rem 0.72rem;font-size:0.82rem;white-space:nowrap}.home-page .banner{padding-top:4rem}}
 
 /* Compact blue navigation with a clean, unboxed condominium name. */
-.site-header,.site-header.home-header{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%)!important;color:white;box-shadow:0 5px 18px rgba(18,59,80,0.2)!important;border-bottom:0}
-.site-header .container{min-height:58px;padding-top:0.45rem;padding-bottom:0.45rem}.site-header .brand,.home-header .brand{padding:0;background:transparent;box-shadow:none;color:white!important;border-radius:0;letter-spacing:0.04em}.site-header nav a,.home-header nav a{color:white!important}.site-header nav a:hover,.home-header nav a:hover{background:rgba(255,255,255,0.14)}
+.site-header,.site-header.home-header{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%)!important;color:white;box-shadow:0 5px 18px rgba(3,65,96,0.28)!important;border-bottom:0}
+.site-header .container{min-height:58px;padding-top:0.45rem;padding-bottom:0.45rem}.site-header .brand,.home-header .brand{padding:0;background:transparent;box-shadow:none;color:white!important;border-radius:0;letter-spacing:0.04em}.site-header nav a,.home-header nav a{color:white!important}.site-header nav a:hover,.home-header nav a:hover{background:rgba(255,255,255,0.22)}
 .site-header .brand{gap:0.65rem}.brand-logo{width:3rem;height:3rem;flex:0 0 auto;display:block;object-fit:contain;border-radius:50%}
-.site-header .btn,.home-header .btn{background:#e7c887!important;border-color:#f1dca8!important;color:#173f55!important;box-shadow:0 4px 12px rgba(11,46,64,0.2);font-weight:900}.site-header .btn:hover,.home-header .btn:hover{background:#f1dca8!important}
+.site-header .btn,.home-header .btn{background:#facc15!important;border-color:#fde68a!important;color:#173f55!important;box-shadow:0 4px 12px rgba(11,46,64,0.24);font-weight:900}.site-header .btn:hover,.home-header .btn:hover{background:#fde047!important}
 @media (min-width:781px){.site-header .container{min-height:54px}.site-header nav{gap:0.35rem}.site-header nav a{padding:0.32rem 0.6rem;font-size:0.9rem}.site-header .btn{padding:0.58rem 1rem;font-size:1rem;min-height:42px}.site-header .brand{font-size:1.1rem}}
 
 .site-footer{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%);color:#f6f1e7;padding:1.35rem 0;border-top:4px solid #e7c887}.site-footer .container{align-items:center}.site-footer strong{color:#e7c887}
@@ -336,3 +336,13 @@ form button:disabled{opacity:0.65;cursor:wait}
 .footer-links a:hover,.footer-location a:hover{color:#e7c887}
 @media (max-width:780px){.footer-grid{grid-template-columns:1fr 1fr;gap:2rem}.footer-brand{grid-column:1/-1}}
 @media (max-width:480px){.site-footer{padding:2.2rem 0 1.8rem}.footer-grid{grid-template-columns:1fr;gap:1.5rem}.footer-brand{grid-column:auto}}
+.home-page{background:#f4fbfd}
+.home-page .section h2,.home-page .location-copy h2,.home-page .card h3{color:#075985}
+.home-page .section-label{color:#0e7490}
+.home-page .source-link{color:#0284c7}
+.home-page .source-link:hover{color:#facc15}
+.home-page #localizacao{background:#e8f7fb}
+.home-page .gallery-card{background:linear-gradient(135deg,#dff7ff,#fff8d6);border-color:rgba(2,132,199,0.2);color:#075985}
+.home-page .card,.home-page .section-card{border-color:rgba(2,132,199,0.16)}
+.home-page .location-highlights strong{color:#075985}
+.home-page .location-highlights span{border-color:rgba(2,132,199,0.24);color:#075985}
