@@ -11,7 +11,7 @@ export default function Header() {
     <header className={`site-header${location.pathname === '/' ? ' home-header' : ''}`}>
       <div className="container">
         <a className="brand" href="/">
-          <img className="brand-logo" src="/logo.png" alt="Logo Sol e Mar" />
+          <img className="brand-logo" src="/logo-sol-e-mar.svg" alt="Logo Sol e Mar" />
           <span>Condomínio Sol e Mar</span>
         </a>
         <nav>
