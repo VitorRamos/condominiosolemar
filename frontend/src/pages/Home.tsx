@@ -15,7 +15,6 @@ type PropertyAd = {
 }
 
 const googleMapsPlaceUrl = 'https://www.google.com/maps/search/?api=1&query=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN'
-const googleMapsEmbedUrl = 'https://www.google.com/maps?q=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN&output=embed'
 
 export default function Home() {
   const [propertyAds, setPropertyAds] = useState<PropertyAd[]>([])
@@ -71,20 +70,6 @@ export default function Home() {
               <div><strong>Avaliação pública</strong><span>5,0 no Google · 8 avaliações</span></div>
             </div>
             <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Ver localização e fotos no Google Maps →</a>
-          </div>
-        </section>
-
-        <section id="localizacao" className="section location-section">
-          <div className="container location-grid">
-            <div className="location-copy">
-              <span className="section-label">Onde estamos</span>
-              <h2>Localização no Google Maps</h2>
-              <p>Encontre o Condomínio Sol e Mar na Rua Desembargador José Gomes da Costa, em Capim Macio, Natal/RN.</p>
-              <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Abrir no Google Maps →</a>
-            </div>
-            <div className="map-frame">
-              <iframe title="Localização do Condomínio Sol e Mar no Google Maps" src={googleMapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-            </div>
           </div>
         </section>
 
