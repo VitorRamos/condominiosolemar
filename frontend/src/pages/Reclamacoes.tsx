@@ -69,7 +69,10 @@ export default function Reclamacoes() {
         </div>
         <div>
           <label htmlFor="complaint-apartment">Apartamento <span className="required-mark" aria-hidden="true">*</span></label>
-          <input id="complaint-apartment" value={apartamento} onChange={e => setApartamento(e.target.value)} required />
+          <select id="complaint-apartment" value={apartamento} onChange={e => setApartamento(e.target.value)} required>
+            <option value="" disabled>Selecione o apartamento</option>
+            {['101', '102', '103', '104', '201', '202', '203', '204', '301', '302', '303', '304', '401', '402', '403', '404', '501', '502', '503', '504', '601', '602', '603', '604', '701', '702', '703', '704'].map(apartment => <option key={apartment} value={apartment}>{apartment}</option>)}
+          </select>
         </div>
         <div>
           <label htmlFor="complaint-block">Bloco <span className="required-mark" aria-hidden="true">*</span></label>
