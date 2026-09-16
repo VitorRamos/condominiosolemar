@@ -340,7 +340,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page #gallery .source-link{color:#e7c887}
 .home-page #contacts{background:#fffdf9}
 .facts-grid span{color:#f6f1e7}
-.home-page .facts-grid div{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%);border-color:rgba(255,255,255,0.18);box-shadow:0 5px 18px rgba(3,65,96,0.2)}
+.home-page .facts-grid div{background:linear-gradient(145deg,#064b72 0%,#075985 58%,#0a4967 100%);border-color:rgba(255,255,255,0.18);box-shadow:0 5px 18px rgba(3,65,96,0.2)}
 .home-page .facts-grid strong{color:#facc15}
 .home-page .facts-grid span{color:#f8fdff}
 .home-page #sobre,.home-page #history,.home-page #gallery,.home-page #imoveis,.home-page .home-values-section{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%)}
