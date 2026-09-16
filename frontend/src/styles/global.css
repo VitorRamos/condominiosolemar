@@ -446,6 +446,10 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .banner-card p{color:#174d68!important;text-shadow:0 1px 8px rgba(255,253,249,0.72)}
 .site-header .btn,.home-header .btn{box-shadow:0 4px 12px rgba(11,46,64,0.2)!important;border:0!important;font-weight:800}
 @media (max-width:780px){.site-header .container{min-height:64px}}
+.site-header,.site-header.home-header,.site-footer{background:#223366!important;background-image:none!important}
+.home-page .home-value,.home-page .facts-grid div{background:#223366!important;background-image:none!important}
+.home-page #sobre,.home-page #history,.home-page #gallery,.home-page #imoveis,.home-page .home-values-section{background:#223366!important;background-image:none!important}
+.home-page .banner::after{background:#223366}
 
 .home-page .banner .banner-title{
   position:absolute;
