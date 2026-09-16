@@ -66,7 +66,7 @@ export default function Login() {
             <div className="password-field">
               <input id="password" value={password} onChange={e => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} autoComplete="current-password" required />
               <button className="password-toggle" type="button" onClick={() => setShowPassword(current => !current)} aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'} title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}>
-                &#128065;
+                <span className="password-eye" aria-hidden="true" />
               </button>
             </div>
           </div>
