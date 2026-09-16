@@ -422,9 +422,9 @@ form button:disabled{opacity:0.65;cursor:wait}
   left:49.7%;
   width:min(88%, 32rem);
   margin:0;
-  color:#FAD78E;
+  color:#e7c887;
   font-family:Georgia, "Times New Roman", serif;
-  font-size:clamp(1.6rem, 3.4vw, 2.4rem);
+  font-size:clamp(1.4rem, 2.8vw, 2rem);
   font-weight:800;
   letter-spacing:0.04em;
   line-height:1.15;
