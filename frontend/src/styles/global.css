@@ -266,7 +266,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:480px){.site-header .container{align-items:center;justify-content:space-between;flex-direction:row;flex-wrap:nowrap;gap:0;width:calc(100% - 2rem);padding:0.65rem 0.5rem}.site-header .brand{align-self:auto;min-width:0;gap:0.35rem;font-size:0.92rem;white-space:nowrap}.brand-logo{width:2.2rem;height:2.2rem}.site-header nav{flex:0 0 auto;justify-content:flex-end;flex-wrap:nowrap;gap:0}.site-header nav a:not(.btn){display:none}.site-header nav .btn{padding:0.45rem 0.72rem;font-size:0.82rem;white-space:nowrap}.home-page .banner{padding-top:4rem}}
 
 @media (max-width:480px){.site-header .brand{flex:1 1 auto;overflow:hidden}.site-header .brand span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.brand-logo{width:1.9rem;height:1.9rem}.site-header nav .btn{max-width:42vw;padding:0.42rem 0.55rem;font-size:clamp(0.68rem,2.8vw,0.78rem);overflow:hidden;text-overflow:ellipsis}}
-@media (max-width:480px){.site-header .brand{flex:0 0 auto;gap:0;overflow:visible}.site-header .brand span{display:none}.brand-logo{width:4rem;height:4rem}.site-header nav .btn{max-width:46vw}}
+@media (max-width:480px){.site-header .brand{flex:0 0 auto;gap:0;overflow:visible}.site-header .brand span{display:none}.brand-logo{width:5.5rem;height:5.5rem}.site-header nav .btn{max-width:46vw}}
 
 /* Compact blue navigation with a clean, unboxed condominium name. */
 .site-header,.site-header.home-header{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%)!important;color:white;box-shadow:0 5px 18px rgba(3,65,96,0.28)!important;border-bottom:0}
