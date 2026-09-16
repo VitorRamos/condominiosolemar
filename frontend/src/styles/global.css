@@ -298,5 +298,9 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:780px){.home-page .home-value{border-top-color:rgba(255,255,255,0.22)}}
 .home-page #history,.home-page #imoveis{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%)}
 .home-page #imoveis> .container>h2{color:#fff}
-.home-page #gallery,.home-page #contacts{background:#fffdf9}
+.home-page #gallery{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%)}
+.home-page #gallery h2{color:#fff}
+.home-page #gallery .section-note{color:#f6f1e7!important}
+.home-page #gallery .source-link{color:#e7c887}
+.home-page #contacts{background:#fffdf9}
 .facts-grid span{color:#f6f1e7}
