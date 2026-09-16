@@ -3,7 +3,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import galeria1 from '../../../Images/galeria1.webp'
 import galeria2 from '../../../Images/galeria2.webp'
-import galeria3 from '../../../Images/galeria3.webp'
 import galeria4 from '../../../Images/galeria4.webp'
 import galeria5 from '../../../Images/galeria5.webp'
 
@@ -11,11 +10,10 @@ const googleMapsPlaceUrl = 'https://www.google.com/maps/search/?api=1&query=Cond
 const googleMapsEmbedUrl = 'https://www.google.com/maps?q=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN&output=embed'
 
 const galleryImages = [
+  { src: galeria5, alt: 'Área de convivência' },
   { src: galeria1, alt: 'Área externa do condomínio' },
   { src: galeria2, alt: 'Espaço interno do condomínio' },
-  { src: galeria3, alt: 'Vista do entorno do condomínio' },
-  { src: galeria4, alt: 'Detalhe do ambiente residencial' },
-  { src: galeria5, alt: 'Área de convivência' }
+  { src: galeria4, alt: 'Detalhe do ambiente residencial' }
 ]
 
 export default function Home() {
