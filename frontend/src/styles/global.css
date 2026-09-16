@@ -341,7 +341,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page #contacts{background:#fffdf9}
 .facts-grid span{color:#f6f1e7}
 .home-page .facts-grid div{background:linear-gradient(145deg,#064b72 0%,#075985 58%,#0a4967 100%);border-color:rgba(255,255,255,0.18);box-shadow:0 5px 18px rgba(3,65,96,0.2)}
-.home-page .facts-grid strong{color:#facc15}
+.home-page .facts-grid strong{color:#e7c887}
 .home-page .facts-grid span{color:#f8fdff}
 .home-page #sobre,.home-page #history,.home-page #gallery,.home-page #imoveis,.home-page .home-values-section{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%)}
 .home-page #sobre,.home-page #history,.home-page #gallery,.home-page #imoveis,.home-page .home-values-section{background:#0284c7}
@@ -422,7 +422,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:780px){.site-header .brand{margin-left:-1rem}}
 @media (max-width:780px){.site-header nav{margin-right:-1rem}}
 @media (max-width:780px){.site-header nav{margin-right:-1.5rem}}
-@media (max-width:780px){.site-header .brand-logo{width:3.2rem;height:3.2rem}}
+@media (max-width:780px){.site-header .brand-logo{width:2.5rem;height:2.5rem}}
 @media (max-width:780px){.home-page .banner{min-height:calc(100svh - 5rem);display:flex;align-items:center}}
 @media (max-width:480px){.site-header .container{width:calc(100% - 4rem)}}
 .home-page #sobre,.home-page #history,.home-page #gallery,.home-page #imoveis{background:#0284c7!important;background-image:none!important;margin:0!important;border:0;border-radius:0}
@@ -445,6 +445,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .banner-card h1{color:#075985!important;text-shadow:0 2px 10px rgba(255,253,249,0.8)}
 .home-page .banner-card p{color:#174d68!important;text-shadow:0 1px 8px rgba(255,253,249,0.72)}
 .site-header .btn,.home-header .btn{box-shadow:0 4px 12px rgba(11,46,64,0.2)!important;border:0!important;font-weight:800}
+@media (max-width:780px){.site-header .container{min-height:64px}}
 
 .home-page .banner .banner-title{
   position:absolute;
