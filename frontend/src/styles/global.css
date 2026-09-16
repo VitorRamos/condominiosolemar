@@ -414,3 +414,41 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .banner-card h1{color:#075985!important;text-shadow:0 2px 10px rgba(255,253,249,0.8)}
 .home-page .banner-card p{color:#174d68!important;text-shadow:0 1px 8px rgba(255,253,249,0.72)}
 .site-header .btn,.home-header .btn{box-shadow:0 4px 12px rgba(11,46,64,0.2)!important;border:0!important;font-weight:800}
+
+.home-page .banner .banner-title{
+  position:absolute;
+  z-index:2;
+  top:42%;
+  left:49.7%;
+  width:min(88%, 32rem);
+  margin:0;
+  color:#e7c887;
+  font-family:inherit;
+  font-size:clamp(1.45rem, 3.1vw, 2.2rem);
+  font-weight:800;
+  letter-spacing:0.04em;
+  line-height:1.15;
+  text-align:center;
+  text-shadow:0 2px 10px rgba(7,89,133,0.7);
+  transform:translate(-150%, -50%);
+  animation:banner-title-slide-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+
+@keyframes banner-title-slide-in{
+  to{transform:translate(-50%, -50%)}
+}
+
+@media (max-width:480px){
+  .home-page .banner .banner-title{
+    width:calc(100% - 2rem);
+    font-size:clamp(1.25rem, 6vw, 1.65rem);
+    letter-spacing:0.03em;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .home-page .banner .banner-title{
+    animation:none;
+    transform:translate(-50%, -50%);
+  }
+}

@@ -38,6 +38,7 @@ export default function Home() {
       <Header />
       <main className="home-page">
         <section className="banner">
+          <span className="banner-title section-label">Sol e Mar</span>
           <div className="container">
             <div className="hero-visual">
               <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
