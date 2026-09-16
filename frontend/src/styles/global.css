@@ -248,6 +248,9 @@ form button:disabled{opacity:0.65;cursor:wait}
   .admin-actions .button-secondary,.admin-actions .delete-period-button{flex:1}
 }
 
+@media (max-width:480px){.site-header .container{width:calc(100% - 4rem)}}
+@media (max-width:480px){.home-page .banner-card h1{color:#fff;text-shadow:0 2px 12px rgba(7,89,133,0.85)}.home-page .banner-card p{color:#fff;text-shadow:0 1px 8px rgba(7,89,133,0.85)}.home-page .banner-card .pill{background:#facc15;color:#173f55;border-color:#fde68a;box-shadow:0 4px 10px rgba(7,89,133,0.25)}}
+
 .site-header{background:#e7d7bf;color:#263b45;box-shadow:0 8px 24px rgba(87,67,43,0.12)}.site-header .brand{color:#263b45}.site-header nav a:hover{background:rgba(23,81,109,0.1)}.site-header .btn{background:#17516d;border-color:#17516d;color:white;box-shadow:0 6px 16px rgba(23,81,109,0.18)}.site-header .btn:hover{background:#103d53}
 
 .home-header{position:absolute;top:0;left:0;width:100%;z-index:20;background:transparent!important;color:white;box-shadow:none!important}.home-header .brand,.home-header nav a{color:white}.home-header nav a:hover{background:rgba(255,255,255,0.16)}.home-header .btn{background:#17516d;border-color:#17516d}.home-page .banner{min-height:650px;padding:9rem 0 8rem;background:linear-gradient(90deg,rgba(16,47,64,0.68) 0%,rgba(16,47,64,0.32) 48%,rgba(16,47,64,0.05) 100%),url('/praia-contexto.jpg') center/cover}.home-page .banner .container{display:block}.home-page .banner-card{max-width:620px;padding:1rem 0;color:white}.home-page .banner h1{color:white;font-size:clamp(3rem,7vw,6.4rem);text-shadow:0 2px 14px rgba(0,0,0,0.2)}.home-page .banner p{color:white;max-width:520px}.home-page .banner .pill{color:#f3d38e;border-color:#f3d38e}.home-page .hero-visual{display:none}.home-page .home-values-section{position:relative;z-index:2;margin-top:-3.5rem;padding:3rem 0;border-radius:50% 50% 0 0 / 12% 12% 0 0;background:#fff}.home-page .home-values{position:relative}.home-page .hero-text-link{color:white}.home-page .section-card{border-left:0}
@@ -346,6 +349,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 .footer-links a:hover,.footer-location a:hover{color:#e7c887}
 @media (max-width:780px){.footer-grid{grid-template-columns:1fr 1fr;gap:2rem}.footer-brand{grid-column:1/-1}}
 @media (max-width:480px){.site-footer{padding:2.2rem 0 1.8rem}.footer-grid{grid-template-columns:1fr;gap:1.5rem}.footer-brand{grid-column:auto}}
+@media (max-width:780px){.home-page .banner-card h1{color:#fff;text-shadow:0 2px 12px rgba(7,89,133,0.85)}.home-page .banner-card p{color:#fff;text-shadow:0 1px 8px rgba(7,89,133,0.85)}.home-page .banner-card .pill{background:#facc15;color:#173f55;border-color:#fde68a;box-shadow:0 4px 10px rgba(7,89,133,0.25)}}
 .home-page{background:#f4fbfd}
 .home-page .section h2,.home-page .location-copy h2,.home-page .card h3{color:#075985}
 .home-page .section-label{color:#0e7490}
