@@ -272,7 +272,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:480px){.site-header .brand{flex:0 0 auto;gap:0;overflow:visible}.site-header .brand span{display:none}.brand-logo{width:5.5rem;height:5.5rem}.site-header nav .btn{max-width:46vw}}
 
 /* Compact blue navigation with a clean, unboxed condominium name. */
-.site-header,.site-header.home-header{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%)!important;color:white;box-shadow:0 5px 18px rgba(3,65,96,0.28)!important;border-bottom:0}
+.site-header,.site-header.home-header{background:linear-gradient(145deg,#064b72 0%,#075985 58%,#0a4967 100%)!important;color:white;box-shadow:0 5px 18px rgba(3,45,68,0.22)!important;border-bottom:0}
 .site-header .container{min-height:58px;padding-top:0.45rem;padding-bottom:0.45rem}.site-header .brand,.home-header .brand{padding:0;background:transparent;box-shadow:none;color:white!important;border-radius:0;letter-spacing:0.04em}.site-header nav a,.home-header nav a{color:white!important}.site-header nav a:hover,.home-header nav a:hover{background:rgba(255,255,255,0.22)}
 .site-header .brand{gap:0.65rem}.brand-logo{width:3rem;height:3rem;flex:0 0 auto;display:block;object-fit:contain;border-radius:50%}
 .site-header .btn,.home-header .btn{background:#facc15!important;border-color:#fde68a!important;color:#173f55!important;box-shadow:0 4px 12px rgba(11,46,64,0.24);font-weight:900}.site-header .btn:hover,.home-header .btn:hover{background:#fde047!important}
@@ -429,6 +429,12 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .home-values-section{background:#0284c7!important;background-image:none!important;margin:0!important;border:0;border-radius:0}
 .home-page .home-values{background:transparent!important;background-image:none!important}
 .home-page .home-values-section{position:relative;z-index:2;margin-top:-3.5rem!important;padding-top:3.8rem;border-radius:52% 52% 0 0 / 12% 12% 0 0}
+
+.home-page .home-value{
+  border:0;
+  background:linear-gradient(145deg,#064b72 0%,#075985 58%,#0a4967 100%);
+  box-shadow:0 10px 24px rgba(3,45,68,0.22);
+}
 .home-page .banner{overflow:visible}
 .home-page .banner::after{content:"";position:absolute;z-index:1;left:0;right:0;bottom:-1px;height:2.5rem;background:#0284c7;border-radius:50% 50% 0 0 / 100% 100% 0 0;pointer-events:none}
 .home-page .banner .container{position:relative;z-index:2}
