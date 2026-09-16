@@ -5,13 +5,31 @@ import { supabase } from '../services/supabase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
+function currentDateValue() {
+  const today = new Date()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
+  return `${today.getFullYear()}-${month}-${day}`
+}
+
+function formatDateForDisplay(value: string) {
+  const [year, month, day] = value.split('-')
+  return year && month && day ? `${day}/${month}/${year}` : value
+}
+
+function normalizeDateValue(value: string) {
+  const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)
+  return match ? `${match[3]}-${match[2]}-${match[1]}` : ''
+}
+
 export default function Reclamacoes() {
   const [nome, setNome] = useState('')
   const [apartamento, setApartamento] = useState('')
   const [bloco, setBloco] = useState('')
   const [assunto, setAssunto] = useState('')
   const [descricao, setDescricao] = useState('')
-  const [data, setData] = useState('')
+  const [data, setData] = useState(currentDateValue)
+  const [dataDisplay, setDataDisplay] = useState(() => formatDateForDisplay(currentDateValue()))
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
   const { session } = useAuth()
@@ -27,6 +45,11 @@ export default function Reclamacoes() {
     }
 
     try {
+      const normalizedDate = normalizeDateValue(dataDisplay)
+      if (!normalizedDate) {
+        setError('Informe a data no formato dd/mm/aaaa.')
+        return
+      }
       const { error: insertError } = await supabase.from('reclamacoes').insert({
         user_id: session.user.id,
         nome,
@@ -34,7 +57,7 @@ export default function Reclamacoes() {
         bloco,
         assunto,
         descricao,
-        data: data || undefined
+        data: normalizedDate
       })
 
       if (insertError) throw insertError
@@ -45,7 +68,8 @@ export default function Reclamacoes() {
       setBloco('')
       setAssunto('')
       setDescricao('')
-      setData('')
+      setData(currentDateValue())
+      setDataDisplay(formatDateForDisplay(currentDateValue()))
     } catch (err: any) {
       setError(err?.message || 'Erro ao enviar')
     }
@@ -99,7 +123,7 @@ export default function Reclamacoes() {
         </div>
         <div>
           <label htmlFor="complaint-date">Data <span className="required-mark" aria-hidden="true">*</span></label>
-          <input id="complaint-date" type="date" value={data} onChange={e => setData(e.target.value)} required />
+          <input id="complaint-date" type="text" inputMode="numeric" value={dataDisplay} onChange={e => { setDataDisplay(e.target.value); setData(normalizeDateValue(e.target.value)) }} placeholder="dd/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" maxLength={10} required />
         </div>
         {success && <div className="success">{success}</div>}
         {error && <div className="error">{error}</div>}
