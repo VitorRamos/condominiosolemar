@@ -480,11 +480,15 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .service-ad-slot span{color:#607684;font-size:0.78rem;line-height:1.35}
 .home-page .service-ad-slot small{color:#607684;font-size:0.75rem;font-weight:700}
 .home-page .service-ad-slot-filled{background:#fff;border-style:solid;box-shadow:0 5px 14px rgba(34,51,102,0.08)}
+.service-manager{max-width:760px;padding:1.4rem;background:#f8f5ed;border:1px solid rgba(34,51,102,0.14);border-radius:12px}
+.service-manager-form{display:grid;gap:0.65rem;max-width:none}.service-manager-form label{color:#223366;font-size:0.85rem;font-weight:700}.service-manager-form input,.service-manager-form textarea{background:#fff}.service-manager-form button{width:auto;justify-self:start;background:#223366;color:#fff;border:0;border-radius:8px;padding:0.7rem 1rem}
+.service-manager-list{display:grid;gap:0.6rem;margin-top:1rem}.service-manager-item{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.8rem;background:#fff;border:1px solid rgba(34,51,102,0.12);border-radius:8px}.service-manager-item div{display:flex;flex-direction:column;gap:0.15rem}.service-manager-item strong{color:#223366}.service-manager-item span,.service-manager-item small{color:#607684;font-size:0.82rem}.service-manager-item button{width:auto;background:transparent;border:1px solid rgba(185,28,28,0.3);border-radius:6px;color:#b91c1c;padding:0.45rem 0.7rem}
 @media (max-width:780px){
   .home-page .contact-card{display:grid;grid-template-columns:1fr;gap:1rem;max-width:620px;margin-left:auto;margin-right:auto}
   .home-page .service-ad-list{grid-template-columns:1fr 1fr}
 }
 @media (max-width:480px){.home-page .contact-card>div{padding:1.1rem}.home-page .service-ad-slot{min-height:70px;padding:0.7rem}}
+@media (max-width:600px){.service-manager-item{align-items:flex-start;flex-direction:column}.service-manager-item button{width:100%}}
 
 .home-page .banner .banner-title{
   position:absolute;

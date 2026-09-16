@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { supabase } from '../services/supabase'
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const { session, logout } = useAuth()
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    if (!session?.user.id) return
+    supabase.from('profiles').select('role').eq('id', session.user.id).single().then(({ data }) => setIsAdmin(data?.role === 'ADMIN'))
+  }, [session?.user.id])
 
   async function handleLogout() {
     await logout()
@@ -32,6 +39,7 @@ export default function Dashboard() {
           <Link className="resident-menu-link" to="/reclamacoes">Reclamações <span aria-hidden="true">→</span></Link>
           <Link className="resident-menu-link" to="/transparencia">Portal da Transparência <span aria-hidden="true">→</span></Link>
           <Link className="resident-menu-link" to="/anunciar-imovel">Anunciar Imóvel <span aria-hidden="true">→</span></Link>
+          {isAdmin && <Link className="resident-menu-link" to="/anunciar-servicos">Anunciar Serviços <span aria-hidden="true">→</span></Link>}
         </section>
       </main>
       <Footer />

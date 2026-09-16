@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Reclamacoes from './pages/Reclamacoes'
 import PortalTransparencia from './pages/PortalTransparencia'
 import AnunciarImovel from './pages/AnunciarImovel'
+import AnunciarServicos from './pages/AnunciarServicos'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './hooks/useAuth'
 
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/reclamacoes" element={<ProtectedRoute><Reclamacoes /></ProtectedRoute>} />
           <Route path="/transparencia" element={<ProtectedRoute><PortalTransparencia /></ProtectedRoute>} />
           <Route path="/anunciar-imovel" element={<ProtectedRoute><AnunciarImovel /></ProtectedRoute>} />
+          <Route path="/anunciar-servicos" element={<ProtectedRoute><AnunciarServicos /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
