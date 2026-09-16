@@ -30,10 +30,10 @@ export default function Home() {
 
         <section id="sobre" className="home-values-section">
           <div className="container home-values">
-            <div className="home-values-intro"><span className="section-label">Condomínio Sol e Mar</span><h2>Viver bem é aqui.</h2><p>Um endereço pensado para oferecer qualidade de vida, integração com a natureza e um ambiente seguro e acolhedor para toda a família.</p></div>
+            <div className="home-values-intro"><span className="section-label">Condomínio Sol e Mar</span><h2>Qualidade de vida</h2><p>Um endereço pensado para oferecer qualidade de vida, integração com a natureza e um ambiente seguro e acolhedor para toda a família.</p></div>
             <div className="home-value"><span>◌</span><strong>Segurança</strong><small>Tranquilidade para sua família</small></div>
             <div className="home-value"><span>≈</span><strong>Praia por perto</strong><small>Mais tempo para aproveitar Natal</small></div>
-            <div className="home-value"><span>♧</span><strong>Comunidade</strong><small>Um ambiente familiar e acolhedor</small></div>
+            <div className="home-value"><span>☺</span><strong>Comunidade</strong><small>Um ambiente familiar e acolhedor</small></div>
             <div className="home-value"><span>✧</span><strong>Praticidade</strong><small>Shopping, escolas e clínicas próximas</small></div>
           </div>
         </section>

@@ -289,14 +289,19 @@ form button:disabled{opacity:0.65;cursor:wait}
 }
 .facts-grid strong{color:#e7c887}
 .home-page .home-values-section{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%)}
-.home-page .home-values{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%);border-color:rgba(255,255,255,0.16);box-shadow:0 16px 38px rgba(18,59,80,0.18)}
-.home-page .home-values-intro .section-label{color:#e7c887}
+.home-page .home-values{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%);border:0;box-shadow:0 16px 38px rgba(18,59,80,0.18)}
+.home-page .home-values-intro .section-label{color:#e7c887;font-size:0.68rem}
 .home-page .home-values-intro h2,.home-page .home-value strong{color:#fff}
+.home-page .home-values-intro h2{font-size:1.7rem;line-height:1.1;margin:0.2rem 0 0.9rem}
 .home-page .home-values-intro p,.home-page .home-value small{color:#f6f1e7}
+.home-page .home-values-intro p{font-size:0.95rem;line-height:1.5}
+.home-page .home-value small{font-size:0.88rem;line-height:1.45}
 .home-page .home-value{border-left-color:rgba(255,255,255,0.22)}
 .home-page .home-value span{color:#e7c887}
 @media (max-width:780px){.home-page .home-value{border-top-color:rgba(255,255,255,0.22)}}
+@media (max-width:480px){.home-page .home-values-intro h2{font-size:1.55rem}.home-page .home-values-intro p{font-size:0.92rem}.home-page .home-value small{font-size:0.84rem}.home-page #history .section-card>p{font-size:1rem}}
 .home-page #history,.home-page #imoveis{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%)}
+.home-page #history .section-card>p{font-size:1.08rem;line-height:1.7}
 .home-page #imoveis> .container>h2{color:#fff}
 .home-page #gallery{background:linear-gradient(105deg,#174d68 0%,#236f8f 55%,#3a8da5 100%)}
 .home-page #gallery h2{color:#fff}
