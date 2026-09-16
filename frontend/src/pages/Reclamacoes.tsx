@@ -8,6 +8,7 @@ import Footer from '../components/Footer'
 export default function Reclamacoes() {
   const [nome, setNome] = useState('')
   const [apartamento, setApartamento] = useState('')
+  const [bloco, setBloco] = useState('')
   const [assunto, setAssunto] = useState('')
   const [descricao, setDescricao] = useState('')
   const [data, setData] = useState('')
@@ -30,6 +31,7 @@ export default function Reclamacoes() {
         user_id: session.user.id,
         nome,
         apartamento,
+        bloco,
         assunto,
         descricao,
         data: data || undefined
@@ -40,6 +42,7 @@ export default function Reclamacoes() {
       setSuccess('Reclamação enviada com sucesso')
       setNome('')
       setApartamento('')
+      setBloco('')
       setAssunto('')
       setDescricao('')
       setData('')
@@ -61,23 +64,31 @@ export default function Reclamacoes() {
         <section className="reclamacoes-card">
           <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="complaint-name">Nome</label>
+          <label htmlFor="complaint-name">Nome <span className="required-mark" aria-hidden="true">*</span></label>
           <input id="complaint-name" value={nome} onChange={e => setNome(e.target.value)} autoComplete="name" required />
         </div>
         <div>
-          <label htmlFor="complaint-apartment">Apartamento</label>
+          <label htmlFor="complaint-apartment">Apartamento <span className="required-mark" aria-hidden="true">*</span></label>
           <input id="complaint-apartment" value={apartamento} onChange={e => setApartamento(e.target.value)} required />
         </div>
         <div>
-          <label htmlFor="complaint-subject">Assunto</label>
+          <label htmlFor="complaint-block">Bloco <span className="required-mark" aria-hidden="true">*</span></label>
+          <select id="complaint-block" value={bloco} onChange={e => setBloco(e.target.value)} required>
+            <option value="" disabled>Selecione o bloco</option>
+            <option value="Bloco A">Bloco A</option>
+            <option value="Bloco B">Bloco B</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="complaint-subject">Assunto <span className="required-mark" aria-hidden="true">*</span></label>
           <input id="complaint-subject" value={assunto} onChange={e => setAssunto(e.target.value)} required />
         </div>
         <div>
-          <label htmlFor="complaint-description">Descrição</label>
+          <label htmlFor="complaint-description">Descrição <span className="required-mark" aria-hidden="true">*</span></label>
           <textarea id="complaint-description" value={descricao} onChange={e => setDescricao(e.target.value)} rows={6} required />
         </div>
         <div>
-          <label htmlFor="complaint-date">Data</label>
+          <label htmlFor="complaint-date">Data <span className="required-mark" aria-hidden="true">*</span></label>
           <input id="complaint-date" type="date" value={data} onChange={e => setData(e.target.value)} required />
         </div>
         {success && <div className="success">{success}</div>}
