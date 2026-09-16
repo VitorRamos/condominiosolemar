@@ -316,6 +316,9 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page #gallery .source-link{color:#e7c887}
 .home-page #contacts{background:#fffdf9}
 .facts-grid span{color:#f6f1e7}
+.home-page .facts-grid div{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%);border-color:rgba(255,255,255,0.18);box-shadow:0 5px 18px rgba(3,65,96,0.2)}
+.home-page .facts-grid strong{color:#facc15}
+.home-page .facts-grid span{color:#f8fdff}
 .home-page #contacts{background:#f6f1e7}
 .home-page .contact-card{display:block;max-width:760px}
 .home-page .contact-card>div{padding:2rem 2.2rem;background:#fff;border:0;border-top:4px solid #facc15;border-radius:18px;box-shadow:0 16px 36px rgba(18,59,80,0.1)}
