@@ -1,20 +1,9 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import galeria1 from '../../../Images/galeria1.webp'
-import galeria2 from '../../../Images/galeria2.webp'
-import galeria4 from '../../../Images/galeria4.webp'
-import galeria5 from '../../../Images/galeria5.webp'
 
 const googleMapsPlaceUrl = 'https://www.google.com/maps/search/?api=1&query=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN'
 const googleMapsEmbedUrl = 'https://www.google.com/maps?q=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN&output=embed'
-
-const galleryImages = [
-  { src: galeria5, alt: 'Área de convivência' },
-  { src: galeria1, alt: 'Área externa do condomínio' },
-  { src: galeria2, alt: 'Espaço interno do condomínio' },
-  { src: galeria4, alt: 'Detalhe do ambiente residencial' }
-]
 
 export default function Home() {
   return (
@@ -55,19 +44,6 @@ export default function Home() {
               <div><strong>Avaliação pública</strong><span>5,0 no Google · 8 avaliações</span></div>
             </div>
             <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Ver localização e fotos no Google Maps →</a>
-          </div>
-        </section>
-
-        <section id="gallery" className="section">
-          <div className="container">
-            <h2>Galeria</h2>
-            <div className="gallery-grid">
-              {galleryImages.map((image, index) => (
-                <div key={image.src} className={`gallery-card gallery-photo${index % 2 === 1 ? ' gallery-photo-secondary' : ''}`}>
-                  <img src={image.src} alt={image.alt} />
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
