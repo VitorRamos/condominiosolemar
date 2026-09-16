@@ -87,6 +87,7 @@ export default function AnunciarServicos() {
             <input id="service-phone" value={form.phone} onChange={event => setForm({ ...form, phone: event.target.value })} placeholder="(84) 99999-0000" required />
             <button type="submit" disabled={ads.length >= 6}>Publicar anúncio</button>
           </form>
+          {ads.length >= 6 && <div className="service-limit-warning" role="status">Você já possui 6 anúncios. Exclua um anúncio para adicionar mais.</div>}
           {error && <div className="error" role="alert">{error}</div>}
           {success && <div className="success" role="status">{success}</div>}
           <div className="service-manager-list">{ads.map(ad => <article className="service-manager-item" key={ad.id}><div><strong>{ad.name}</strong><span>{ad.description}</span><small>{ad.phone}</small></div><button type="button" onClick={() => handleDelete(ad.id)}>Excluir</button></article>)}</div>
