@@ -96,11 +96,6 @@ export default function Home() {
                 <p>Referência pública encontrada na região: apartamento de 72 m², com 3 quartos, 2 banheiros e 1 vaga.</p>
                 <a className="source-link" href="https://www.google.com/search?q=%22Condom%C3%ADnio+Residencial+Sol+e+Mar%22+%2272m%C2%B2%22" target="_blank" rel="noreferrer">Consultar anúncio e disponibilidade →</a>
               </div>
-              <div className="card">
-                <h3>Localização</h3>
-                <p>Capim Macio reúne praia, Shopping Seaway, Parque Ecológico, clínicas, escolas e serviços que deixam a vida mais prática.</p>
-                <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Abrir no mapa →</a>
-              </div>
             </div>
           </div>
         </section>
@@ -111,11 +106,6 @@ export default function Home() {
               <h2>Contato</h2>
                 <p>Consulte localização, fotos e avaliações no Google Maps.</p>
                 <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Abrir página pública →</a>
-            </div>
-            <div>
-              <h2>Informações</h2>
-                <p>R. Des. José Gomes da Costa, 1887</p>
-                <p>Capim Macio · Natal/RN · 59082-140</p>
             </div>
           </div>
         </section>
