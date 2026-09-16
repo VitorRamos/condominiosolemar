@@ -15,6 +15,10 @@ type PropertyAd = {
 }
 
 const googleMapsPlaceUrl = 'https://www.google.com/maps/search/?api=1&query=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN'
+const serviceAdExamples = [
+  { title: 'Eletricista residencial', details: 'Pequenos reparos e instalações', contact: '(84) 99999-0000' },
+  { title: 'Limpeza e diarista', details: 'Serviço residencial com indicação', contact: '(84) 98888-0000' },
+]
 
 export default function Home() {
   const [propertyAds, setPropertyAds] = useState<PropertyAd[]>([])
@@ -102,12 +106,16 @@ export default function Home() {
               <h2>Prestadores de serviço</h2>
               <p>Encontre serviços indicados pela comunidade do Sol e Mar.</p>
               <div className="service-ad-list">
-                {Array.from({ length: 6 }, (_, index) => (
-                  <article className="service-ad-slot" key={index}>
-                    <strong>Espaço para anúncio</strong>
-                    <span>Seu serviço pode aparecer aqui</span>
+                {Array.from({ length: 6 }, (_, index) => {
+                  const example = serviceAdExamples[index]
+                  return (
+                  <article className={`service-ad-slot${example ? ' service-ad-slot-filled' : ''}`} key={index}>
+                    <strong>{example?.title || 'Espaço para anúncio'}</strong>
+                    <span>{example?.details || 'Seu serviço pode aparecer aqui'}</span>
+                    {example && <small>{example.contact}</small>}
                   </article>
-                ))}
+                  )
+                })}
               </div>
             </div>
             <div className="contact-form-panel">
