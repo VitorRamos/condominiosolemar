@@ -354,8 +354,8 @@ form button:disabled{opacity:0.65;cursor:wait}
 .footer-brand small{margin-top:0.7rem;color:#b8cbd4}
 .footer-links a,.footer-location a{color:#f6f1e7;font-size:0.92rem;transition:color 0.2s ease}
 .footer-links a:hover,.footer-location a:hover{color:#e7c887}
-@media (max-width:780px){.footer-grid{grid-template-columns:1fr 1fr;gap:2rem}.footer-brand{grid-column:1/-1}}
-@media (max-width:480px){.site-footer{padding:2.2rem 0 1.8rem}.footer-grid{grid-template-columns:1fr;gap:1.5rem}.footer-brand{grid-column:auto}}
+@media (max-width:780px){.footer-grid{grid-template-columns:1fr 1fr;gap:2rem}.footer-brand{grid-column:1/-1}.footer-brand,.footer-links,.footer-location{align-items:center;text-align:center}.footer-brand p,.footer-location p,.footer-links a,.footer-location a{width:100%}}
+@media (max-width:480px){.site-footer{padding:2.2rem 0 1.8rem}.site-footer .container{align-items:center;text-align:center;justify-content:center}.footer-grid{grid-template-columns:1fr;gap:1.5rem}.footer-brand{grid-column:auto}}
 @media (max-width:780px){.home-page .banner-card h1{color:#fff;text-shadow:0 2px 12px rgba(7,89,133,0.85)}.home-page .banner-card p{color:#fff;text-shadow:0 1px 8px rgba(7,89,133,0.85)}.home-page .banner-card .pill{background:#facc15;color:#173f55;border-color:#fde68a;box-shadow:0 4px 10px rgba(7,89,133,0.25)}}
 .home-page{background:#f4fbfd}
 .home-page .section h2,.home-page .location-copy h2,.home-page .card h3{color:#075985}
