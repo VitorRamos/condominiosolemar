@@ -11,9 +11,9 @@ export default function Footer() {
         </div>
         <nav className="footer-links" aria-label="Links úteis">
           <strong>Links úteis</strong>
-          <a href="/#history">Nossa história</a>
-          <a href="/#gallery">Galeria</a>
-          <a href="/#localizacao">Localização</a>
+          <a href="/transparencia">Portal da transparência</a>
+          <a href="/reclamacoes">Reclamações</a>
+          <a href="/anunciar-imovel">Anunciar imóvel</a>
         </nav>
         <div className="footer-location">
           <strong>Onde estamos</strong>
