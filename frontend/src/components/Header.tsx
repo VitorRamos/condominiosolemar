@@ -18,6 +18,8 @@ export default function Header() {
           <a href="/#history">História</a>
           <a href="/#imoveis">Imóveis</a>
           <a href="/#contacts">Contato</a>
+          <a href="/reclamacoes">Reclamações</a>
+          <a href="/transparencia">Portal da Transparência</a>
           <Link to={residentPath} className="btn">Área do Morador</Link>
         </nav>
       </div>
