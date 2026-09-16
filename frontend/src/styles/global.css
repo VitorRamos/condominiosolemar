@@ -376,13 +376,13 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .hero-text-link:hover{color:#facc15}
 @media (max-width:780px){.home-page .banner{min-height:620px;padding:6rem 0 5rem;background:linear-gradient(180deg,rgba(7,89,133,0.68) 0%,rgba(7,89,133,0.46) 58%,rgba(7,89,133,0.24) 100%),url('/solemar-banner.png') center/cover}.home-page .banner-card{width:100%;max-width:600px}.home-page .banner-card h1{font-size:clamp(2.25rem,9vw,3.5rem);line-height:1.06}.home-page .banner-card p{max-width:540px;font-size:1.06rem;line-height:1.6}.home-page .hero-actions{margin-top:1.1rem}}
 @media (max-width:480px){.home-page .banner{min-height:580px;padding:5.5rem 0 4.5rem}.home-page .banner-card h1{font-size:clamp(2.15rem,10vw,3rem)}.home-page .banner-card p{font-size:1rem;line-height:1.58}.home-page .banner-card .pill{margin-bottom:1rem}}
-.home-page .banner{background:linear-gradient(90deg,rgba(228,220,200,0.62) 0%,rgba(228,220,200,0.38) 52%,rgba(228,220,200,0.12) 100%),url('/solemar-banner.png') center/cover}
+.home-page .banner{background:linear-gradient(90deg,rgba(234,216,181,0.62) 0%,rgba(234,216,181,0.38) 52%,rgba(234,216,181,0.12) 100%),url('/solemar-banner.png') center/cover}
 .home-page .banner-card h1{color:#075985;text-shadow:0 2px 10px rgba(255,253,249,0.72)}
 .home-page .banner-card h1{color:#0284c7!important}
 .home-page .banner-card p{color:#174d68;text-shadow:0 1px 8px rgba(255,253,249,0.68)}
 .home-page .banner-card .pill{background:#facc15;color:#173f55;border-color:#fde68a;box-shadow:0 5px 14px rgba(23,81,109,0.18)}
 .home-page .hero-text-link{color:#0284c7;text-shadow:none}.home-page .hero-text-link:hover{color:#075985}
-@media (max-width:780px){.home-page .banner{background:linear-gradient(180deg,rgba(228,220,200,0.62) 0%,rgba(228,220,200,0.42) 58%,rgba(228,220,200,0.16) 100%),url('/solemar-banner.png') center/cover}.home-page .banner-card h1{color:#075985;text-shadow:0 2px 10px rgba(255,253,249,0.82)}.home-page .banner-card p{color:#174d68;text-shadow:0 1px 8px rgba(255,253,249,0.75)}}
+@media (max-width:780px){.home-page .banner{background:linear-gradient(180deg,rgba(234,216,181,0.62) 0%,rgba(234,216,181,0.42) 58%,rgba(234,216,181,0.16) 100%),url('/solemar-banner.png') center/cover}.home-page .banner-card h1{color:#075985;text-shadow:0 2px 10px rgba(255,253,249,0.82)}.home-page .banner-card p{color:#174d68;text-shadow:0 1px 8px rgba(255,253,249,0.75)}}
 .home-page .banner-card h1{font-family:"Segoe UI",Arial,sans-serif;font-weight:700;letter-spacing:0}
  .home-page .banner-card{background:#fff;padding:2.2rem 2.4rem;border:1px solid rgba(255,255,255,0.9);border-radius:20px;box-shadow:0 18px 38px rgba(3,65,96,0.16)}
  .home-page .banner-card h1{font-size:clamp(2.15rem,4.2vw,3.4rem)}
@@ -408,4 +408,9 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .banner::after{content:"";position:absolute;z-index:1;left:0;right:0;bottom:-1px;height:2.5rem;background:#0284c7;border-radius:50% 50% 0 0 / 100% 100% 0 0;pointer-events:none}
 .home-page .banner .container{position:relative;z-index:2}
 @media (max-width:780px){.home-page .banner::after{height:2rem}}
+.home-page .banner-card{background:rgba(7,89,133,0.74);border-color:rgba(255,255,255,0.22);backdrop-filter:blur(4px);box-shadow:0 18px 38px rgba(3,65,96,0.24)}
+.home-page .banner-card h1,.home-page .banner-card p{color:#fff!important}
+.home-page .banner-card{background:transparent;border:0;box-shadow:none;backdrop-filter:none;padding:0}
+.home-page .banner-card h1{color:#075985!important;text-shadow:0 2px 10px rgba(255,253,249,0.8)}
+.home-page .banner-card p{color:#174d68!important;text-shadow:0 1px 8px rgba(255,253,249,0.72)}
 .site-header .btn,.home-header .btn{box-shadow:0 4px 12px rgba(11,46,64,0.2)!important;border:0!important;font-weight:800}

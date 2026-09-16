@@ -12,11 +12,6 @@ export default function Home() {
       <main className="home-page">
         <section className="banner">
           <div className="container">
-            <div className="banner-card">
-              <h1>Um condomínio no coração de Capim Macio</h1>
-              <p>Um condomínio seguro e familiar, a poucos minutos da praia, para viver com tranquilidade, conforto e mais tempo para aproveitar Natal.</p>
-              <div className="hero-actions"><a className="hero-text-link" href="#localizacao">Conheça a localização →</a></div>
-            </div>
             <div className="hero-visual">
               <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
               <div className="hero-visual-caption">
