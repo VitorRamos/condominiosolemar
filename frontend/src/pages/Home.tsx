@@ -1,9 +1,22 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import galeria1 from '../../../Images/galeria1.webp'
+import galeria2 from '../../../Images/galeria2.webp'
+import galeria3 from '../../../Images/galeria3.webp'
+import galeria4 from '../../../Images/galeria4.webp'
+import galeria5 from '../../../Images/galeria5.webp'
 
 const googleMapsPlaceUrl = 'https://www.google.com/maps/search/?api=1&query=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN'
 const googleMapsEmbedUrl = 'https://www.google.com/maps?q=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN&output=embed'
+
+const galleryImages = [
+  { src: galeria1, alt: 'Área externa do condomínio' },
+  { src: galeria2, alt: 'Espaço interno do condomínio' },
+  { src: galeria3, alt: 'Vista do entorno do condomínio' },
+  { src: galeria4, alt: 'Detalhe do ambiente residencial' },
+  { src: galeria5, alt: 'Área de convivência' }
+]
 
 export default function Home() {
   return (
@@ -52,18 +65,12 @@ export default function Home() {
           <div className="container">
             <h2>Galeria</h2>
             <div className="gallery-grid">
-              <div className="gallery-card gallery-photo">
-                <img src="/condominio-google-1.jpg" alt="Área externa do Condomínio Residencial Sol e Mar" />
-                <span>Foto pública do condomínio</span>
-              </div>
-              <div className="gallery-card gallery-photo gallery-photo-secondary">
-                <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
-                <span>Convivência e espaços internos</span>
-              </div>
-              <div className="gallery-card">Capim Macio, Natal/RN</div>
-              <div className="gallery-card">Perto da praia e de serviços</div>
+              {galleryImages.map((image, index) => (
+                <div key={image.src} className={`gallery-card gallery-photo${index % 2 === 1 ? ' gallery-photo-secondary' : ''}`}>
+                  <img src={image.src} alt={image.alt} />
+                </div>
+              ))}
             </div>
-            <p className="section-note">Imagens locais do condomínio e do entorno. A primeira foto foi obtida na ficha pública do Google Maps. <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Ver origem e mais fotos →</a></p>
           </div>
         </section>
 
