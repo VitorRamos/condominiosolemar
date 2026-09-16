@@ -328,6 +328,12 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:480px){.site-header .brand-logo{width:5rem;height:5rem}}
 @media (max-width:480px){.site-header .container{min-height:0;padding-top:0.25rem;padding-bottom:0.25rem}.site-header{padding:0.2rem 0}}
 @media (max-width:480px){.site-header .container{padding-top:0.08rem;padding-bottom:0.08rem}.site-header{padding:0.08rem 0}}
+@media (max-width:480px){.site-header .brand-logo{width:5.7rem;height:5.7rem}.site-header nav{margin-left:2rem}}
+@media (max-width:480px){.site-header .brand{order:1}.site-header nav{order:2;margin-left:2rem;margin-right:0}}
+@media (max-width:480px){.site-header .container{justify-content:space-between}.site-header nav{margin-left:0}}
+@media (max-width:480px){.site-header{padding:0.03rem 0}.site-header .container{width:calc(100% - 1rem);padding-top:0.03rem;padding-bottom:0.03rem}}
+@media (max-width:480px){.site-header{padding:0}.site-header .container{width:100%;padding:0 0.35rem}}
+@media (max-width:480px){.site-header .brand-logo{width:4.8rem;height:4.8rem}}
 .home-page .location-copy h2{line-height:1.1}
 .home-page #sobre,.home-page #history,.home-page #gallery,.home-page #imoveis,.home-page .home-values{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%)}
 .site-footer{padding:2.8rem 0 2.2rem;border-top:4px solid #e7c887}
