@@ -104,8 +104,16 @@ export default function Home() {
           <div className="container contact-card">
             <div>
               <h2>Contato</h2>
-                <p>Consulte localização, fotos e avaliações no Google Maps.</p>
-                <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Abrir página pública →</a>
+              <p>Envie uma mensagem para saber mais sobre o Condomínio Sol e Mar.</p>
+              <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+                <label htmlFor="contact-name">Nome</label>
+                <input id="contact-name" name="name" type="text" placeholder="Seu nome" required />
+                <label htmlFor="contact-email">E-mail</label>
+                <input id="contact-email" name="email" type="email" placeholder="seuemail@exemplo.com" required />
+                <label htmlFor="contact-message">Mensagem</label>
+                <textarea id="contact-message" name="message" rows={4} placeholder="Como podemos ajudar?" required />
+                <button type="submit">Enviar mensagem</button>
+              </form>
             </div>
           </div>
         </section>
