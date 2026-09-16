@@ -79,14 +79,6 @@ export default function Home() {
               <span className="section-label">Onde estamos</span>
               <h2>Localização no Google Maps</h2>
               <p>Encontre o Condomínio Sol e Mar na Rua Desembargador José Gomes da Costa, em Capim Macio, Natal/RN.</p>
-              <div className="location-highlights" aria-label="Pontos próximos">
-                <strong>Por perto</strong>
-                <span>Praia</span>
-                <span>Shopping Seaway</span>
-                <span>Parque Ecológico</span>
-                <span>Clínicas</span>
-                <span>Escolas</span>
-              </div>
               <a className="source-link" href={googleMapsPlaceUrl} target="_blank" rel="noreferrer">Abrir no Google Maps →</a>
             </div>
             <div className="map-frame">
