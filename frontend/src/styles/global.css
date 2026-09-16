@@ -377,6 +377,11 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .hero-text-link{color:#0284c7;text-shadow:none}.home-page .hero-text-link:hover{color:#075985}
 @media (max-width:780px){.home-page .banner{background:linear-gradient(180deg,rgba(228,220,200,0.62) 0%,rgba(228,220,200,0.42) 58%,rgba(228,220,200,0.16) 100%),url('/solemar-banner.png') center/cover}.home-page .banner-card h1{color:#075985;text-shadow:0 2px 10px rgba(255,253,249,0.82)}.home-page .banner-card p{color:#174d68;text-shadow:0 1px 8px rgba(255,253,249,0.75)}}
 .home-page .banner-card h1{font-family:"Segoe UI",Arial,sans-serif;font-weight:700;letter-spacing:0}
+ .home-page .banner-card{background:#fff;padding:2.2rem 2.4rem;border:1px solid rgba(255,255,255,0.9);border-radius:20px;box-shadow:0 18px 38px rgba(3,65,96,0.16)}
+ .home-page .banner-card h1{font-size:clamp(2.15rem,4.2vw,3.4rem)}
+ .home-page .banner-card p{font-size:1.05rem}
+@media (max-width:780px){.home-page .banner-card{padding:1.6rem 1.4rem;border-radius:16px}.home-page .banner-card h1,.home-page .banner-card p{ text-shadow:none}}
+@media (max-width:780px){.home-page .banner-card h1{font-size:clamp(2rem,8vw,3rem)}.home-page .banner-card p{font-size:1rem}}
 @media (min-width:781px){.site-header .brand-logo{width:3.6rem;height:3.6rem}}
 @media (max-width:780px){.site-header .container{width:calc(100% - 1rem);justify-content:space-between}.site-header nav{margin-left:0}}
 @media (max-width:780px){.site-header nav .btn{padding:0.58rem 0.86rem;font-size:0.86rem}}
