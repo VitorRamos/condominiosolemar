@@ -26,6 +26,7 @@ export default function Dashboard() {
       <main className="dashboard-shell container">
         <div className="dashboard-header">
           <div>
+            <Link className="dashboard-back-link" to="/">← Voltar para a página inicial</Link>
             <span className="dashboard-kicker">Área do morador</span>
             <h1>Bem-vindo à sua área</h1>
             <p>{session?.user.email}</p>
