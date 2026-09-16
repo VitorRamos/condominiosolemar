@@ -51,7 +51,7 @@ export default function Home() {
 
         <section id="sobre" className="home-values-section">
           <div className="container home-values">
-            <div className="home-value"><span>◌︎</span><strong>Segurança</strong><small>Portaria presencial 24 horas</small></div>
+            <div className="home-value"><span><svg className="category-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10" width="14" height="11" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /><path d="M12 14v3" /></svg></span><strong>Segurança</strong><small>Portaria presencial 24 horas</small></div>
             <div className="home-value"><span>≈︎</span><strong>Praia por perto</strong><small>Mais tempo para aproveitar Natal</small></div>
             <div className="home-value"><span>☺︎</span><strong>Comunidade</strong><small>Um ambiente familiar e acolhedor</small></div>
             <div className="home-value"><span>✧︎</span><strong>Praticidade</strong><small>Shopping, escolas e clínicas próximas</small></div>
