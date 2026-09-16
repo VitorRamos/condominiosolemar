@@ -386,7 +386,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .section-label{color:#0e7490}
 .home-page .source-link{color:#0284c7}
 .home-page .source-link:hover{color:#facc15}
-.home-page #localizacao,.home-page #contacts{background:#ead8b5;background-image:none}
+.home-page #localizacao,.home-page #contacts{background:#EFE2C3;background-image:none}
 .home-page .gallery-card{background:linear-gradient(135deg,#dff7ff,#fff8d6);border-color:rgba(2,132,199,0.2);color:#075985}
 .home-page .card,.home-page .section-card{border-color:rgba(2,132,199,0.16)}
 .home-page .banner{min-height:680px;padding:7rem 0 6rem;background:linear-gradient(90deg,rgba(7,89,133,0.76) 0%,rgba(7,89,133,0.42) 52%,rgba(7,89,133,0.12) 100%),url('/solemar-banner.png') center/cover}
