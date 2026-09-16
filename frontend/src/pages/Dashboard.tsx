@@ -38,8 +38,10 @@ export default function Dashboard() {
           <h2>O que você deseja fazer?</h2>
           <Link className="resident-menu-link" to="/reclamacoes">Reclamações <span aria-hidden="true">→</span></Link>
           <Link className="resident-menu-link" to="/transparencia">Portal da Transparência <span aria-hidden="true">→</span></Link>
-          <Link className="resident-menu-link" to="/anunciar-imovel">Anunciar Imóvel <span aria-hidden="true">→</span></Link>
-          {isAdmin && <Link className="resident-menu-link" to="/anunciar-servicos">Anunciar Serviços <span aria-hidden="true">→</span></Link>}
+          {isAdmin && <>
+            <Link className="resident-menu-link" to="/anunciar-imovel">Anunciar Imóvel <span aria-hidden="true">→</span></Link>
+            <Link className="resident-menu-link" to="/anunciar-servicos">Anunciar Serviços <span aria-hidden="true">→</span></Link>
+          </>}
         </section>
       </main>
       <Footer />
