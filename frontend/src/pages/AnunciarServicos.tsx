@@ -7,6 +7,14 @@ import { supabase } from '../services/supabase'
 
 type ServiceAd = { id: number; name: string; phone: string; description: string }
 
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length <= 2) return digits.replace(/^(.{0,2})/, '($1')
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+}
+
 export default function AnunciarServicos() {
   const navigate = useNavigate()
   const { session, logout } = useAuth()
@@ -84,7 +92,7 @@ export default function AnunciarServicos() {
             <label htmlFor="service-description">Descrição <span className="required-mark" aria-hidden="true">*</span></label>
             <textarea id="service-description" value={form.description} onChange={event => setForm({ ...form, description: event.target.value })} placeholder="Descreva o serviço" rows={3} required />
             <label htmlFor="service-phone">Telefone <span className="required-mark" aria-hidden="true">*</span></label>
-            <input id="service-phone" value={form.phone} onChange={event => setForm({ ...form, phone: event.target.value })} placeholder="(84) 99999-0000" required />
+            <input id="service-phone" type="tel" inputMode="numeric" maxLength={15} value={form.phone} onChange={event => setForm({ ...form, phone: formatPhone(event.target.value) })} placeholder="(84) 99999-0000" required />
             <button type="submit" disabled={ads.length >= 6}>Publicar anúncio</button>
           </form>
           {ads.length >= 6 && <div className="service-limit-warning" role="status">Você já possui 6 anúncios. Exclua um anúncio para adicionar mais.</div>}
