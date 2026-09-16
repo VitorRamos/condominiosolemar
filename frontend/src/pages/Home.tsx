@@ -13,7 +13,6 @@ export default function Home() {
         <section className="banner">
           <div className="container">
             <div className="banner-card">
-              <span className="pill">Capim Macio · Natal/RN</span>
               <h1>Um condomínio no coração de Capim Macio</h1>
               <p>Um condomínio seguro e familiar, a poucos minutos da praia, para viver com tranquilidade, conforto e mais tempo para aproveitar Natal.</p>
               <div className="hero-actions"><a className="btn" href="#localizacao">Conheça a localização</a></div>
