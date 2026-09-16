@@ -97,7 +97,20 @@ export default function Home() {
 
         <section id="contacts" className="section">
           <div className="container contact-card">
-            <div>
+            <div className="service-classifieds">
+              <span className="section-label">Classificados do condomínio</span>
+              <h2>Prestadores de serviço</h2>
+              <p>Encontre serviços indicados pela comunidade do Sol e Mar.</p>
+              <div className="service-ad-list">
+                {Array.from({ length: 6 }, (_, index) => (
+                  <article className="service-ad-slot" key={index}>
+                    <strong>Espaço para anúncio</strong>
+                    <span>Seu serviço pode aparecer aqui</span>
+                  </article>
+                ))}
+              </div>
+            </div>
+            <div className="contact-form-panel">
               <h2>Contato</h2>
               <p>Envie uma mensagem para saber mais sobre o Condomínio Sol e Mar.</p>
               <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
