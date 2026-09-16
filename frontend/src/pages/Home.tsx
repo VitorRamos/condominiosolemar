@@ -1,11 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { supabase } from '../services/supabase'
+
+type PropertyAd = {
+  id: number
+  type: 'Venda' | 'Aluguel'
+  title: string
+  location: string
+  price: string
+  description: string
+  contact: string
+  photos: string[]
+}
 
 const googleMapsPlaceUrl = 'https://www.google.com/maps/search/?api=1&query=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN'
 const googleMapsEmbedUrl = 'https://www.google.com/maps?q=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN&output=embed'
 
 export default function Home() {
+  const [propertyAds, setPropertyAds] = useState<PropertyAd[]>([])
+  const [propertyAdsLoading, setPropertyAdsLoading] = useState(true)
+
+  useEffect(() => {
+    supabase
+      .from('property_ads')
+      .select('id, type, title, location, price, description, contact, photos')
+      .eq('published', true)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        setPropertyAds((data as PropertyAd[]) || [])
+        setPropertyAdsLoading(false)
+      })
+  }, [])
+
   return (
     <div className="site-root">
       <Header />
@@ -64,12 +91,21 @@ export default function Home() {
         <section id="imoveis" className="section">
           <div className="container">
             <h2>Imóveis em destaque</h2>
-            <div className="info-grid">
-              <div className="card">
-                <h3>Apartamento anunciado</h3>
-                <p>Referência pública encontrada na região: apartamento de 72 m², com 3 quartos, 2 banheiros e 1 vaga.</p>
-                <a className="source-link" href="https://www.google.com/search?q=%22Condom%C3%ADnio+Residencial+Sol+e+Mar%22+%2272m%C2%B2%22" target="_blank" rel="noreferrer">Consultar anúncio e disponibilidade →</a>
-              </div>
+            <div className="property-list-grid">
+              {propertyAds.map(ad => (
+                <article className="property-ad-card" key={ad.id}>
+                  {ad.photos[0] && <img src={ad.photos[0]} alt={`Foto de ${ad.title}`} />}
+                  <div>
+                    <span className="card-tag">{ad.type}</span>
+                    <h3>{ad.title}</h3>
+                    <p>{ad.location}</p>
+                    <p>{ad.description}</p>
+                    <strong>{ad.price}</strong>
+                    <small>{ad.contact}</small>
+                  </div>
+                </article>
+              ))}
+              {!propertyAdsLoading && propertyAds.length === 0 && <div className="dashboard-empty"><strong>Nenhum imóvel anunciado no momento.</strong><span>Os anúncios publicados pelos moradores aparecerão aqui.</span></div>}
             </div>
           </div>
         </section>

@@ -324,17 +324,18 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .home-values-section{margin-top:0;border-radius:0}
 .home-page #history,.home-page #gallery,.home-page #imoveis{margin-top:0}
 .home-page #contacts{background:#f6f1e7}
-.home-page .contact-card{display:block;max-width:760px}
-.home-page .contact-card>div{padding:2rem 2.2rem;background:#fff;border:0;border-top:4px solid #facc15;border-radius:18px;box-shadow:0 16px 36px rgba(18,59,80,0.1)}
+.home-page .contact-card{display:block;max-width:620px;margin-left:max(1rem,calc((100% - 1120px) / 2));margin-right:0}
+.home-page .contact-card>div{padding:1.5rem 1.6rem;background:#fff;border:0;border-top:4px solid #facc15;border-radius:18px;box-shadow:0 16px 36px rgba(18,59,80,0.1)}
 .home-page .contact-card h2{margin-top:0;color:#174d68}
 .home-page .contact-card>div>p{margin-bottom:1.4rem;color:#607684}
-.home-page .contact-form{max-width:none;gap:0.55rem}
-.home-page .contact-form label{color:#174d68;font-size:0.85rem}
-.home-page .contact-form input,.home-page .contact-form textarea{background:#fff;border-color:rgba(23,81,109,0.18);border-radius:10px;padding:0.72rem 0.85rem}
+.home-page .contact-form{width:100%;max-width:520px;margin:0;gap:0.55rem;align-items:stretch}
+.home-page .contact-form label{width:100%;color:#174d68;font-size:0.85rem;text-align:left}
+.home-page .contact-form input,.home-page .contact-form textarea{width:100%;background:#fff;border-color:rgba(23,81,109,0.18);border-radius:10px;padding:0.72rem 0.85rem}
 .home-page .contact-form input:focus,.home-page .contact-form textarea:focus{outline:2px solid rgba(58,141,165,0.25);border-color:#3a8da5}
 .home-page .contact-form textarea{resize:vertical;min-height:110px}
-.home-page .contact-form button{margin-top:0.45rem;background:#facc15;color:#173f55;border:1px solid #fde68a;border-radius:999px;padding:0.72rem 1rem;box-shadow:0 5px 12px rgba(11,46,64,0.2)}
+.home-page .contact-form button{width:100%;margin-top:0.45rem;background:#facc15;color:#173f55;border:1px solid #fde68a;border-radius:999px;padding:0.72rem 1rem;box-shadow:0 5px 12px rgba(11,46,64,0.2)}
 .home-page .contact-form button:hover{background:#fde047}
+@media (max-width:780px){.home-page .contact-card{margin-left:auto;margin-right:auto}}
 @media (max-width:480px){.site-header .brand-logo{width:5rem;height:5rem}}
 @media (max-width:480px){.site-header .container{min-height:0;padding-top:0.25rem;padding-bottom:0.25rem}.site-header{padding:0.2rem 0}}
 @media (max-width:480px){.site-header .container{padding-top:0.08rem;padding-bottom:0.08rem}.site-header{padding:0.08rem 0}}
