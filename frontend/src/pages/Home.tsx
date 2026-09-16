@@ -51,10 +51,10 @@ export default function Home() {
 
         <section id="sobre" className="home-values-section">
           <div className="container home-values">
-            <div className="home-value"><span>◌</span><strong>Segurança</strong><small>Portaria presencial 24 horas</small></div>
-            <div className="home-value"><span>≈</span><strong>Praia por perto</strong><small>Mais tempo para aproveitar Natal</small></div>
-            <div className="home-value"><span>☺</span><strong>Comunidade</strong><small>Um ambiente familiar e acolhedor</small></div>
-            <div className="home-value"><span>✧</span><strong>Praticidade</strong><small>Shopping, escolas e clínicas próximas</small></div>
+            <div className="home-value"><span>◌︎</span><strong>Segurança</strong><small>Portaria presencial 24 horas</small></div>
+            <div className="home-value"><span>≈︎</span><strong>Praia por perto</strong><small>Mais tempo para aproveitar Natal</small></div>
+            <div className="home-value"><span>☺︎</span><strong>Comunidade</strong><small>Um ambiente familiar e acolhedor</small></div>
+            <div className="home-value"><span>✧︎</span><strong>Praticidade</strong><small>Shopping, escolas e clínicas próximas</small></div>
           </div>
         </section>
 
