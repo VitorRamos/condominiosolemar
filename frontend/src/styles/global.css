@@ -321,6 +321,10 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .contact-form textarea{resize:vertical;min-height:110px}
 .home-page .contact-form button{margin-top:0.45rem;background:#e7c887;color:#173f55;border:1px solid #f1dca8;border-radius:999px;padding:0.72rem 1rem;box-shadow:0 5px 12px rgba(11,46,64,0.16)}
 .home-page .contact-form button:hover{background:#f1dca8}
+.home-page .location-copy h2{line-height:1.1}
+.home-page .location-highlights{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:1.1rem 0 0.35rem}
+.home-page .location-highlights strong{width:100%;color:#174d68;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.08em}
+.home-page .location-highlights span{padding:0.35rem 0.6rem;background:rgba(255,255,255,0.72);border:1px solid rgba(23,81,109,0.14);border-radius:999px;color:#174d68;font-size:0.85rem;font-weight:700}
 .site-footer{padding:2.8rem 0 2.2rem;border-top:4px solid #e7c887}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:2.5rem;align-items:start}
 .footer-brand,.footer-links,.footer-location{display:flex;flex-direction:column;align-items:flex-start;gap:0.45rem}
