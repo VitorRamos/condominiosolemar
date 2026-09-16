@@ -321,3 +321,13 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .contact-form textarea{resize:vertical;min-height:110px}
 .home-page .contact-form button{margin-top:0.45rem;background:#e7c887;color:#173f55;border:1px solid #f1dca8;border-radius:999px;padding:0.72rem 1rem;box-shadow:0 5px 12px rgba(11,46,64,0.16)}
 .home-page .contact-form button:hover{background:#f1dca8}
+.site-footer{padding:2.8rem 0 2.2rem;border-top:4px solid #e7c887}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:2.5rem;align-items:start}
+.footer-brand,.footer-links,.footer-location{display:flex;flex-direction:column;align-items:flex-start;gap:0.45rem}
+.footer-brand strong,.footer-links strong,.footer-location strong{color:#e7c887;font-size:1.05rem}
+.footer-brand p,.footer-location p{margin:0;color:#dce7ee;font-size:0.92rem;line-height:1.5}
+.footer-brand small{margin-top:0.7rem;color:#b8cbd4}
+.footer-links a,.footer-location a{color:#f6f1e7;font-size:0.92rem;transition:color 0.2s ease}
+.footer-links a:hover,.footer-location a:hover{color:#e7c887}
+@media (max-width:780px){.footer-grid{grid-template-columns:1fr 1fr;gap:2rem}.footer-brand{grid-column:1/-1}}
+@media (max-width:480px){.site-footer{padding:2.2rem 0 1.8rem}.footer-grid{grid-template-columns:1fr;gap:1.5rem}.footer-brand{grid-column:auto}}
