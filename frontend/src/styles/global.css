@@ -326,6 +326,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 .home-page .location-highlights{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:1.1rem 0 0.35rem}
 .home-page .location-highlights strong{width:100%;color:#174d68;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.08em}
 .home-page .location-highlights span{padding:0.35rem 0.6rem;background:rgba(255,255,255,0.72);border:1px solid rgba(23,81,109,0.14);border-radius:999px;color:#174d68;font-size:0.85rem;font-weight:700}
+.home-page #sobre,.home-page #history,.home-page #gallery,.home-page #imoveis,.home-page .home-values{background:linear-gradient(105deg,#075985 0%,#0284c7 55%,#06b6d4 100%)}
 .site-footer{padding:2.8rem 0 2.2rem;border-top:4px solid #e7c887}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:2.5rem;align-items:start}
 .footer-brand,.footer-links,.footer-location{display:flex;flex-direction:column;align-items:flex-start;gap:0.45rem}
