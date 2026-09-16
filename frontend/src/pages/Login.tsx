@@ -69,6 +69,7 @@ export default function Login() {
                 <svg className="password-eye" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path d="M2.5 12s3.4-5 9.5-5 9.5 5 9.5 5-3.4 5-9.5 5-9.5-5-9.5-5Z" />
                   <circle cx="12" cy="12" r="2.5" />
+                  {showPassword && <path d="m4 4 16 16" />}
                 </svg>
               </button>
             </div>
