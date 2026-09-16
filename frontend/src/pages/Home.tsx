@@ -49,8 +49,7 @@ export default function Home() {
           <div className="container section-card">
               <span className="section-label">Nossa história</span><h2>Um endereço para chamar de lar</h2>
             <p>
-              O Condomínio Residencial Sol e Mar está localizado no bairro Capim Macio, em Natal, no Rio Grande do Norte.
-              Um endereço residencial para famílias que valorizam segurança, sossego e praticidade. O condomínio fica perto da praia, do Shopping Seaway, do Parque Ecológico, de clínicas e escolas.
+              O Condomínio Residencial Sol e Mar está localizado no bairro Capim Macio, em Natal, no Rio Grande do Norte. Um endereço residencial para famílias que valorizam segurança, sossego e praticidade. O condomínio fica perto da Praia de Ponta Negra, do Shopping Seaway, do Parque Ecológico, de clínicas e escolas.
             </p>
             <div className="facts-grid">
               <div><strong>Endereço</strong><span>R. Des. José Gomes da Costa, 1887</span></div>
