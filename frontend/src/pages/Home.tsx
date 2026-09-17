@@ -22,6 +22,12 @@ export default function Home() {
   const [contactStatus, setContactStatus] = useState('')
 
   useEffect(() => {
+    if (!window.location.hash) return
+    const sectionId = window.location.hash.slice(1)
+    window.requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }, [])
+
+  useEffect(() => {
     supabase
       .from('property_ads')
       .select('id, type, title, location, price, description, contact, photos')
