@@ -36,6 +36,7 @@ export default function FormulariosEnviados() {
   const [loading, setLoading] = useState(true)
   const [actionId, setActionId] = useState<number | null>(null)
   const [showArchived, setShowArchived] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<ComplaintItem | null>(null)
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -106,8 +107,6 @@ export default function FormulariosEnviados() {
   }
 
   async function deleteComplaint(id: number) {
-    if (!window.confirm('Excluir esta mensagem permanentemente?')) return
-
     setActionId(id)
     setError('')
     const { error: deleteError } = await supabase.from('reclamacoes').delete().eq('id', id)
@@ -117,6 +116,7 @@ export default function FormulariosEnviados() {
       setComplaints(current => current.filter(complaint => complaint.id !== id))
     }
     setActionId(null)
+    setPendingDelete(null)
   }
 
   async function handleLogout() {
@@ -215,7 +215,7 @@ export default function FormulariosEnviados() {
                     <button type="button" className="complaint-action complaint-archive" onClick={() => archiveComplaint(complaint.id)} disabled={actionId === complaint.id}>
                       {showArchived ? 'Restaurar' : 'Arquivar'}
                     </button>
-                    <button type="button" className="complaint-action complaint-delete" onClick={() => deleteComplaint(complaint.id)} disabled={actionId === complaint.id}>
+                    <button type="button" className="complaint-action complaint-delete" onClick={() => setPendingDelete(complaint)} disabled={actionId === complaint.id}>
                       Excluir
                     </button>
                   </div>
@@ -226,6 +226,21 @@ export default function FormulariosEnviados() {
         </section>
       </main>
       <Footer />
+      {pendingDelete && (
+        <div className="delete-dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setPendingDelete(null) }}>
+          <section className="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete-dialog-title" aria-describedby="delete-dialog-description">
+            <div className="delete-dialog-icon" aria-hidden="true">!</div>
+            <h2 id="delete-dialog-title">Excluir mensagem?</h2>
+            <p id="delete-dialog-description">Tem certeza que deseja excluir esta mensagem de <strong>{pendingDelete.nome}</strong>? Esta ação é permanente.</p>
+            <div className="delete-dialog-actions">
+              <button type="button" className="delete-dialog-cancel" onClick={() => setPendingDelete(null)}>Cancelar</button>
+              <button type="button" className="delete-dialog-confirm" onClick={() => deleteComplaint(pendingDelete.id)} disabled={actionId === pendingDelete.id}>
+                {actionId === pendingDelete.id ? 'Excluindo...' : 'Sim, excluir'}
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   )
 }

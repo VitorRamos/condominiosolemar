@@ -542,3 +542,9 @@ form button:disabled{opacity:0.65;cursor:wait}
     transform:translate(-50%, -50%);
   }
 }
+
+.delete-dialog-backdrop{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:1rem;background:rgba(15,23,42,0.48)}
+.delete-dialog{width:min(100%,430px);padding:1.7rem;background:#fff;border:1px solid #fee2e2;border-radius:18px;box-shadow:0 24px 70px rgba(15,23,42,0.25);text-align:center}
+.delete-dialog-icon{display:grid;place-items:center;width:2.8rem;height:2.8rem;margin:0 auto 0.9rem;border-radius:50%;background:#fff1f2;color:#dc2626;font-size:1.4rem;font-weight:900}
+.delete-dialog h2{margin:0;color:var(--deep);font-size:1.35rem}.delete-dialog p{margin:0.7rem 0 1.35rem;color:#607684;line-height:1.55}.delete-dialog p strong{color:var(--deep)}
+.delete-dialog-actions{display:flex;justify-content:center;gap:0.65rem}.delete-dialog-actions button{width:auto;padding:0.65rem 1rem;border-radius:9px;font:inherit;font-weight:800;cursor:pointer}.delete-dialog-cancel{border:1px solid var(--border);background:#fff;color:var(--deep)}.delete-dialog-cancel:hover{background:#f8fcff}.delete-dialog-confirm{border:1px solid #dc2626;background:#dc2626;color:#fff}.delete-dialog-confirm:hover{background:#b91c1c;border-color:#b91c1c}.delete-dialog-confirm:disabled{cursor:wait;opacity:0.65}
