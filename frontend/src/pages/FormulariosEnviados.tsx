@@ -13,6 +13,7 @@ type ComplaintItem = {
   assunto: string
   descricao: string
   data: string
+  lido: boolean
   arquivado: boolean
   user_id?: string
   created_at?: string
@@ -34,6 +35,7 @@ export default function FormulariosEnviados() {
   const [complaints, setComplaints] = useState<ComplaintItem[]>([])
   const [loading, setLoading] = useState(true)
   const [actionId, setActionId] = useState<number | null>(null)
+  const [showArchived, setShowArchived] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -62,8 +64,7 @@ export default function FormulariosEnviados() {
   async function loadComplaints() {
     const { data, error: fetchError } = await supabase
       .from('reclamacoes')
-      .select('id, nome, apartamento, bloco, assunto, descricao, data, arquivado, created_at, user_id')
-      .eq('arquivado', false)
+      .select('id, nome, apartamento, bloco, assunto, descricao, data, lido, arquivado, created_at, user_id')
       .order('created_at', { ascending: false })
 
     if (fetchError) {
@@ -79,11 +80,27 @@ export default function FormulariosEnviados() {
   async function archiveComplaint(id: number) {
     setActionId(id)
     setError('')
-    const { error: archiveError } = await supabase.from('reclamacoes').update({ arquivado: true }).eq('id', id)
+    const complaint = complaints.find(item => item.id === id)
+    const { error: archiveError } = await supabase.from('reclamacoes').update({ arquivado: !complaint?.arquivado }).eq('id', id)
     if (archiveError) {
       setError(archiveError.message)
     } else {
-      setComplaints(current => current.filter(complaint => complaint.id !== id))
+      setComplaints(current => current.map(item => item.id === id ? { ...item, arquivado: !item.arquivado } : item))
+    }
+    setActionId(null)
+  }
+
+  async function toggleRead(id: number) {
+    const complaint = complaints.find(item => item.id === id)
+    if (!complaint) return
+
+    setActionId(id)
+    setError('')
+    const { error: readError } = await supabase.from('reclamacoes').update({ lido: !complaint.lido }).eq('id', id)
+    if (readError) {
+      setError(readError.message)
+    } else {
+      setComplaints(current => current.map(item => item.id === id ? { ...item, lido: !item.lido } : item))
     }
     setActionId(null)
   }
@@ -106,6 +123,10 @@ export default function FormulariosEnviados() {
     await logout()
     navigate('/login')
   }
+
+  const visibleComplaints = complaints.filter(complaint => complaint.arquivado === showArchived)
+  const activeCount = complaints.filter(complaint => !complaint.arquivado).length
+  const archivedCount = complaints.filter(complaint => complaint.arquivado).length
 
   if (!isAdmin) {
     return (
@@ -144,20 +165,37 @@ export default function FormulariosEnviados() {
                 <span>Reclamações e mensagens dos moradores</span>
               </div>
             </div>
-            <span className="inbox-count">{complaints.length} {complaints.length === 1 ? 'mensagem' : 'mensagens'}</span>
+            <span className="inbox-count">{visibleComplaints.length} {visibleComplaints.length === 1 ? 'mensagem' : 'mensagens'}</span>
+          </div>
+
+          <div className="inbox-tabs" role="tablist" aria-label="Pastas de mensagens">
+            <button type="button" className={!showArchived ? 'is-active' : ''} onClick={() => setShowArchived(false)} role="tab" aria-selected={!showArchived}>
+              Recebidas <span>{activeCount}</span>
+            </button>
+            <button type="button" className={showArchived ? 'is-active' : ''} onClick={() => setShowArchived(true)} role="tab" aria-selected={showArchived}>
+              Arquivadas <span>{archivedCount}</span>
+            </button>
           </div>
 
           {loading && <p>Carregando formulários...</p>}
           {error && <div className="error" role="alert">{error}</div>}
 
-          {!loading && complaints.length === 0 && (
-            <div className="empty-state">Nenhuma reclamação foi enviada até o momento.</div>
+          {!loading && visibleComplaints.length === 0 && (
+            <div className="empty-state">{showArchived ? 'Nenhuma mensagem arquivada.' : 'Nenhuma reclamação foi enviada até o momento.'}</div>
           )}
 
-          {!loading && complaints.length > 0 && (
+          {!loading && visibleComplaints.length > 0 && (
             <div className="complaint-admin-list">
-              {complaints.map((complaint) => (
-                <article key={complaint.id} className="complaint-admin-item">
+              {visibleComplaints.map((complaint) => (
+                <article key={complaint.id} className={`complaint-admin-item ${complaint.lido ? 'is-read' : 'is-unread'}`}>
+                  <div className="complaint-subject-row">
+                    <div className="complaint-subject-info">
+                      <strong>{complaint.assunto}</strong>
+                      <span className="complaint-subject-separator" aria-hidden="true">•</span>
+                      <span>Mensagem recebida</span>
+                    </div>
+                    <span>{complaint.lido ? 'Lida' : 'Não lida'}</span>
+                  </div>
                   <div className="complaint-admin-header">
                     <div className="complaint-sender">
                       <div>
@@ -168,16 +206,14 @@ export default function FormulariosEnviados() {
                     <small className="complaint-date">{formatComplaintDate(complaint.data)}</small>
                   </div>
 
-                  <div className="complaint-admin-meta">
-                    <strong>{complaint.assunto}</strong>
-                    <span>Mensagem recebida</span>
-                  </div>
-
                   <p className="complaint-message">{complaint.descricao}</p>
 
                   <div className="complaint-actions">
+                    <button type="button" className="complaint-action complaint-read" onClick={() => toggleRead(complaint.id)} disabled={actionId === complaint.id}>
+                      {complaint.lido ? 'Marcar como não lida' : 'Marcar como lida'}
+                    </button>
                     <button type="button" className="complaint-action complaint-archive" onClick={() => archiveComplaint(complaint.id)} disabled={actionId === complaint.id}>
-                      {actionId === complaint.id ? 'Aguarde...' : 'Arquivar'}
+                      {showArchived ? 'Restaurar' : 'Arquivar'}
                     </button>
                     <button type="button" className="complaint-action complaint-delete" onClick={() => deleteComplaint(complaint.id)} disabled={actionId === complaint.id}>
                       Excluir
