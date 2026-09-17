@@ -106,7 +106,18 @@ export default function FormulariosEnviados() {
           <button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button>
         </div>
 
-        <section className="complaint-admin-panel">
+        <section className="complaint-admin-panel" aria-label="Caixa de entrada de formulários">
+          <div className="inbox-toolbar">
+            <div className="inbox-title">
+              <span className="inbox-icon" aria-hidden="true">✉</span>
+              <div>
+                <strong>Caixa de entrada</strong>
+                <span>Reclamações e mensagens dos moradores</span>
+              </div>
+            </div>
+            <span className="inbox-count">{complaints.length} {complaints.length === 1 ? 'mensagem' : 'mensagens'}</span>
+          </div>
+
           {loading && <p>Carregando formulários...</p>}
           {error && <div className="error" role="alert">{error}</div>}
 
@@ -119,18 +130,22 @@ export default function FormulariosEnviados() {
               {complaints.map((complaint) => (
                 <article key={complaint.id} className="complaint-admin-item">
                   <div className="complaint-admin-header">
-                    <div>
+                    <div className="complaint-sender">
+                      <span className="sender-avatar" aria-hidden="true">{complaint.nome.trim().charAt(0).toUpperCase()}</span>
+                      <div>
                       <strong>{complaint.nome}</strong>
-                      <span>{complaint.apartamento} • {complaint.bloco}</span>
+                        <span>Apartamento {complaint.apartamento} • {complaint.bloco || 'Bloco não informado'}</span>
+                      </div>
                     </div>
-                    <small>{formatComplaintDate(complaint.data)}</small>
+                    <small className="complaint-date">{formatComplaintDate(complaint.data)}</small>
                   </div>
 
                   <div className="complaint-admin-meta">
-                    <span>Assunto: {complaint.assunto}</span>
+                    <strong>{complaint.assunto}</strong>
+                    <span>Mensagem recebida</span>
                   </div>
 
-                  <p>{complaint.descricao}</p>
+                  <p className="complaint-message">{complaint.descricao}</p>
                 </article>
               ))}
             </div>
