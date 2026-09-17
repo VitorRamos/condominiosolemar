@@ -5,23 +5,6 @@ import { supabase } from '../services/supabase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-function currentDateValue() {
-  const today = new Date()
-  const month = String(today.getMonth() + 1).padStart(2, '0')
-  const day = String(today.getDate()).padStart(2, '0')
-  return `${today.getFullYear()}-${month}-${day}`
-}
-
-function formatDateForDisplay(value: string) {
-  const [year, month, day] = value.split('-')
-  return year && month && day ? `${day}/${month}/${year}` : value
-}
-
-function normalizeDateValue(value: string) {
-  const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)
-  return match ? `${match[3]}-${match[2]}-${match[1]}` : ''
-}
-
 function formatWhatsapp(value: string) {
   const digits = value.replace(/\D/g, '').slice(0, 11)
   if (digits.length <= 2) return digits
@@ -38,8 +21,6 @@ export default function Reclamacoes() {
   const [descricao, setDescricao] = useState('')
   const [responderPara, setResponderPara] = useState('')
   const [responderContato, setResponderContato] = useState('')
-  const [data, setData] = useState(currentDateValue)
-  const [dataDisplay, setDataDisplay] = useState(() => formatDateForDisplay(currentDateValue()))
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
   const { session } = useAuth()
@@ -55,12 +36,6 @@ export default function Reclamacoes() {
     }
 
     try {
-      const normalizedDate = normalizeDateValue(dataDisplay)
-      if (!normalizedDate) {
-        setError('Informe a date no formato dd/mm/aaaa.')
-        return
-      }
-
       if (responderPara === 'WhatsApp' && ![10, 11].includes(responderContato.replace(/\D/g, '').length)) {
         setError('Informe um número de WhatsApp válido com DDD.')
         return
@@ -73,8 +48,7 @@ export default function Reclamacoes() {
         assunto,
         descricao,
         responder_para: responderPara,
-        responder_contato: responderContato,
-        data: normalizedDate
+        responder_contato: responderContato
       }
 
       const { error: insertError } = await supabase.from('reclamacoes').insert({
@@ -99,8 +73,6 @@ export default function Reclamacoes() {
       setDescricao('')
       setResponderPara('')
       setResponderContato('')
-      setData(currentDateValue())
-      setDataDisplay(formatDateForDisplay(currentDateValue()))
     } catch (err: any) {
       setError(err?.message || 'Erro ao enviar')
     }
@@ -178,10 +150,6 @@ export default function Reclamacoes() {
             />
           </div>
         )}
-        <div>
-          <label htmlFor="complaint-date">Data <span className="required-mark" aria-hidden="true">*</span></label>
-          <input id="complaint-date" type="text" inputMode="numeric" value={dataDisplay} onChange={e => { setDataDisplay(e.target.value); setData(normalizeDateValue(e.target.value)) }} placeholder="dd/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" maxLength={10} required />
-        </div>
         {success && <div className="success">{success}</div>}
         {error && <div className="error">{error}</div>}
         <button className="complaint-submit" type="submit">Enviar reclamação</button>
