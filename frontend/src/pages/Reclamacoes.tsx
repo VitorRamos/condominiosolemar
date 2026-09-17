@@ -135,7 +135,7 @@ export default function Reclamacoes() {
         {responderPara && (
           <div>
             <label htmlFor="complaint-reply-contact">
-              {responderPara === 'WhatsApp' ? 'Número do WhatsApp' : 'E-mail para resposta'} <span className="required-mark" aria-hidden="true">*</span>
+              {responderPara === 'WhatsApp' ? 'Número do WhatsApp' : 'Endereço de e-mail'} <span className="required-mark" aria-hidden="true">*</span>
             </label>
             <input
               id="complaint-reply-contact"
