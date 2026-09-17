@@ -131,7 +131,6 @@ export default function FormulariosEnviados() {
                 <article key={complaint.id} className="complaint-admin-item">
                   <div className="complaint-admin-header">
                     <div className="complaint-sender">
-                      <span className="sender-avatar" aria-hidden="true">{complaint.nome.trim().charAt(0).toUpperCase()}</span>
                       <div>
                       <strong>{complaint.nome}</strong>
                         <span>Apartamento {complaint.apartamento} • {complaint.bloco || 'Bloco não informado'}</span>
