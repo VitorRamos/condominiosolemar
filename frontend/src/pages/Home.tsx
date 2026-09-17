@@ -19,6 +19,7 @@ export default function Home() {
   const [propertyAds, setPropertyAds] = useState<PropertyAd[]>([])
   const [propertyAdsLoading, setPropertyAdsLoading] = useState(true)
   const [serviceAds, setServiceAds] = useState<{ id: number; name: string; phone: string; description: string }[]>([])
+  const [contactStatus, setContactStatus] = useState('')
 
   useEffect(() => {
     supabase
@@ -32,6 +33,24 @@ export default function Home() {
       })
     supabase.from('service_ads').select('id, name, phone, description').eq('published', true).order('created_at', { ascending: false }).limit(6).then(({ data }) => setServiceAds(data || []))
   }, [])
+
+  async function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setContactStatus('')
+    const form = event.currentTarget
+    const values = new FormData(form)
+    const { error } = await supabase.from('contact_messages').insert({
+      nome: values.get('name'),
+      email: values.get('email'),
+      mensagem: values.get('message')
+    })
+    if (error) {
+      setContactStatus('Não foi possível enviar sua mensagem. Tente novamente.')
+      return
+    }
+    form.reset()
+    setContactStatus('Mensagem enviada com sucesso.')
+  }
 
   return (
     <div className="site-root">
@@ -118,7 +137,7 @@ export default function Home() {
             <div className="contact-form-panel">
               <h2>Contato</h2>
               <p>Envie uma mensagem para anunciar seu serviço ou imóvel.</p>
-              <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+              <form className="contact-form" onSubmit={handleContactSubmit}>
                 <label htmlFor="contact-name">Nome <span className="required-mark" aria-hidden="true">*</span></label>
                 <input id="contact-name" name="name" type="text" placeholder="Seu nome" required />
                 <label htmlFor="contact-email">E-mail <span className="required-mark" aria-hidden="true">*</span></label>
@@ -126,6 +145,7 @@ export default function Home() {
                 <label htmlFor="contact-message">Mensagem <span className="required-mark" aria-hidden="true">*</span></label>
                 <textarea id="contact-message" name="message" rows={4} placeholder="Como podemos ajudar?" required />
                 <button type="submit">Enviar mensagem</button>
+                {contactStatus && <div className="contact-form-status" role="status">{contactStatus}</div>}
               </form>
             </div>
           </div>

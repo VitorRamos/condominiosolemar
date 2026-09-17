@@ -6,14 +6,16 @@ import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
 
 type ComplaintItem = {
+  kind: 'reclamacao' | 'contato'
   id: number
   nome: string
-  apartamento: string
-  bloco: string
-  assunto: string
+  email?: string
+  apartamento?: string
+  bloco?: string
+  assunto?: string
   descricao: string
-  responder_para: string
-  responder_contato: string
+  responder_para?: string
+  responder_contato?: string
   data: string
   lido: boolean
   arquivado: boolean
@@ -65,26 +67,45 @@ export default function FormulariosEnviados() {
   }, [session?.user.id])
 
   async function loadComplaints() {
-    const { data, error: fetchError } = await supabase
-      .from('reclamacoes')
-      .select('id, nome, apartamento, bloco, assunto, descricao, responder_para, responder_contato, data, lido, arquivado, created_at, user_id')
-      .order('created_at', { ascending: false })
+    const [complaintsResult, contactsResult] = await Promise.all([
+      supabase.from('reclamacoes').select('id, nome, apartamento, bloco, assunto, descricao, responder_para, responder_contato, data, lido, arquivado, created_at, user_id').order('created_at', { ascending: false }),
+      supabase.from('contact_messages').select('id, nome, email, mensagem, lido, arquivado, created_at').order('created_at', { ascending: false })
+    ])
 
-    if (fetchError) {
-      setError(fetchError.message)
+    if (complaintsResult.error) {
+      setError(complaintsResult.error.message)
       setLoading(false)
       return
     }
 
-    setComplaints((data as ComplaintItem[]) || [])
+    if (contactsResult.error) {
+      setError(contactsResult.error.message)
+      setLoading(false)
+      return
+    }
+
+    const complaints = ((complaintsResult.data || []) as Omit<ComplaintItem, 'kind'>[]).map(item => ({ ...item, kind: 'reclamacao' as const }))
+    const contacts = (contactsResult.data || []).map(item => ({
+      kind: 'contato' as const,
+      id: item.id,
+      nome: item.nome,
+      email: item.email,
+      descricao: item.mensagem,
+      lido: item.lido,
+      arquivado: item.arquivado,
+      created_at: item.created_at,
+      data: item.created_at?.slice(0, 10) || ''
+    }))
+    setComplaints([...complaints, ...contacts].sort((left, right) => (right.created_at || '').localeCompare(left.created_at || '')))
     setLoading(false)
   }
 
-  async function archiveComplaint(id: number) {
+  async function archiveComplaint(complaint: ComplaintItem) {
+    const { id } = complaint
     setActionId(id)
     setError('')
-    const complaint = complaints.find(item => item.id === id)
-    const { error: archiveError } = await supabase.from('reclamacoes').update({ arquivado: !complaint?.arquivado }).eq('id', id)
+    const table = complaint.kind === 'contato' ? 'contact_messages' : 'reclamacoes'
+    const { error: archiveError } = await supabase.from(table).update({ arquivado: !complaint.arquivado }).eq('id', id)
     if (archiveError) {
       setError(archiveError.message)
     } else {
@@ -93,13 +114,13 @@ export default function FormulariosEnviados() {
     setActionId(null)
   }
 
-  async function toggleRead(id: number) {
-    const complaint = complaints.find(item => item.id === id)
-    if (!complaint) return
+  async function toggleRead(complaint: ComplaintItem) {
+    const { id } = complaint
 
     setActionId(id)
     setError('')
-    const { error: readError } = await supabase.from('reclamacoes').update({ lido: !complaint.lido }).eq('id', id)
+    const table = complaint.kind === 'contato' ? 'contact_messages' : 'reclamacoes'
+    const { error: readError } = await supabase.from(table).update({ lido: !complaint.lido }).eq('id', id)
     if (readError) {
       setError(readError.message)
     } else {
@@ -108,10 +129,12 @@ export default function FormulariosEnviados() {
     setActionId(null)
   }
 
-  async function deleteComplaint(id: number) {
+  async function deleteComplaint(complaint: ComplaintItem) {
+    const { id } = complaint
     setActionId(id)
     setError('')
-    const { error: deleteError } = await supabase.from('reclamacoes').delete().eq('id', id)
+    const table = complaint.kind === 'contato' ? 'contact_messages' : 'reclamacoes'
+    const { error: deleteError } = await supabase.from(table).delete().eq('id', id)
     if (deleteError) {
       setError(deleteError.message)
     } else {
@@ -193,10 +216,10 @@ export default function FormulariosEnviados() {
           {!loading && visibleComplaints.length > 0 && (
             <div className="complaint-admin-list">
               {visibleComplaints.map((complaint) => (
-                <article key={complaint.id} className={`complaint-admin-item ${complaint.lido ? 'is-read' : 'is-unread'}`}>
+                <article key={`${complaint.kind}-${complaint.id}`} className={`complaint-admin-item ${complaint.lido ? 'is-read' : 'is-unread'}`}>
                   <div className="complaint-subject-row">
                     <div className="complaint-subject-info">
-                      <strong>{complaint.assunto}</strong>
+                      <strong>{complaint.assunto || 'Mensagem de contato'}</strong>
                       <span className="complaint-subject-separator" aria-hidden="true">•</span>
                       <span>Mensagem recebida</span>
                     </div>
@@ -205,8 +228,8 @@ export default function FormulariosEnviados() {
                   <div className="complaint-admin-header">
                     <div className="complaint-sender">
                       <div>
-                      <strong>{complaint.nome}</strong>
-                        <span>Apartamento {complaint.apartamento} • {complaint.bloco || 'Bloco não informado'}</span>
+                        <strong>{complaint.nome}</strong>
+                        {complaint.kind === 'contato' ? <span>{complaint.email}</span> : <span>Apartamento {complaint.apartamento} • {complaint.bloco || 'Bloco não informado'}</span>}
                       </div>
                     </div>
                     <small className="complaint-date">{formatComplaintDate(complaint.data)}</small>
@@ -214,17 +237,17 @@ export default function FormulariosEnviados() {
 
                   <p className="complaint-message">{complaint.descricao}</p>
 
-                  <div className="complaint-reply-contact">
+                  {complaint.kind === 'reclamacao' && <div className="complaint-reply-contact">
                     <strong>Responder para:</strong>
                     <span>{complaint.responder_para || 'Não informado'}</span>
                     {complaint.responder_contato && <span>{complaint.responder_contato}</span>}
-                  </div>
+                  </div>}
 
                   <div className="complaint-actions">
-                    <button type="button" className="complaint-action complaint-read" onClick={() => toggleRead(complaint.id)} disabled={actionId === complaint.id}>
+                    <button type="button" className="complaint-action complaint-read" onClick={() => toggleRead(complaint)} disabled={actionId === complaint.id}>
                       {complaint.lido ? 'Marcar como não lida' : 'Marcar como lida'}
                     </button>
-                    <button type="button" className="complaint-action complaint-archive" onClick={() => archiveComplaint(complaint.id)} disabled={actionId === complaint.id}>
+                    <button type="button" className="complaint-action complaint-archive" onClick={() => archiveComplaint(complaint)} disabled={actionId === complaint.id}>
                       {showArchived ? 'Restaurar' : 'Arquivar'}
                     </button>
                     <button type="button" className="complaint-action complaint-delete" onClick={() => setPendingDelete(complaint)} disabled={actionId === complaint.id}>
@@ -246,7 +269,7 @@ export default function FormulariosEnviados() {
             <p id="delete-dialog-description">Tem certeza que deseja excluir esta mensagem de <strong>{pendingDelete.nome}</strong>? Esta ação é permanente.</p>
             <div className="delete-dialog-actions">
               <button type="button" className="delete-dialog-cancel" onClick={() => setPendingDelete(null)}>Cancelar</button>
-              <button type="button" className="delete-dialog-confirm" onClick={() => deleteComplaint(pendingDelete.id)} disabled={actionId === pendingDelete.id}>
+              <button type="button" className="delete-dialog-confirm" onClick={() => deleteComplaint(pendingDelete)} disabled={actionId === pendingDelete.id}>
                 {actionId === pendingDelete.id ? 'Excluindo...' : 'Sim, excluir'}
               </button>
             </div>

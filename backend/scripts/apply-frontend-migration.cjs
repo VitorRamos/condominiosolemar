@@ -121,6 +121,14 @@ async function main() {
     console.log('Supabase complaint reply contact migration already applied')
   }
 
+  const contactMessagesResult = await client.query('select to_regclass($1) as table_name', ['public.contact_messages'])
+  if (!contactMessagesResult.rows[0].table_name) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260917000300_contact_messages.sql'), 'utf8'))
+    console.log('Supabase contact messages migration applied')
+  } else {
+    console.log('Supabase contact messages migration already applied')
+  }
+
   await client.query(`
     insert into public.profiles (id, name)
     select id, coalesce(raw_user_meta_data ->> 'name', email)
