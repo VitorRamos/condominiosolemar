@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { supabase } from '../services/supabase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -50,19 +49,23 @@ export default function Reclamacoes() {
         setError('Informe a data no formato dd/mm/aaaa.')
         return
       }
-      const { error: insertError } = await supabase.from('reclamacoes').insert({
-        user_id: session.user.id,
-        nome,
-        apartamento,
-        bloco,
-        assunto,
-        descricao,
-        data: normalizedDate
-      })
 
-      if (insertError) throw insertError
+      const sendingDate = formatDateForDisplay(dataDisplay)
+      const emailBody = [
+        `Nome: ${nome}`,
+        `Apartamento: ${apartamento}`,
+        `Bloco: ${bloco}`,
+        `Assunto: ${assunto}`,
+        `Data: ${sendingDate}`,
+        '',
+        'Descrição:',
+        descricao
+      ].join('\n')
 
-      setSuccess('Reclamação enviada com sucesso')
+      const mailtoLink = `mailto:enquantoeulavoalouca@gmail.com?subject=${encodeURIComponent(`Reclamação - ${assunto}`)}&body=${encodeURIComponent(emailBody)}`
+      window.location.href = mailtoLink
+
+      setSuccess('Seu e-mail foi preparado para enviar para enquantoeulavoalouca@gmail.com.')
       setNome('')
       setApartamento('')
       setBloco('')
