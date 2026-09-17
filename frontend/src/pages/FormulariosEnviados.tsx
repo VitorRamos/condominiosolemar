@@ -60,8 +60,8 @@ export default function FormulariosEnviados() {
   async function loadComplaints() {
     const { data, error: fetchError } = await supabase
       .from('reclamacoes')
-      .select('*')
-      .order('data', { ascending: false })
+      .select('id, nome, apartamento, bloco, assunto, descricao, data, created_at, user_id')
+      .order('created_at', { ascending: false })
 
     if (fetchError) {
       setError(fetchError.message)
@@ -100,7 +100,7 @@ export default function FormulariosEnviados() {
           <div>
             <Link className="dashboard-back-link" to="/dashboard">← Voltar para a Área do Morador</Link>
             <span className="dashboard-kicker">Administração</span>
-            <h1>Formulários enviados</h1>
+            <h1>Formulários Recebidos</h1>
             <p>Leitura das reclamações recebidas pelos moradores.</p>
           </div>
           <button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button>

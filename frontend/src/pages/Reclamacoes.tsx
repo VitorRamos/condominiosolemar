@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { supabase } from '../services/supabase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -46,26 +47,34 @@ export default function Reclamacoes() {
     try {
       const normalizedDate = normalizeDateValue(dataDisplay)
       if (!normalizedDate) {
-        setError('Informe a data no formato dd/mm/aaaa.')
+        setError('Informe a date no formato dd/mm/aaaa.')
         return
       }
 
-      const sendingDate = formatDateForDisplay(dataDisplay)
-      const emailBody = [
-        `Nome: ${nome}`,
-        `Apartamento: ${apartamento}`,
-        `Bloco: ${bloco}`,
-        `Assunto: ${assunto}`,
-        `Data: ${sendingDate}`,
-        '',
-        'Descrição:',
-        descricao
-      ].join('\n')
+      const payload = {
+        user_id: session.user.id,
+        nome,
+        apartamento,
+        assunto,
+        descricao,
+        data: normalizedDate
+      }
 
-      const mailtoLink = `mailto:enquantoeulavoalouca@gmail.com?subject=${encodeURIComponent(`Reclamação - ${assunto}`)}&body=${encodeURIComponent(emailBody)}`
-      window.location.href = mailtoLink
+      const { error: insertError } = await supabase.from('reclamacoes').insert({
+        ...payload,
+        ...(bloco ? { bloco } : {})
+      })
 
-      setSuccess('Seu e-mail foi preparado para enviar para enquantoeulavoalouca@gmail.com.')
+      if (insertError) {
+        if (insertError.message.includes('bloco')) {
+          const { error: retryError } = await supabase.from('reclamacoes').insert(payload)
+          if (retryError) throw retryError
+        } else {
+          throw insertError
+        }
+      }
+
+      setSuccess('Reclamação enviada com sucesso.')
       setNome('')
       setApartamento('')
       setBloco('')
