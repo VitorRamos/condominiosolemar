@@ -22,12 +22,22 @@ function normalizeDateValue(value: string) {
   return match ? `${match[3]}-${match[2]}-${match[1]}` : ''
 }
 
+function formatWhatsapp(value: string) {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length <= 2) return digits
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+}
+
 export default function Reclamacoes() {
   const [nome, setNome] = useState('')
   const [apartamento, setApartamento] = useState('')
   const [bloco, setBloco] = useState('')
   const [assunto, setAssunto] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [responderPara, setResponderPara] = useState('')
+  const [responderContato, setResponderContato] = useState('')
   const [data, setData] = useState(currentDateValue)
   const [dataDisplay, setDataDisplay] = useState(() => formatDateForDisplay(currentDateValue()))
   const [success, setSuccess] = useState('')
@@ -51,12 +61,19 @@ export default function Reclamacoes() {
         return
       }
 
+      if (responderPara === 'WhatsApp' && ![10, 11].includes(responderContato.replace(/\D/g, '').length)) {
+        setError('Informe um número de WhatsApp válido com DDD.')
+        return
+      }
+
       const payload = {
         user_id: session.user.id,
         nome,
         apartamento,
         assunto,
         descricao,
+        responder_para: responderPara,
+        responder_contato: responderContato,
         data: normalizedDate
       }
 
@@ -80,6 +97,8 @@ export default function Reclamacoes() {
       setBloco('')
       setAssunto('')
       setDescricao('')
+      setResponderPara('')
+      setResponderContato('')
       setData(currentDateValue())
       setDataDisplay(formatDateForDisplay(currentDateValue()))
     } catch (err: any) {
@@ -133,6 +152,32 @@ export default function Reclamacoes() {
           <label htmlFor="complaint-description">Descrição <span className="required-mark" aria-hidden="true">*</span></label>
           <textarea id="complaint-description" value={descricao} onChange={e => setDescricao(e.target.value)} rows={6} required />
         </div>
+        <div>
+          <label htmlFor="complaint-reply-channel">Responder para <span className="required-mark" aria-hidden="true">*</span></label>
+          <select id="complaint-reply-channel" value={responderPara} onChange={e => { setResponderPara(e.target.value); setResponderContato('') }} required>
+            <option value="" disabled>Escolha uma opção</option>
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="E-mail">E-mail</option>
+          </select>
+        </div>
+        {responderPara && (
+          <div>
+            <label htmlFor="complaint-reply-contact">
+              {responderPara === 'WhatsApp' ? 'Número do WhatsApp' : 'E-mail para resposta'} <span className="required-mark" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="complaint-reply-contact"
+              type={responderPara === 'E-mail' ? 'email' : 'tel'}
+              inputMode={responderPara === 'E-mail' ? 'email' : 'tel'}
+              value={responderContato}
+              onChange={e => setResponderContato(responderPara === 'WhatsApp' ? formatWhatsapp(e.target.value) : e.target.value)}
+              placeholder={responderPara === 'WhatsApp' ? '(84) 99999-9999' : 'seuemail@exemplo.com'}
+              autoComplete={responderPara === 'E-mail' ? 'email' : 'tel'}
+              maxLength={responderPara === 'WhatsApp' ? 15 : undefined}
+              required
+            />
+          </div>
+        )}
         <div>
           <label htmlFor="complaint-date">Data <span className="required-mark" aria-hidden="true">*</span></label>
           <input id="complaint-date" type="text" inputMode="numeric" value={dataDisplay} onChange={e => { setDataDisplay(e.target.value); setData(normalizeDateValue(e.target.value)) }} placeholder="dd/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" maxLength={10} required />

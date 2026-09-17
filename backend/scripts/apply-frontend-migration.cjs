@@ -106,6 +106,21 @@ async function main() {
     console.log('Supabase complaint archive migration already applied')
   }
 
+  const complaintReplyResult = await client.query(`
+    select exists (
+      select 1 from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'reclamacoes'
+        and column_name = 'responder_contato'
+    ) as applied
+  `)
+  if (!complaintReplyResult.rows[0].applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260917000200_add_reply_contact_to_reclamacoes.sql'), 'utf8'))
+    console.log('Supabase complaint reply contact migration applied')
+  } else {
+    console.log('Supabase complaint reply contact migration already applied')
+  }
+
   await client.query(`
     insert into public.profiles (id, name)
     select id, coalesce(raw_user_meta_data ->> 'name', email)

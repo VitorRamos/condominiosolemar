@@ -12,6 +12,8 @@ type ComplaintItem = {
   bloco: string
   assunto: string
   descricao: string
+  responder_para: string
+  responder_contato: string
   data: string
   lido: boolean
   arquivado: boolean
@@ -65,7 +67,7 @@ export default function FormulariosEnviados() {
   async function loadComplaints() {
     const { data, error: fetchError } = await supabase
       .from('reclamacoes')
-      .select('id, nome, apartamento, bloco, assunto, descricao, data, lido, arquivado, created_at, user_id')
+      .select('id, nome, apartamento, bloco, assunto, descricao, responder_para, responder_contato, data, lido, arquivado, created_at, user_id')
       .order('created_at', { ascending: false })
 
     if (fetchError) {
@@ -211,6 +213,12 @@ export default function FormulariosEnviados() {
                   </div>
 
                   <p className="complaint-message">{complaint.descricao}</p>
+
+                  <div className="complaint-reply-contact">
+                    <strong>Responder para:</strong>
+                    <span>{complaint.responder_para || 'Não informado'}</span>
+                    {complaint.responder_contato && <span>{complaint.responder_contato}</span>}
+                  </div>
 
                   <div className="complaint-actions">
                     <button type="button" className="complaint-action complaint-read" onClick={() => toggleRead(complaint.id)} disabled={actionId === complaint.id}>
