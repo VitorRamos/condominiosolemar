@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
+import { compressImage } from '../services/imageCompression'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -20,34 +21,6 @@ type PropertyAd = {
 
 const MAX_ADS = 4
 const MAX_PHOTOS = 8
-
-function compressPhoto(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const image = new Image()
-    const objectUrl = URL.createObjectURL(file)
-    image.onload = () => {
-      const maxDimension = 1280
-      const scale = Math.min(1, maxDimension / Math.max(image.width, image.height))
-      const canvas = document.createElement('canvas')
-      canvas.width = Math.max(1, Math.round(image.width * scale))
-      canvas.height = Math.max(1, Math.round(image.height * scale))
-      const context = canvas.getContext('2d')
-      if (!context) {
-        URL.revokeObjectURL(objectUrl)
-        reject(new Error('Não foi possível preparar a imagem.'))
-        return
-      }
-      context.drawImage(image, 0, 0, canvas.width, canvas.height)
-      URL.revokeObjectURL(objectUrl)
-      resolve(canvas.toDataURL('image/jpeg', 0.72))
-    }
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl)
-      reject(new Error(`Não foi possível ler a imagem ${file.name}.`))
-    }
-    image.src = objectUrl
-  })
-}
 
 export default function AnunciarImovel() {
   const navigate = useNavigate()
@@ -83,7 +56,7 @@ export default function AnunciarImovel() {
       return
     }
     try {
-      setPhotos(await Promise.all(files.map(compressPhoto)))
+      setPhotos(await Promise.all(files.map(compressImage)))
     } catch (photoError: any) {
       setError(photoError?.message || 'Não foi possível comprimir as fotos.')
       setPhotos([])
