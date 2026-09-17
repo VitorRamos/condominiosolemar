@@ -76,6 +76,21 @@ async function main() {
     console.log('Supabase user deletion migration already applied')
   }
 
+  const complaintBlockResult = await client.query(`
+    select exists (
+      select 1 from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'reclamacoes'
+        and column_name = 'bloco'
+    ) as applied
+  `)
+  if (!complaintBlockResult.rows[0].applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260916000100_add_bloco_to_reclamacoes.sql'), 'utf8'))
+    console.log('Supabase complaint block migration applied')
+  } else {
+    console.log('Supabase complaint block migration already applied')
+  }
+
   await client.query(`
     insert into public.profiles (id, name)
     select id, coalesce(raw_user_meta_data ->> 'name', email)
