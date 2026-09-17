@@ -14,6 +14,22 @@ type PropertyAd = {
   photos: string[]
 }
 
+function PropertyPhotoGallery({ ad }: { ad: PropertyAd }) {
+  const [photoIndex, setPhotoIndex] = useState(0)
+  const hasMultiplePhotos = ad.photos.length > 1
+
+  return (
+    <div className="property-photo-gallery" aria-label={`Fotos de ${ad.title}`}>
+      <img src={ad.photos[photoIndex]} alt={`Foto ${photoIndex + 1} de ${ad.title}`} />
+      {hasMultiplePhotos && <>
+        <button className="property-photo-arrow property-photo-arrow-left" type="button" onClick={() => setPhotoIndex(index => Math.max(0, index - 1))} disabled={photoIndex === 0} aria-label="Foto anterior">‹</button>
+        <button className="property-photo-arrow property-photo-arrow-right" type="button" onClick={() => setPhotoIndex(index => Math.min(ad.photos.length - 1, index + 1))} disabled={photoIndex === ad.photos.length - 1} aria-label="Próxima foto">›</button>
+        <span className="property-photo-counter" aria-live="polite">{photoIndex + 1}/{ad.photos.length}</span>
+      </>}
+    </div>
+  )
+}
+
 const googleMapsPlaceUrl = 'https://www.google.com/maps/search/?api=1&query=Condom%C3%ADnio+Residencial+Sol+e+Mar%2C+Rua+Desembargador+Jos%C3%A9+Gomes+da+Costa%2C+1887%2C+Natal%2C+RN'
 export default function Home() {
   const [propertyAds, setPropertyAds] = useState<PropertyAd[]>([])
@@ -105,7 +121,7 @@ export default function Home() {
             <div className="property-list-grid">
               {propertyAds.map(ad => (
                 <article className="property-ad-card" key={ad.id}>
-                  {ad.photos[0] && <img src={ad.photos[0]} alt={`Foto de ${ad.title}`} />}
+                  {ad.photos.length > 0 && <PropertyPhotoGallery ad={ad} />}
                   <div>
                     <span className="card-tag">{ad.type}</span>
                     <h3>{ad.title}</h3>
