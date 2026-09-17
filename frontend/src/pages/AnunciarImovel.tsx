@@ -22,6 +22,19 @@ type PropertyAd = {
 const MAX_ADS = 4
 const MAX_PHOTOS = 8
 
+function formatPrice(value: string) {
+  const digits = value.replace(/\D/g, '').replace(/^0+(?=\d)/, '')
+  return digits ? `R$ ${Number(digits).toLocaleString('pt-BR')}` : ''
+}
+
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length <= 2) return digits
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+}
+
 export default function AnunciarImovel() {
   const navigate = useNavigate()
   const { session, logout } = useAuth()
@@ -141,7 +154,7 @@ export default function AnunciarImovel() {
             <div><label htmlFor="property-title">Título do anúncio</label><input id="property-title" value={title} onChange={event => setTitle(event.target.value)} placeholder="Ex.: Apartamento de 3 quartos" required /></div>
             <div><label htmlFor="property-location">Localização</label><input id="property-location" value={location} onChange={event => setLocation(event.target.value)} required /></div>
             <div><label htmlFor="property-description">Descrição</label><textarea id="property-description" rows={6} value={description} onChange={event => setDescription(event.target.value)} placeholder="Informe quartos, metragem, vagas e outros detalhes" required /></div>
-            <div className="property-form-grid"><div><label htmlFor="property-price">Preço</label><input id="property-price" value={price} onChange={event => setPrice(event.target.value)} placeholder="Ex.: R$ 420.000" required /></div><div><label htmlFor="property-contact">Contato</label><input id="property-contact" value={contact} onChange={event => setContact(event.target.value)} placeholder="Ex.: (84) 99999-0000" required /></div></div>
+            <div className="property-form-grid"><div><label htmlFor="property-price">Preço</label><input id="property-price" inputMode="numeric" value={price} onChange={event => setPrice(formatPrice(event.target.value))} placeholder="Ex.: R$ 420.000" maxLength={18} required /></div><div><label htmlFor="property-contact">Contato</label><input id="property-contact" type="tel" inputMode="numeric" value={contact} onChange={event => setContact(formatPhone(event.target.value))} placeholder="Ex.: (84) 99999-0000" maxLength={15} required /></div></div>
             <div><label htmlFor="property-photos">Fotos do imóvel <span className="field-help">até {MAX_PHOTOS}</span></label><input id="property-photos" type="file" accept="image/*" multiple onChange={handlePhotoChange} /><span className="field-help">{photos.length} foto(s) preparada(s) para o anúncio.</span></div>
             <button type="submit" disabled={saving || loading || ads.length >= MAX_ADS}>{saving ? 'Salvando...' : ads.length >= MAX_ADS ? 'Limite atingido' : 'Publicar anúncio'}</button>
           </form>
