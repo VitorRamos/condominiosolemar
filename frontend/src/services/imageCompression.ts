@@ -2,6 +2,10 @@ const MAX_IMAGE_DIMENSION = 1280
 const JPEG_QUALITY = 0.72
 
 export function compressImage(file: File) {
+  if (!file.type.startsWith('image/')) {
+    return Promise.reject(new Error(`O arquivo ${file.name} não é uma imagem válida.`))
+  }
+
   return new Promise<string>((resolve, reject) => {
     const image = new Image()
     const objectUrl = URL.createObjectURL(file)
@@ -31,4 +35,8 @@ export function compressImage(file: File) {
 
     image.src = objectUrl
   })
+}
+
+export function compressImages(files: File[]) {
+  return Promise.all(files.map(compressImage))
 }

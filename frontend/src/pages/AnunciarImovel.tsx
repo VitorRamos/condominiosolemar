@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
-import { compressImage } from '../services/imageCompression'
+import { compressImages } from '../services/imageCompression'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -69,7 +69,7 @@ export default function AnunciarImovel() {
       return
     }
     try {
-      setPhotos(await Promise.all(files.map(compressImage)))
+      setPhotos(await compressImages(files))
     } catch (photoError: any) {
       setError(photoError?.message || 'Não foi possível comprimir as fotos.')
       setPhotos([])
