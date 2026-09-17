@@ -13,6 +13,7 @@ type ComplaintItem = {
   assunto: string
   descricao: string
   data: string
+  arquivado: boolean
   user_id?: string
   created_at?: string
 }
@@ -32,6 +33,7 @@ export default function FormulariosEnviados() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [complaints, setComplaints] = useState<ComplaintItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [actionId, setActionId] = useState<number | null>(null)
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -60,7 +62,8 @@ export default function FormulariosEnviados() {
   async function loadComplaints() {
     const { data, error: fetchError } = await supabase
       .from('reclamacoes')
-      .select('id, nome, apartamento, bloco, assunto, descricao, data, created_at, user_id')
+      .select('id, nome, apartamento, bloco, assunto, descricao, data, arquivado, created_at, user_id')
+      .eq('arquivado', false)
       .order('created_at', { ascending: false })
 
     if (fetchError) {
@@ -71,6 +74,32 @@ export default function FormulariosEnviados() {
 
     setComplaints((data as ComplaintItem[]) || [])
     setLoading(false)
+  }
+
+  async function archiveComplaint(id: number) {
+    setActionId(id)
+    setError('')
+    const { error: archiveError } = await supabase.from('reclamacoes').update({ arquivado: true }).eq('id', id)
+    if (archiveError) {
+      setError(archiveError.message)
+    } else {
+      setComplaints(current => current.filter(complaint => complaint.id !== id))
+    }
+    setActionId(null)
+  }
+
+  async function deleteComplaint(id: number) {
+    if (!window.confirm('Excluir esta mensagem permanentemente?')) return
+
+    setActionId(id)
+    setError('')
+    const { error: deleteError } = await supabase.from('reclamacoes').delete().eq('id', id)
+    if (deleteError) {
+      setError(deleteError.message)
+    } else {
+      setComplaints(current => current.filter(complaint => complaint.id !== id))
+    }
+    setActionId(null)
   }
 
   async function handleLogout() {
@@ -145,6 +174,15 @@ export default function FormulariosEnviados() {
                   </div>
 
                   <p className="complaint-message">{complaint.descricao}</p>
+
+                  <div className="complaint-actions">
+                    <button type="button" className="complaint-action complaint-archive" onClick={() => archiveComplaint(complaint.id)} disabled={actionId === complaint.id}>
+                      {actionId === complaint.id ? 'Aguarde...' : 'Arquivar'}
+                    </button>
+                    <button type="button" className="complaint-action complaint-delete" onClick={() => deleteComplaint(complaint.id)} disabled={actionId === complaint.id}>
+                      Excluir
+                    </button>
+                  </div>
                 </article>
               ))}
             </div>

@@ -91,6 +91,21 @@ async function main() {
     console.log('Supabase complaint block migration already applied')
   }
 
+  const complaintArchiveResult = await client.query(`
+    select exists (
+      select 1 from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'reclamacoes'
+        and column_name = 'arquivado'
+    ) as applied
+  `)
+  if (!complaintArchiveResult.rows[0].applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260917000100_add_archived_to_reclamacoes.sql'), 'utf8'))
+    console.log('Supabase complaint archive migration applied')
+  } else {
+    console.log('Supabase complaint archive migration already applied')
+  }
+
   await client.query(`
     insert into public.profiles (id, name)
     select id, coalesce(raw_user_meta_data ->> 'name', email)
