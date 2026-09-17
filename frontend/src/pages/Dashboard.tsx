@@ -42,6 +42,7 @@ export default function Dashboard() {
           {isAdmin && <>
             <Link className="resident-menu-link" to="/anunciar-imovel">Anunciar Imóvel <span aria-hidden="true">→</span></Link>
             <Link className="resident-menu-link" to="/anunciar-servicos">Anunciar Serviços <span aria-hidden="true">→</span></Link>
+            <Link className="resident-menu-link" to="/formularios-enviados">Formulários Enviados <span aria-hidden="true">→</span></Link>
           </>}
         </section>
       </main>
