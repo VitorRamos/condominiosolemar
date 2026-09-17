@@ -181,7 +181,11 @@ export default function FormulariosEnviados() {
           {error && <div className="error" role="alert">{error}</div>}
 
           {!loading && visibleComplaints.length === 0 && (
-            <div className="empty-state">{showArchived ? 'Nenhuma mensagem arquivada.' : 'Nenhuma reclamação foi enviada até o momento.'}</div>
+            <div className="empty-state">
+              <span className="empty-state-icon" aria-hidden="true">✉</span>
+              <strong>{showArchived ? 'Nenhuma mensagem arquivada' : 'Caixa de entrada vazia'}</strong>
+              <span>{showArchived ? 'As mensagens arquivadas aparecerão aqui.' : 'Nenhuma reclamação foi enviada até o momento.'}</span>
+            </div>
           )}
 
           {!loading && visibleComplaints.length > 0 && (
