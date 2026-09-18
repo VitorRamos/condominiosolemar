@@ -166,6 +166,21 @@ async function main() {
     console.log('Supabase optional delivery carrier migration already applied')
   }
 
+  const adminOnlyPropertyAdsResult = await client.query(`
+    select exists (
+      select 1 from pg_policies
+      where schemaname = 'public'
+        and tablename = 'property_ads'
+        and policyname = 'Residents can create their own property ads'
+    ) as resident_policy_exists
+  `)
+  if (adminOnlyPropertyAdsResult.rows[0].resident_policy_exists) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000500_admin_only_property_ads.sql'), 'utf8'))
+    console.log('Supabase admin-only property ads policies applied')
+  } else {
+    console.log('Supabase admin-only property ads policies already applied')
+  }
+
   await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000200_portaria_access.sql'), 'utf8'))
   console.log('Supabase portaria access policy applied')
 

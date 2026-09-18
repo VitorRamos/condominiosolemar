@@ -38,10 +38,32 @@ export default function Home() {
   const [contactStatus, setContactStatus] = useState('')
 
   useEffect(() => {
-    if (!window.location.hash) return
-    const sectionId = window.location.hash.slice(1)
-    window.requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
-  }, [])
+    function scrollToHash() {
+      const sectionId = window.location.hash.slice(1)
+      if (!sectionId) return
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
+    if (!window.location.hash || propertyAdsLoading) return
+
+    let cancelled = false
+    const run = () => {
+      if (!cancelled) scrollToHash()
+    }
+
+    const frame = window.requestAnimationFrame(run)
+    const retry = window.setTimeout(run, 250)
+    const lateRetry = window.setTimeout(run, 800)
+    window.addEventListener('hashchange', run)
+
+    return () => {
+      cancelled = true
+      window.cancelAnimationFrame(frame)
+      window.clearTimeout(retry)
+      window.clearTimeout(lateRetry)
+      window.removeEventListener('hashchange', run)
+    }
+  }, [propertyAdsLoading, propertyAds.length, serviceAds.length])
 
   useEffect(() => {
     supabase

@@ -14,7 +14,7 @@ export default function Footer() {
           <strong>Links úteis</strong>
           <a href="/transparencia">Portal da transparência</a>
           <a href="/reclamacoes">Reclamações</a>
-          <a href="/anunciar-imovel">Anunciar imóvel</a>
+          <a href="/#imoveis">Imóveis</a>
         </nav>
         <div className="footer-brand">
           <strong>Condomínio Sol e Mar</strong>

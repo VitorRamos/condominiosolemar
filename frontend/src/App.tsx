@@ -10,6 +10,7 @@ import AnunciarServicos from './pages/AnunciarServicos'
 import FormulariosEnviados from './pages/FormulariosEnviados'
 import PortariaEncomendas from './pages/PortariaEncomendas'
 import Portaria from './pages/Portaria'
+import NotFound from './pages/NotFound'
 import { PortariaRoute, ResidentRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './hooks/useAuth'
 
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/portaria/encomendas" element={<PortariaRoute><PortariaEncomendas /></PortariaRoute>} />
           <Route path="/portaria" element={<PortariaRoute><Portaria /></PortariaRoute>} />
           <Route path="/dashboard" element={<ResidentRoute><Dashboard /></ResidentRoute>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
