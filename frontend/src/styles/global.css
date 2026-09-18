@@ -571,3 +571,4 @@ form button:disabled{opacity:0.65;cursor:wait}
 .delivery-form-grid > div:has(#delivery-notes){grid-column:1/-1}
 @media (max-width:780px){.delivery-receipt-fields{grid-template-columns:1fr;padding:1rem}}
 .portaria-shell .portaria-menu{width:100%;max-width:none}
+.delivery-list-section .delivery-list{min-height:240px;align-content:start}.delivery-list-section .dashboard-empty{min-height:190px;align-items:center;justify-content:center;text-align:center}

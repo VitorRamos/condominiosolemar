@@ -7,179 +7,40 @@ import { isPortariaEmail } from '../services/portaria'
 import { supabase } from '../services/supabase'
 
 export type DeliveryStatus = 'RECEBIDA' | 'NOTIFICADA' | 'ENTREGUE'
-
-type DeliveryRecord = {
-  id: number
-  recipient_name: string
-  apartment: string
-  block: string
-  carrier: string
-  received_by: string
-  received_at: string
-  status: DeliveryStatus
-  notes: string | null
-}
-
-type DeliveryForm = {
-  recipient_name: string
-  apartment: string
-  block: string
-  carrier: string
-  received_by: string
-  received_time: string
-  notes: string
-}
+type DeliveryRecord = { id: number; recipient_name: string; apartment: string; block: string; carrier: string; received_by: string; received_at: string; status: DeliveryStatus; notes: string | null }
+type DeliveryForm = { recipient_name: string; apartment: string; block: string; carrier: string; received_by: string; received_time: string; notes: string }
 
 const porterNames = ['Cláudio', 'José', 'Fábio', 'Leandro', 'Rafael']
-const apartmentOptions = ['101', '102', '103', '104', '201', '202', '203', '204', '301', '302', '303', '304', '401', '402', '403', '404', '501', '502', '503', '504', '601', '602', '603', '604', '701', '702', '703', '704']
+const apartments = ['101','102','103','104','201','202','203','204','301','302','303','304','401','402','403','404','501','502','503','504','601','602','603','604','701','702','703','704']
 const statusLabels: Record<DeliveryStatus, string> = { RECEBIDA: 'Recebida', NOTIFICADA: 'Morador notificado', ENTREGUE: 'Entregue' }
 
-function currentTimeValue() {
-  const now = new Date()
-  return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
-}
-
-function createEmptyForm(): DeliveryForm {
-  return { recipient_name: '', apartment: '', block: '', carrier: '', received_by: '', received_time: currentTimeValue(), notes: '' }
-}
-
-function buildReceivedAt(time: string) {
-  const now = new Date()
-  const [hours, minutes] = time.split(':').map(Number)
-  now.setHours(hours, minutes, 0, 0)
-  return now.toISOString()
-}
-
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(value))
-}
+function newForm(): DeliveryForm { const now = new Date(); return { recipient_name: '', apartment: '', block: '', carrier: '', received_by: '', received_time: `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`, notes: '' } }
+function receivedAt(time: string) { const date = new Date(); const [hours, minutes] = time.split(':').map(Number); date.setHours(hours, minutes, 0, 0); return date.toISOString() }
+function displayDate(value: string) { return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(value)) }
 
 export default function PortariaEncomendas() {
-  const navigate = useNavigate()
-  const { session, logout } = useAuth()
-  const [isPortaria, setIsPortaria] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [deliveries, setDeliveries] = useState<DeliveryRecord[]>([])
-  const [form, setForm] = useState<DeliveryForm>(createEmptyForm)
-  const [filter, setFilter] = useState<'TODAS' | DeliveryStatus>('TODAS')
-  const [search, setSearch] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
-  const [actionId, setActionId] = useState<number | null>(null)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const navigate = useNavigate(); const { session, logout } = useAuth()
+  const [isPortaria, setIsPortaria] = useState(false); const [isAdmin, setIsAdmin] = useState(false)
+  const [deliveries, setDeliveries] = useState<DeliveryRecord[]>([]); const [form, setForm] = useState<DeliveryForm>(newForm)
+  const [filter, setFilter] = useState<'TODAS' | DeliveryStatus>('TODAS'); const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(true); const [saving, setSaving] = useState(false); const [actionId, setActionId] = useState<number | null>(null)
+  const [pendingDelete, setPendingDelete] = useState<DeliveryRecord | null>(null); const [error, setError] = useState(''); const [success, setSuccess] = useState('')
 
-  useEffect(() => {
-    if (!session?.user.id) return
-    const allowed = isPortariaEmail(session.user.email)
-    setIsPortaria(allowed)
-    supabase.from('profiles').select('role').eq('id', session.user.id).single().then(({ data }) => {
-      setIsAdmin(data?.role === 'ADMIN')
-      if (allowed) loadDeliveries()
-      else setLoading(false)
-    })
-  }, [session?.user.id])
+  useEffect(() => { if (!session?.user.id) return; const allowed = isPortariaEmail(session.user.email); setIsPortaria(allowed); supabase.from('profiles').select('role').eq('id', session.user.id).single().then(({ data }) => { setIsAdmin(data?.role === 'ADMIN'); if (allowed) loadDeliveries(); else setLoading(false) }) }, [session?.user.id])
 
-  async function loadDeliveries() {
-    const { data, error: queryError } = await supabase
-      .from('package_deliveries')
-      .select('id, recipient_name, apartment, block, carrier, received_by, received_at, status, notes')
-      .order('received_at', { ascending: false })
-    if (queryError) setError(queryError.message)
-    setDeliveries((data as DeliveryRecord[]) || [])
-    setLoading(false)
-  }
+  async function loadDeliveries() { const { data, error: queryError } = await supabase.from('package_deliveries').select('id, recipient_name, apartment, block, carrier, received_by, received_at, status, notes').order('received_at', { ascending: false }); if (queryError) setError(queryError.message); setDeliveries((data as DeliveryRecord[]) || []); setLoading(false) }
 
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault()
-    setError('')
-    setSuccess('')
-    if (!session?.user.id) return
-    if (!form.received_by || !form.received_time) {
-      setError('Informe quem recebeu a encomenda e o horário de recebimento.')
-      return
-    }
+  async function handleSubmit(event: React.FormEvent) { event.preventDefault(); setError(''); setSuccess(''); if (!session?.user.id) return; if (!form.received_by || !form.received_time) { setError('Informe quem recebeu a encomenda e o horário de recebimento.'); return }; setSaving(true); const { data, error: insertError } = await supabase.from('package_deliveries').insert({ recipient_name: form.recipient_name, apartment: form.apartment, block: form.block, carrier: form.carrier, received_by: form.received_by, received_at: receivedAt(form.received_time), notes: form.notes.trim() || null, created_by: session.user.id }).select('id, recipient_name, apartment, block, carrier, received_by, received_at, status, notes').single(); if (insertError) setError(insertError.message); else { setDeliveries(current => [data as DeliveryRecord, ...current]); setForm(newForm()); setSuccess('Encomenda registrada com sucesso.') }; setSaving(false) }
 
-    setSaving(true)
-    const { data, error: insertError } = await supabase.from('package_deliveries').insert({
-      recipient_name: form.recipient_name,
-      apartment: form.apartment,
-      block: form.block,
-      carrier: form.carrier,
-      received_by: form.received_by,
-      received_at: buildReceivedAt(form.received_time),
-      notes: form.notes.trim() || null,
-      created_by: session.user.id
-    }).select('id, recipient_name, apartment, block, carrier, received_by, received_at, status, notes').single()
+  async function updateStatus(delivery: DeliveryRecord, status: DeliveryStatus) { setActionId(delivery.id); const { error: updateError } = await supabase.from('package_deliveries').update({ status }).eq('id', delivery.id); if (updateError) setError(updateError.message); else setDeliveries(current => current.map(item => item.id === delivery.id ? { ...item, status } : item)); setActionId(null) }
+  async function deleteDelivery(delivery: DeliveryRecord) { setActionId(delivery.id); setError(''); const { error: deleteError } = await supabase.from('package_deliveries').delete().eq('id', delivery.id); if (deleteError) setError(deleteError.message); else { setDeliveries(current => current.filter(item => item.id !== delivery.id)); setSuccess('Encomenda excluída com sucesso.') }; setActionId(null); setPendingDelete(null) }
+  async function handleLogout() { await logout(); navigate('/login') }
 
-    if (insertError) setError(insertError.message)
-    else {
-      setDeliveries(current => [data as DeliveryRecord, ...current])
-      setForm(createEmptyForm())
-      setSuccess('Encomenda registrada com sucesso.')
-    }
-    setSaving(false)
-  }
-
-  async function updateStatus(delivery: DeliveryRecord, status: DeliveryStatus) {
-    setActionId(delivery.id)
-    setError('')
-    const { error: updateError } = await supabase.from('package_deliveries').update({ status }).eq('id', delivery.id)
-    if (updateError) setError(updateError.message)
-    else setDeliveries(current => current.map(item => item.id === delivery.id ? { ...item, status } : item))
-    setActionId(null)
-  }
-
-  async function deleteDelivery(delivery: DeliveryRecord) {
-    if (!window.confirm(`Excluir a encomenda de ${delivery.recipient_name}?`)) return
-    setActionId(delivery.id)
-    const { error: deleteError } = await supabase.from('package_deliveries').delete().eq('id', delivery.id)
-    if (deleteError) setError(deleteError.message)
-    else setDeliveries(current => current.filter(item => item.id !== delivery.id))
-    setActionId(null)
-  }
-
-  const visibleDeliveries = useMemo(() => deliveries.filter(delivery => {
-    const matchesFilter = filter === 'TODAS' || delivery.status === filter
-    const query = search.trim().toLowerCase()
-    const matchesSearch = !query || [delivery.recipient_name, delivery.apartment, delivery.block, delivery.carrier, delivery.received_by].some(value => value.toLowerCase().includes(query))
-    return matchesFilter && matchesSearch
-  }), [deliveries, filter, search])
-
-  async function handleLogout() {
-    await logout()
-    navigate('/login')
-  }
+  const visible = useMemo(() => deliveries.filter(delivery => { const matchesFilter = filter === 'TODAS' || delivery.status === filter; const query = search.trim().toLowerCase(); const matchesSearch = !query || [delivery.recipient_name, delivery.apartment, delivery.block, delivery.carrier, delivery.received_by].some(value => value.toLowerCase().includes(query)); return matchesFilter && matchesSearch }), [deliveries, filter, search])
 
   if (!isPortaria) return <div className="site-root"><Header /><main className="dashboard-shell container"><Link className="dashboard-back-link" to="/portaria">← Voltar para a Portaria</Link><h1>Acesso restrito</h1><p>Esta área está disponível somente para usuários autorizados da portaria.</p></main><Footer /></div>
 
-  return (
-    <div className="site-root">
-      <Header />
-      <main className="delivery-page container">
-        <div className="dashboard-header"><div><Link className="dashboard-back-link" to="/portaria">← Voltar para a Portaria</Link><span className="dashboard-kicker">Portaria</span><h1>Registro de encomendas</h1><p>Registre a chegada, avise o morador e acompanhe a retirada.</p></div><button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button></div>
-        {success && <div className="success" role="status">{success}</div>}
-        {error && <div className="error" role="alert">{error}</div>}
-
-        {isAdmin && <section className="delivery-form-card">
-          <div className="section-heading"><div><span className="section-label">Nova entrada</span><h2>Registrar encomenda</h2></div></div>
-          <form onSubmit={handleSubmit}>
-            <div className="delivery-form-grid">
-              <div><label htmlFor="delivery-recipient">Destinatário</label><input id="delivery-recipient" value={form.recipient_name} onChange={event => setForm({ ...form, recipient_name: event.target.value })} required /></div>
-              <div><label htmlFor="delivery-carrier">Transportadora</label><input id="delivery-carrier" value={form.carrier} onChange={event => setForm({ ...form, carrier: event.target.value })} placeholder="Correios, iFood..." required /></div>
-              <div><label htmlFor="delivery-apartment">Apartamento</label><select id="delivery-apartment" value={form.apartment} onChange={event => setForm({ ...form, apartment: event.target.value })} required><option value="" disabled>Selecione</option>{apartmentOptions.map(value => <option key={value}>{value}</option>)}</select></div>
-              <div><label htmlFor="delivery-block">Bloco</label><select id="delivery-block" value={form.block} onChange={event => setForm({ ...form, block: event.target.value })} required><option value="" disabled>Selecione</option><option>Bloco A</option><option>Bloco B</option></select></div>
-              <div><label htmlFor="delivery-received-by">Recebido por</label><select id="delivery-received-by" value={form.received_by} onChange={event => setForm({ ...form, received_by: event.target.value })} required><option value="" disabled>Selecione o porteiro</option>{porterNames.map(name => <option key={name}>{name}</option>)}</select></div>
-              <div><label htmlFor="delivery-received-time">Horário de recebimento</label><input id="delivery-received-time" type="time" value={form.received_time} onChange={event => setForm({ ...form, received_time: event.target.value })} required /></div>
-              <div className="delivery-notes-field"><label htmlFor="delivery-notes">Observações <span className="field-help">opcional</span></label><input id="delivery-notes" value={form.notes} onChange={event => setForm({ ...form, notes: event.target.value })} /></div>
-            </div>
-            <button type="submit" disabled={saving}>{saving ? 'Registrando...' : 'Registrar encomenda'}</button>
-          </form>
-        </section>}
-
-        <section className="delivery-list-section"><div className="section-heading"><div><span className="section-label">Livro da portaria</span><h2>Encomendas registradas</h2></div><span className="section-count">{visibleDeliveries.length} de {deliveries.length}</span></div><div className="delivery-toolbar"><input aria-label="Buscar encomenda" placeholder="Buscar por morador, apartamento ou transportadora" value={search} onChange={event => setSearch(event.target.value)} /><select aria-label="Filtrar por status" value={filter} onChange={event => setFilter(event.target.value as typeof filter)}><option value="TODAS">Todos os status</option><option value="RECEBIDA">Recebidas</option><option value="NOTIFICADA">Notificadas</option><option value="ENTREGUE">Entregues</option></select></div>{loading && <div className="dashboard-loading">Carregando encomendas...</div>}{!loading && visibleDeliveries.length === 0 && <div className="dashboard-empty"><strong>Nenhuma encomenda encontrada.</strong><span>Os registros da portaria aparecerão aqui.</span></div>}<div className="delivery-list">{visibleDeliveries.map(delivery => <article className="delivery-item" key={delivery.id}><div className="delivery-item-main"><div><span className={`delivery-status delivery-status-${delivery.status.toLowerCase()}`}>{statusLabels[delivery.status]}</span><h3>{delivery.recipient_name}</h3><p>Apartamento {delivery.apartment} · {delivery.block}</p></div><time dateTime={delivery.received_at}>{formatDate(delivery.received_at)}</time></div><div className="delivery-meta"><span>{delivery.carrier}</span><span>Recebido por: {delivery.received_by}</span>{delivery.notes && <span>{delivery.notes}</span>}</div>{isAdmin && <div className="delivery-actions"><button type="button" onClick={() => updateStatus(delivery, 'RECEBIDA')} disabled={actionId === delivery.id || delivery.status === 'RECEBIDA'}>Recebida</button><button type="button" onClick={() => updateStatus(delivery, 'NOTIFICADA')} disabled={actionId === delivery.id || delivery.status === 'NOTIFICADA'}>Notificar</button><button type="button" onClick={() => updateStatus(delivery, 'ENTREGUE')} disabled={actionId === delivery.id || delivery.status === 'ENTREGUE'}>Entregue</button><button type="button" className="delivery-delete" onClick={() => deleteDelivery(delivery)} disabled={actionId === delivery.id}>Excluir</button></div>}</article>)}</div></section>
-      </main>
-      <Footer />
-    </div>
-  )
+  return <div className="site-root"><Header /><main className="delivery-page container"><div className="dashboard-header"><div><Link className="dashboard-back-link" to="/portaria">← Voltar para a Portaria</Link><span className="dashboard-kicker">Portaria</span><h1>Registro de encomendas</h1><p>Registre a chegada, avise o morador e acompanhe a retirada.</p></div><button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button></div>{success && <div className="success" role="status">{success}</div>}{error && <div className="error" role="alert">{error}</div>}
+    {isAdmin && <section className="delivery-form-card"><div className="section-heading"><div><span className="section-label">Nova entrada</span><h2>Registrar encomenda</h2></div></div><form onSubmit={handleSubmit}><div className="delivery-form-grid"><div><label>Destinatário</label><input value={form.recipient_name} onChange={e => setForm({ ...form, recipient_name: e.target.value })} required /></div><div><label>Transportadora</label><input value={form.carrier} onChange={e => setForm({ ...form, carrier: e.target.value })} placeholder="Correios, iFood..." required /></div><div><label>Apartamento</label><select value={form.apartment} onChange={e => setForm({ ...form, apartment: e.target.value })} required><option value="" disabled>Selecione</option>{apartments.map(value => <option key={value}>{value}</option>)}</select></div><div><label>Bloco</label><select value={form.block} onChange={e => setForm({ ...form, block: e.target.value })} required><option value="" disabled>Selecione</option><option>Bloco A</option><option>Bloco B</option></select></div><div><label>Recebido por</label><select value={form.received_by} onChange={e => setForm({ ...form, received_by: e.target.value })} required><option value="" disabled>Selecione o porteiro</option>{porterNames.map(name => <option key={name}>{name}</option>)}</select></div><div><label>Horário de recebimento</label><input type="time" value={form.received_time} onChange={e => setForm({ ...form, received_time: e.target.value })} required /></div><div className="delivery-notes-field"><label>Observações <span className="field-help">opcional</span></label><input value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} /></div></div><button type="submit" disabled={saving}>{saving ? 'Registrando...' : 'Registrar encomenda'}</button></form></section>}
+    <section className="delivery-list-section"><div className="section-heading"><div><span className="section-label">Livro da portaria</span><h2>Encomendas registradas</h2></div><span className="section-count">{visible.length} de {deliveries.length}</span></div><div className="delivery-toolbar"><input aria-label="Buscar encomenda" placeholder="Buscar por morador, apartamento ou transportadora" value={search} onChange={e => setSearch(e.target.value)} /><select aria-label="Filtrar por status" value={filter} onChange={e => setFilter(e.target.value as typeof filter)}><option value="TODAS">Todos os status</option><option value="RECEBIDA">Recebidas</option><option value="NOTIFICADA">Notificadas</option><option value="ENTREGUE">Entregues</option></select></div>{loading && <div className="dashboard-loading">Carregando encomendas...</div>}{!loading && visible.length === 0 && <div className="dashboard-empty"><strong>Nenhuma encomenda encontrada.</strong><span>Os registros da portaria aparecerão aqui.</span></div>}<div className="delivery-list">{visible.map(delivery => <article className="delivery-item" key={delivery.id}><div className="delivery-item-main"><div><span className={`delivery-status delivery-status-${delivery.status.toLowerCase()}`}>{statusLabels[delivery.status]}</span><h3>{delivery.recipient_name}</h3><p>Apartamento {delivery.apartment} · {delivery.block}</p></div><time dateTime={delivery.received_at}>{displayDate(delivery.received_at)}</time></div><div className="delivery-meta"><span>{delivery.carrier}</span><span>Recebido por: {delivery.received_by}</span>{delivery.notes && <span>{delivery.notes}</span>}</div>{isAdmin && <div className="delivery-actions"><button type="button" onClick={() => updateStatus(delivery, 'RECEBIDA')} disabled={actionId === delivery.id || delivery.status === 'RECEBIDA'}>Recebida</button><button type="button" onClick={() => updateStatus(delivery, 'NOTIFICADA')} disabled={actionId === delivery.id || delivery.status === 'NOTIFICADA'}>Notificar</button><button type="button" onClick={() => updateStatus(delivery, 'ENTREGUE')} disabled={actionId === delivery.id || delivery.status === 'ENTREGUE'}>Entregue</button><button type="button" className="delivery-delete" onClick={() => setPendingDelete(delivery)} disabled={actionId === delivery.id}>Excluir</button></div>}</article>)}</div></section></main><Footer />{pendingDelete && <div className="delete-dialog-backdrop" role="presentation" onMouseDown={e => { if (e.target === e.currentTarget) setPendingDelete(null) }}><section className="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delivery-delete-title"><div className="delete-dialog-icon" aria-hidden="true">!</div><h2 id="delivery-delete-title">Excluir encomenda?</h2><p>Tem certeza que deseja excluir a encomenda de <strong>{pendingDelete.recipient_name}</strong>? Esta ação é permanente.</p><div className="delete-dialog-actions"><button type="button" className="delete-dialog-cancel" onClick={() => setPendingDelete(null)}>Cancelar</button><button type="button" className="delete-dialog-confirm" onClick={() => deleteDelivery(pendingDelete)} disabled={actionId === pendingDelete.id}>{actionId === pendingDelete.id ? 'Excluindo...' : 'Sim, excluir'}</button></div></section></div>}</div>
 }
