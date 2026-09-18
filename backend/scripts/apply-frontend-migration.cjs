@@ -152,6 +152,20 @@ async function main() {
     console.log('Supabase delivery received-by migration already applied')
   }
 
+  const deliveryCarrierResult = await client.query(`
+    select is_nullable = 'YES' as applied
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'package_deliveries'
+      and column_name = 'carrier'
+  `)
+  if (!deliveryCarrierResult.rows[0]?.applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000400_optional_delivery_carrier.sql'), 'utf8'))
+    console.log('Supabase optional delivery carrier migration applied')
+  } else {
+    console.log('Supabase optional delivery carrier migration already applied')
+  }
+
   await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000200_portaria_access.sql'), 'utf8'))
   console.log('Supabase portaria access policy applied')
 
