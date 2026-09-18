@@ -91,6 +91,10 @@ function formatDate(value: string) {
     timeStyle: "short",
   }).format(new Date(value));
 }
+function currentTimeValue() {
+  const now = new Date();
+  return `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+}
 export default function PortariaEncomendas() {
   const navigate = useNavigate();
   const { session, logout } = useAuth();
@@ -392,17 +396,22 @@ export default function PortariaEncomendas() {
                     ))}
                   </select>
                 </div>
-                <div>
-                  <label>Horário de recebimento</label>
-                  <input
-                    type="time"
-                    step="60"
-                    value={form.received_time}
-                    onChange={(e) =>
-                      setForm({ ...form, received_time: e.target.value })
-                    }
-                    required
-                  />
+                <div className="delivery-time-field">
+                  <label htmlFor="delivery-received-time">Horário de recebimento</label>
+                  <div className="delivery-time-control">
+                    <input
+                      id="delivery-received-time"
+                      type="time"
+                      step="60"
+                      value={form.received_time}
+                      onChange={(e) =>
+                        setForm({ ...form, received_time: e.target.value })
+                      }
+                      required
+                    />
+                    <button className="current-time-button" type="button" onClick={() => setForm({ ...form, received_time: currentTimeValue() })}><span aria-hidden="true">◷</span> Agora</button>
+                  </div>
+                  <span className="field-help">Hora e minuto do recebimento</span>
                 </div>
                 <div className="delivery-notes-field">
                   <label>Observações</label>
