@@ -38,6 +38,8 @@ function formatPhone(value: string) {
 export default function AnunciarImovel() {
   const navigate = useNavigate()
   const { session, logout } = useAuth()
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [roleReady, setRoleReady] = useState(false)
   const [ads, setAds] = useState<PropertyAd[]>([])
   const [type, setType] = useState<AdType>('Venda')
   const [title, setTitle] = useState('')
@@ -52,13 +54,22 @@ export default function AnunciarImovel() {
   const [success, setSuccess] = useState('')
 
   useEffect(() => {
-    if (!session?.user) return
-    supabase.from('property_ads').select('id, type, title, location, price, description, contact, photos').eq('created_by', session.user.id).eq('published', true).order('created_at', { ascending: false }).then(({ data, error: queryError }) => {
-      if (queryError) setError(queryError.message)
-      setAds((data as PropertyAd[]) || [])
-      setLoading(false)
+    if (!session?.user.id) return
+    supabase.from('profiles').select('role').eq('id', session.user.id).single().then(({ data }) => {
+      const admin = data?.role === 'ADMIN'
+      setIsAdmin(admin)
+      setRoleReady(true)
+      if (!admin) {
+        setLoading(false)
+        return
+      }
+      supabase.from('property_ads').select('id, type, title, location, price, description, contact, photos').eq('created_by', session.user.id).eq('published', true).order('created_at', { ascending: false }).then(({ data: adsData, error: queryError }) => {
+        if (queryError) setError(queryError.message)
+        setAds((adsData as PropertyAd[]) || [])
+        setLoading(false)
+      })
     })
-  }, [session])
+  }, [session?.user.id])
 
   async function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files || [])
@@ -133,6 +144,14 @@ export default function AnunciarImovel() {
   async function handleLogout() {
     await logout()
     navigate('/login')
+  }
+
+  if (!roleReady) {
+    return <div className="site-root"><Header /><main className="dashboard-shell container"><p>Carregando sessão...</p></main><Footer /></div>
+  }
+
+  if (!isAdmin) {
+    return <div className="site-root"><Header /><main className="dashboard-shell container"><Link className="dashboard-back-link" to="/dashboard">← Voltar para a Área do Morador</Link><h1>Acesso restrito</h1><p>Esta área está disponível somente para administradores.</p></main><Footer /></div>
   }
 
   return (
