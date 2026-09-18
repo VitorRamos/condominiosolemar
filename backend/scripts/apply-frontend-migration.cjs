@@ -129,6 +129,14 @@ async function main() {
     console.log('Supabase contact messages migration already applied')
   }
 
+  const packageDeliveriesResult = await client.query('select to_regclass($1) as table_name', ['public.package_deliveries'])
+  if (!packageDeliveriesResult.rows[0].table_name) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000100_package_deliveries.sql'), 'utf8'))
+    console.log('Supabase package deliveries migration applied')
+  } else {
+    console.log('Supabase package deliveries migration already applied')
+  }
+
   await client.query(`
     insert into public.profiles (id, name)
     select id, coalesce(raw_user_meta_data ->> 'name', email)
