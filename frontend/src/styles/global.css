@@ -106,7 +106,7 @@ form button:disabled{opacity:0.65;cursor:wait}
 .dashboard-logout{width:auto;padding:0.65rem 1rem;border:1px solid rgba(2,105,161,0.25);border-radius:10px;background:white;color:var(--sea);font:inherit;font-weight:700;cursor:pointer}
 .dashboard-logout:hover{background:#effbfa}
 .dashboard-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-bottom:3rem}
-.delivery-receipt-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.9rem;margin-bottom:0.9rem;padding:1rem 1.35rem;background:#f2f8fa;border:1px solid #c9dce5;border-radius:14px}.delivery-receipt-fields label{display:block;margin-bottom:0.35rem;color:var(--deep);font-weight:700}.delivery-receipt-fields input,.delivery-receipt-fields select{width:100%;padding:0.78rem 0.85rem;border:1px solid var(--border);border-radius:10px;background:#fff;font:inherit}
+.portaria-shell{padding-top:3rem;padding-bottom:4rem}.portaria-shell .dashboard-header,.portaria-shell .portaria-welcome,.portaria-shell .portaria-menu{width:100%;max-width:none}.delivery-receipt-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.9rem;margin-bottom:0.9rem;padding:1rem 1.35rem;background:#f2f8fa;border:1px solid #c9dce5;border-radius:14px}.delivery-receipt-fields label{display:block;margin-bottom:0.35rem;color:var(--deep);font-weight:700}.delivery-receipt-fields input,.delivery-receipt-fields select{width:100%;padding:0.78rem 0.85rem;border:1px solid var(--border);border-radius:10px;background:#fff;font:inherit}
 .summary-card{min-height:130px;padding:1.25rem;background:white;border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 28px rgba(15,23,42,0.05)}
 .summary-primary{background:linear-gradient(135deg,#e8fbf8,#f8fffe);border-color:rgba(14,165,166,0.2)}
 .summary-card span,.summary-card small{display:block;color:#607684;font-size:0.88rem}
@@ -570,3 +570,4 @@ form button:disabled{opacity:0.65;cursor:wait}
 @media (max-width:600px){.portaria-welcome{align-items:flex-start;flex-wrap:wrap}.portaria-access-badge{width:100%;margin-left:3.6rem}.portaria-menu-link{align-items:flex-start}.portaria-menu-arrow{margin-top:0.55rem}}
 .delivery-form-grid > div:has(#delivery-notes){grid-column:1/-1}
 @media (max-width:780px){.delivery-receipt-fields{grid-template-columns:1fr;padding:1rem}}
+.portaria-shell .portaria-menu{width:100%;max-width:none}
