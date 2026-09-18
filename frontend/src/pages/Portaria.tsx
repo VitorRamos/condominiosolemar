@@ -28,13 +28,18 @@ export default function Portaria() {
           <button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button>
         </div>
         <section className="portaria-welcome" aria-label="Status do acesso">
-          <div className="portaria-welcome-mark" aria-hidden="true">⌂</div>
+          <div className="portaria-welcome-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M3.5 10.5 12 3.8l8.5 6.7" />
+              <path d="M5.5 9.5v10.2h13V9.5M9.5 19.7v-5.5h5v5.5" />
+            </svg>
+          </div>
           <div><strong>Central operacional</strong><span>O acesso da portaria está ativo para este dispositivo.</span></div>
           <span className="portaria-access-badge">Acesso autorizado</span>
         </section>
         <section className="portaria-menu" aria-label="Menu da portaria">
           <div className="portaria-menu-heading"><div><span className="section-label">Operações</span><h2>Controle do condomínio</h2></div><span className="portaria-menu-count">01</span></div>
-          <Link className="portaria-menu-link" to="/portaria/encomendas"><span className="portaria-menu-icon" aria-hidden="true">▣</span><span className="portaria-menu-copy"><strong>Registrar encomendas</strong><small>Cadastre chegadas, notifique moradores e acompanhe as retiradas.</small><em>Abrir operação</em></span><span className="portaria-menu-arrow" aria-hidden="true">→</span></Link>
+          <Link className="portaria-menu-link" to="/portaria/encomendas"><span className="portaria-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="m4 8 8-4 8 4-8 4-8-4Z" /><path d="M4 8v9l8 4 8-4V8M12 12v9M8 6l8 4" /></svg></span><span className="portaria-menu-copy"><strong>Registrar encomendas</strong><small>Cadastre chegadas, notifique moradores e acompanhe as retiradas.</small><em>Abrir operação</em></span><span className="portaria-menu-arrow" aria-hidden="true">→</span></Link>
         </section>
       </main>
       <Footer />

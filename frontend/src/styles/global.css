@@ -107,6 +107,8 @@ form button:disabled{opacity:0.65;cursor:wait}
 .dashboard-logout:hover{background:#effbfa}
 .dashboard-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-bottom:3rem}
 .portaria-shell{padding-top:3rem;padding-bottom:4rem}.portaria-shell .dashboard-header,.portaria-shell .portaria-welcome,.portaria-shell .portaria-menu{width:100%;max-width:none}.delivery-receipt-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.9rem;margin-bottom:0.9rem;padding:1rem 1.35rem;background:#f2f8fa;border:1px solid #c9dce5;border-radius:14px}.delivery-receipt-fields label{display:block;margin-bottom:0.35rem;color:var(--deep);font-weight:700}.delivery-receipt-fields input,.delivery-receipt-fields select{width:100%;padding:0.78rem 0.85rem;border:1px solid var(--border);border-radius:10px;background:#fff;font:inherit}
+.portaria-welcome-mark svg{display:block;width:1.45rem;height:1.45rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.portaria-menu-icon svg{display:block;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .summary-card{min-height:130px;padding:1.25rem;background:white;border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 28px rgba(15,23,42,0.05)}
 .summary-primary{background:linear-gradient(135deg,#e8fbf8,#f8fffe);border-color:rgba(14,165,166,0.2)}
 .summary-card span,.summary-card small{display:block;color:#607684;font-size:0.88rem}
