@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useAuth } from "../hooks/useAuth";
-import { isPortariaEmail } from "../services/portaria";
 import { supabase } from "../services/supabase";
 export type DeliveryStatus = "RECEBIDA" | "NOTIFICADA" | "ENTREGUE";
 type Delivery = {
@@ -97,8 +96,7 @@ function currentTimeValue() {
 }
 export default function PortariaEncomendas() {
   const navigate = useNavigate();
-  const { session, logout } = useAuth();
-  const [isPortaria, setIsPortaria] = useState(false);
+  const { session, logout, isPortaria } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [form, setForm] = useState<FormState>(createForm);
@@ -123,8 +121,6 @@ export default function PortariaEncomendas() {
   const pageSize = 10;
   useEffect(() => {
     if (!session?.user.id) return;
-    const allowed = isPortariaEmail(session.user.email);
-    setIsPortaria(allowed);
     supabase
       .from("profiles")
       .select("role")
@@ -132,10 +128,10 @@ export default function PortariaEncomendas() {
       .single()
       .then(({ data }) => {
         setIsAdmin(data?.role === "ADMIN");
-        if (allowed) loadDeliveries();
+        if (isPortaria) loadDeliveries();
         else setLoading(false);
       });
-  }, [session?.user.id]);
+  }, [session?.user.id, isPortaria]);
   useEffect(() => {
     setPage(1);
   }, [search, statusFilter, month, year]);

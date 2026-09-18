@@ -20,6 +20,11 @@ async function main() {
     where id = (select id from auth.users where email = $1)
     returning id, role
   `, [email])
+  await client.query(`
+    update public.profiles
+    set approved = true
+    where id = (select id from auth.users where email = $1)
+  `, [email]).catch(() => {})
 
   if (result.rowCount === 0) throw new Error(`Auth user not found or profile missing: ${email}`)
   console.log(`Promoted ${email} to ${result.rows[0].role}`)

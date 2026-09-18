@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { supabase } from '../services/supabase'
+import { CONTACT_EMAIL_MAX, CONTACT_MESSAGE_MAX, CONTACT_NAME_MAX } from '../services/limits'
 
 type PropertyAd = {
   id: number
@@ -83,11 +84,14 @@ export default function Home() {
     setContactStatus('')
     const form = event.currentTarget
     const values = new FormData(form)
-    const { error } = await supabase.from('contact_messages').insert({
-      nome: values.get('name'),
-      email: values.get('email'),
-      mensagem: values.get('message')
-    })
+    const nome = String(values.get('name') || '').trim()
+    const email = String(values.get('email') || '').trim()
+    const mensagem = String(values.get('message') || '').trim()
+    if (nome.length > CONTACT_NAME_MAX || email.length > CONTACT_EMAIL_MAX || mensagem.length > CONTACT_MESSAGE_MAX) {
+      setContactStatus('Sua mensagem é longa demais. Reduza o texto e tente novamente.')
+      return
+    }
+    const { error } = await supabase.from('contact_messages').insert({ nome, email, mensagem })
     if (error) {
       setContactStatus('Não foi possível enviar sua mensagem. Tente novamente.')
       return
@@ -183,11 +187,11 @@ export default function Home() {
               <p>Envie uma mensagem para anunciar seu serviço ou imóvel.</p>
               <form className="contact-form" onSubmit={handleContactSubmit}>
                 <label htmlFor="contact-name">Nome <span className="required-mark" aria-hidden="true">*</span></label>
-                <input id="contact-name" name="name" type="text" placeholder="Seu nome" required />
+                <input id="contact-name" name="name" type="text" placeholder="Seu nome" maxLength={CONTACT_NAME_MAX} required />
                 <label htmlFor="contact-email">E-mail <span className="required-mark" aria-hidden="true">*</span></label>
-                <input id="contact-email" name="email" type="email" placeholder="seuemail@exemplo.com" required />
+                <input id="contact-email" name="email" type="email" placeholder="seuemail@exemplo.com" maxLength={CONTACT_EMAIL_MAX} required />
                 <label htmlFor="contact-message">Mensagem <span className="required-mark" aria-hidden="true">*</span></label>
-                <textarea id="contact-message" name="message" rows={4} placeholder="Como podemos ajudar?" required />
+                <textarea id="contact-message" name="message" rows={4} placeholder="Como podemos ajudar?" maxLength={CONTACT_MESSAGE_MAX} required />
                 <button type="submit">Enviar mensagem</button>
                 {contactStatus && <div className="contact-form-status" role="status">{contactStatus}</div>}
               </form>

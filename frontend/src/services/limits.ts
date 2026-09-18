@@ -1,0 +1,7 @@
+export const CONTACT_NAME_MAX = 120
+export const CONTACT_EMAIL_MAX = 254
+export const CONTACT_MESSAGE_MAX = 2000
+
+export const COMPLAINT_NAME_MAX = 120
+export const COMPLAINT_DESCRIPTION_MAX = 4000
+export const COMPLAINT_CONTACT_MAX = 80

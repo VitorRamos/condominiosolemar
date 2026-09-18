@@ -181,8 +181,34 @@ async function main() {
     console.log('Supabase admin-only property ads policies already applied')
   }
 
-  await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000200_portaria_access.sql'), 'utf8'))
-  console.log('Supabase portaria access policy applied')
+  const portariaFunctionResult = await client.query(`
+    select exists (
+      select 1 from pg_proc
+      join pg_namespace on pg_namespace.oid = pg_proc.pronamespace
+      where pg_namespace.nspname = 'public' and pg_proc.proname = 'is_portaria_user'
+    ) as applied
+  `)
+  if (!portariaFunctionResult.rows[0].applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000200_portaria_access.sql'), 'utf8'))
+    console.log('Supabase portaria access policy applied')
+  } else {
+    console.log('Supabase portaria access policy already applied')
+  }
+
+  const securityHardeningResult = await client.query(`
+    select exists (
+      select 1 from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'profiles'
+        and column_name = 'approved'
+    ) as applied
+  `)
+  if (!securityHardeningResult.rows[0].applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260919000100_security_hardening.sql'), 'utf8'))
+    console.log('Supabase security hardening migration applied')
+  } else {
+    console.log('Supabase security hardening migration already applied')
+  }
 
   await client.query(`
     insert into public.profiles (id, name)

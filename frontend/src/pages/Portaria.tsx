@@ -3,12 +3,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useAuth } from '../hooks/useAuth'
-import { isPortariaEmail } from '../services/portaria'
 
 export default function Portaria() {
   const navigate = useNavigate()
-  const { session, logout } = useAuth()
-  const allowed = isPortariaEmail(session?.user.email)
+  const { logout, isPortaria } = useAuth()
+  const allowed = isPortaria
 
   async function handleLogout() {
     await logout()
