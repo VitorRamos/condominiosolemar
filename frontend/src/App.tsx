@@ -10,7 +10,7 @@ import AnunciarServicos from './pages/AnunciarServicos'
 import FormulariosEnviados from './pages/FormulariosEnviados'
 import PortariaEncomendas from './pages/PortariaEncomendas'
 import Portaria from './pages/Portaria'
-import ProtectedRoute from './components/ProtectedRoute'
+import { PortariaRoute, ResidentRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './hooks/useAuth'
 
 export default function App() {
@@ -20,14 +20,14 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/reclamacoes" element={<ProtectedRoute><Reclamacoes /></ProtectedRoute>} />
-          <Route path="/transparencia" element={<ProtectedRoute><PortalTransparencia /></ProtectedRoute>} />
-          <Route path="/anunciar-imovel" element={<ProtectedRoute><AnunciarImovel /></ProtectedRoute>} />
-          <Route path="/anunciar-servicos" element={<ProtectedRoute><AnunciarServicos /></ProtectedRoute>} />
-          <Route path="/formularios-enviados" element={<ProtectedRoute><FormulariosEnviados /></ProtectedRoute>} />
-          <Route path="/portaria/encomendas" element={<ProtectedRoute><PortariaEncomendas /></ProtectedRoute>} />
-          <Route path="/portaria" element={<ProtectedRoute><Portaria /></ProtectedRoute>} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/reclamacoes" element={<ResidentRoute><Reclamacoes /></ResidentRoute>} />
+          <Route path="/transparencia" element={<ResidentRoute><PortalTransparencia /></ResidentRoute>} />
+          <Route path="/anunciar-imovel" element={<ResidentRoute><AnunciarImovel /></ResidentRoute>} />
+          <Route path="/anunciar-servicos" element={<ResidentRoute><AnunciarServicos /></ResidentRoute>} />
+          <Route path="/formularios-enviados" element={<ResidentRoute><FormulariosEnviados /></ResidentRoute>} />
+          <Route path="/portaria/encomendas" element={<PortariaRoute><PortariaEncomendas /></PortariaRoute>} />
+          <Route path="/portaria" element={<PortariaRoute><Portaria /></PortariaRoute>} />
+          <Route path="/dashboard" element={<ResidentRoute><Dashboard /></ResidentRoute>} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

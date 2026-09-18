@@ -27,10 +27,14 @@ export default function Portaria() {
           <div><Link className="dashboard-back-link" to="/">← Voltar para a página inicial</Link><span className="dashboard-kicker">Portaria</span><h1>Painel da portaria</h1><p>Escolha uma operação para continuar.</p></div>
           <button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button>
         </div>
+        <section className="portaria-welcome" aria-label="Status do acesso">
+          <div className="portaria-welcome-mark" aria-hidden="true">⌂</div>
+          <div><strong>Central operacional</strong><span>O acesso da portaria está ativo para este dispositivo.</span></div>
+          <span className="portaria-access-badge">Acesso autorizado</span>
+        </section>
         <section className="portaria-menu" aria-label="Menu da portaria">
-          <span className="section-label">Operações</span>
-          <h2>Controle do condomínio</h2>
-          <Link className="portaria-menu-link" to="/portaria/encomendas"><span><strong>Registrar encomenda</strong><small>Registrar, notificar e acompanhar retiradas.</small></span><span aria-hidden="true">→</span></Link>
+          <div className="portaria-menu-heading"><div><span className="section-label">Operações</span><h2>Controle do condomínio</h2></div><span className="portaria-menu-count">01</span></div>
+          <Link className="portaria-menu-link" to="/portaria/encomendas"><span className="portaria-menu-icon" aria-hidden="true">▣</span><span className="portaria-menu-copy"><strong>Registrar encomendas</strong><small>Cadastre chegadas, notifique moradores e acompanhe as retiradas.</small><em>Abrir operação</em></span><span className="portaria-menu-arrow" aria-hidden="true">→</span></Link>
         </section>
       </main>
       <Footer />

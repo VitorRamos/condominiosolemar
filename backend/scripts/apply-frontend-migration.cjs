@@ -137,6 +137,21 @@ async function main() {
     console.log('Supabase package deliveries migration already applied')
   }
 
+  const deliveryReceivedByResult = await client.query(`
+    select exists (
+      select 1 from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'package_deliveries'
+        and column_name = 'received_by'
+    ) as applied
+  `)
+  if (!deliveryReceivedByResult.rows[0].applied) {
+    await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000300_delivery_received_by.sql'), 'utf8'))
+    console.log('Supabase delivery received-by migration applied')
+  } else {
+    console.log('Supabase delivery received-by migration already applied')
+  }
+
   await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000200_portaria_access.sql'), 'utf8'))
   console.log('Supabase portaria access policy applied')
 
