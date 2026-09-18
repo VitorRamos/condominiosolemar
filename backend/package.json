@@ -7,6 +7,7 @@
     "db:security": "node scripts/apply-security-migration.cjs",
     "db:audit-rls": "node scripts/audit-rls.cjs",
     "db:promote-admin": "node scripts/promote-admin.cjs",
+    "db:audit-portaria": "node scripts/audit-portaria-users.cjs",
     "db:delete-user": "node scripts/delete-user.cjs"
   },
   "dependencies": {

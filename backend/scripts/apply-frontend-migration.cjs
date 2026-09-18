@@ -137,6 +137,9 @@ async function main() {
     console.log('Supabase package deliveries migration already applied')
   }
 
+  await client.query(fs.readFileSync(path.join(migrationsDirectory, '20260918000200_portaria_access.sql'), 'utf8'))
+  console.log('Supabase portaria access policy applied')
+
   await client.query(`
     insert into public.profiles (id, name)
     select id, coalesce(raw_user_meta_data ->> 'name', email)

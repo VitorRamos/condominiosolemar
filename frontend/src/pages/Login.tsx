@@ -23,7 +23,9 @@ export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
   const { login, isAuthenticated, loading } = useAuth()
-  const destination = postLoginPath((location.state as { from?: string } | null)?.from)
+  const requestedPath = (location.state as { from?: string } | null)?.from
+  const destination = postLoginPath(requestedPath)
+  const isPortariaLogin = requestedPath?.startsWith('/portaria') || destination.startsWith('/portaria')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -60,8 +62,8 @@ export default function Login() {
       <Header />
       <main className="login-page container">
         <Link className="login-back-link" to="/">← Voltar para a página inicial</Link>
-        <h2>Área do Morador - Login</h2>
-        <p>Entre para acessar o painel do condomínio.</p>
+        <h2>{isPortariaLogin ? 'Área da Portaria - Login' : 'Área do Morador - Login'}</h2>
+        <p>{isPortariaLogin ? 'Entre para acessar o painel da portaria.' : 'Entre para acessar o painel do condomínio.'}</p>
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email">E-mail</label>
