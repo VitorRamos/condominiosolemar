@@ -552,6 +552,7 @@ export default function PortariaEncomendas() {
                     </button>
                     <button
                       type="button"
+                      className="delivery-complete-button"
                       onClick={() =>
                         setPendingAction({ delivery: item, status: "ENTREGUE" })
                       }
