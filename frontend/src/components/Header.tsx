@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { isPortariaEmail } from '../services/portaria'
 
 export default function Header() {
-  const { isAuthenticated, loading, session } = useAuth()
+  const { isAuthenticated, loading, isPortaria } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
-  const isPortaria = isPortariaEmail(session?.user.email)
   const residentPath = !loading && isAuthenticated ? (isPortaria ? '/portaria' : '/dashboard') : '/login'
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
+import { COMPLAINT_CONTACT_MAX, COMPLAINT_DESCRIPTION_MAX, COMPLAINT_NAME_MAX } from '../services/limits'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -36,6 +37,11 @@ export default function Reclamacoes() {
     }
 
     try {
+      if (nome.trim().length > COMPLAINT_NAME_MAX || descricao.trim().length > COMPLAINT_DESCRIPTION_MAX || responderContato.trim().length > COMPLAINT_CONTACT_MAX) {
+        setError('Alguns campos ultrapassam o tamanho máximo permitido.')
+        return
+      }
+
       if (responderPara === 'WhatsApp' && ![10, 11].includes(responderContato.replace(/\D/g, '').length)) {
         setError('Informe um número de WhatsApp válido com DDD.')
         return
@@ -92,7 +98,7 @@ export default function Reclamacoes() {
           <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="complaint-name">Nome <span className="required-mark" aria-hidden="true">*</span></label>
-          <input id="complaint-name" value={nome} onChange={e => setNome(e.target.value)} autoComplete="name" required />
+          <input id="complaint-name" value={nome} onChange={e => setNome(e.target.value)} autoComplete="name" maxLength={COMPLAINT_NAME_MAX} required />
         </div>
         <div>
           <label htmlFor="complaint-apartment">Apartamento <span className="required-mark" aria-hidden="true">*</span></label>
@@ -122,7 +128,7 @@ export default function Reclamacoes() {
         </div>
         <div>
           <label htmlFor="complaint-description">Descrição <span className="required-mark" aria-hidden="true">*</span></label>
-          <textarea id="complaint-description" value={descricao} onChange={e => setDescricao(e.target.value)} rows={6} required />
+          <textarea id="complaint-description" value={descricao} onChange={e => setDescricao(e.target.value)} rows={6} maxLength={COMPLAINT_DESCRIPTION_MAX} required />
         </div>
         <div>
           <label htmlFor="complaint-reply-channel">Responder para <span className="required-mark" aria-hidden="true">*</span></label>
@@ -145,7 +151,7 @@ export default function Reclamacoes() {
               onChange={e => setResponderContato(responderPara === 'WhatsApp' ? formatWhatsapp(e.target.value) : e.target.value)}
               placeholder={responderPara === 'WhatsApp' ? '(84) 99999-9999' : 'seuemail@exemplo.com'}
               autoComplete={responderPara === 'E-mail' ? 'email' : 'tel'}
-              maxLength={responderPara === 'WhatsApp' ? 15 : undefined}
+              maxLength={responderPara === 'WhatsApp' ? 15 : COMPLAINT_CONTACT_MAX}
               required
             />
           </div>
