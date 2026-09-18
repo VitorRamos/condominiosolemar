@@ -221,7 +221,8 @@ export default function PortariaEncomendas() {
   }
   const baseFiltered = useMemo(
     () =>
-      deliveries.filter((item) => {
+      deliveries
+        .filter((item) => {
         const date = new Date(item.received_at);
         const text = search.trim().toLowerCase();
         return (
@@ -236,7 +237,12 @@ export default function PortariaEncomendas() {
               item.received_by,
             ].some((value) => value.toLowerCase().includes(text)))
         );
-      }),
+        })
+        .sort(
+          (left, right) =>
+            new Date(right.received_at).getTime() -
+            new Date(left.received_at).getTime(),
+        ),
     [deliveries, search, month, year],
   );
   const filtered =
