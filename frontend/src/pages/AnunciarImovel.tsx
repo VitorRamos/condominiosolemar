@@ -141,7 +141,7 @@ export default function AnunciarImovel() {
       <main className="property-page container">
         <Link className="dashboard-back-link" to="/dashboard">← Voltar para a Área do Morador</Link>
         <div className="property-heading">
-          <div><span className="dashboard-kicker">Administração</span><h1>Anunciar imóvel</h1><p>Você pode manter até {MAX_ADS} anúncios ativos. As fotos são comprimidas antes do salvamento.</p></div>
+          <div><span className="dashboard-kicker">Administração</span><h1>Anunciar imóvel</h1><p>Você pode manter até {MAX_ADS} anúncios ativos.</p></div>
           <button className="dashboard-logout" type="button" onClick={handleLogout}>Sair</button>
         </div>
         <div className="property-limit"><strong>{ads.length}/{MAX_ADS} anúncios ativos</strong>{ads.length >= MAX_ADS && <span>Exclua um anúncio para cadastrar outro imóvel.</span>}</div>

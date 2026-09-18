@@ -86,7 +86,7 @@ export default function Reclamacoes() {
         <div className="reclamacoes-heading">
           <span className="dashboard-kicker">Área do morador</span>
           <h1>Registrar reclamação</h1>
-          <p>Envie sua mensagem para a administração do condomínio. Todos os campos são obrigatórios.</p>
+          <p>Envie sua mensagem para a administração do condomínio.</p>
         </div>
         <section className="reclamacoes-card">
           <form onSubmit={handleSubmit}>
