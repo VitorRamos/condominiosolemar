@@ -117,6 +117,7 @@ export default function PortariaEncomendas() {
     delivery: Delivery;
     status: "NOTIFICADA" | "ENTREGUE";
   } | null>(null);
+  const [timeOpen, setTimeOpen] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const pageSize = 10;
@@ -397,21 +398,16 @@ export default function PortariaEncomendas() {
                   </select>
                 </div>
                 <div className="delivery-time-field">
-                  <label htmlFor="delivery-received-time">Horário de recebimento</label>
+                  <label>Horário de recebimento</label>
                   <div className="delivery-time-control">
-                    <input
-                      id="delivery-received-time"
-                      type="time"
-                      step="60"
-                      value={form.received_time}
-                      onChange={(e) =>
-                        setForm({ ...form, received_time: e.target.value })
-                      }
-                      required
-                    />
+                    <button className="time-picker-trigger" type="button" onClick={() => setTimeOpen((open) => !open)} aria-expanded={timeOpen} aria-haspopup="dialog">
+                      <span className="time-picker-clock" aria-hidden="true">◷</span>{form.received_time || "00:00"}
+                    </button>
                     <button className="current-time-button" type="button" onClick={() => setForm({ ...form, received_time: currentTimeValue() })}><span aria-hidden="true">◷</span> Agora</button>
                   </div>
-                  <span className="field-help">Hora e minuto do recebimento</span>
+                  {timeOpen && <div className="time-picker-popover" role="dialog" aria-label="Escolher horário"><div><label htmlFor="delivery-hour">Hora</label><select id="delivery-hour" value={form.received_time.split(":")[0]} onChange={(e) => setForm({ ...form, received_time: `${e.target.value}:${form.received_time.split(":")[1] || "00"}` })}>{Array.from({ length: 24 }, (_, hour) => <option key={hour} value={String(hour).padStart(2, "0")}>{String(hour).padStart(2, "0")}</option>)}</select></div><span className="time-picker-colon" aria-hidden="true">:</span><div><label htmlFor="delivery-minute">Minuto</label><select id="delivery-minute" value={form.received_time.split(":")[1] || "00"} onChange={(e) => setForm({ ...form, received_time: `${form.received_time.split(":")[0] || "00"}:${e.target.value}` })}>{Array.from({ length: 60 }, (_, minute) => <option key={minute} value={String(minute).padStart(2, "0")}>{String(minute).padStart(2, "0")}</option>)}</select></div><button className="time-picker-done" type="button" onClick={() => setTimeOpen(false)}>Aplicar horário</button></div>}
+                  <input className="sr-only" value={form.received_time} required readOnly aria-label="Horário de recebimento selecionado" />
+                  <span className="field-help">Escolha a hora e o minuto</span>
                 </div>
                 <div className="delivery-notes-field">
                   <label>Observações</label>
