@@ -98,6 +98,7 @@ export default function PortariaEncomendas() {
   const navigate = useNavigate();
   const { session, logout, isPortaria } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
+  const canManageDeliveries = isPortaria || isAdmin;
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [form, setForm] = useState<FormState>(createForm);
   const [search, setSearch] = useState("");
@@ -313,7 +314,7 @@ export default function PortariaEncomendas() {
         </div>
         {success && <div className="success">{success}</div>}
         {error && <div className="error">{error}</div>}
-        {isAdmin && (
+        {canManageDeliveries && (
           <section className="delivery-form-card">
             <div className="section-heading">
               <div>
@@ -530,7 +531,7 @@ export default function PortariaEncomendas() {
                   <span>Recebido por: {item.received_by}</span>
                   {item.notes && <span>{item.notes}</span>}
                 </div>
-                {isAdmin && (
+                {canManageDeliveries && (
                   <div className="delivery-actions">
                     <button
                       type="button"
