@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { supabase } from '../services/supabase'
@@ -16,16 +16,34 @@ type PropertyAd = {
 }
 
 function PropertyPhotoGallery({ ad }: { ad: PropertyAd }) {
+  const [photos, setPhotos] = useState<string[]>(ad.photos)
   const [photoIndex, setPhotoIndex] = useState(0)
-  const hasMultiplePhotos = ad.photos.length > 1
+  const galleryRef = useRef<HTMLDivElement>(null)
+  const hasMultiplePhotos = photos.length > 1
+
+  useEffect(() => {
+    const node = galleryRef.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      observer.disconnect()
+      supabase.from('property_ads').select('photos').eq('id', ad.id).single().then(({ data }) => {
+        if (data?.photos?.length) setPhotos(data.photos as string[])
+      })
+    }, { rootMargin: '200px' })
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [ad.id])
 
   return (
-    <div className="property-photo-gallery" aria-label={`Fotos de ${ad.title}`}>
-      <img src={ad.photos[photoIndex]} alt={`Foto ${photoIndex + 1} de ${ad.title}`} />
+    <div ref={galleryRef} className="property-photo-gallery" aria-label={`Fotos de ${ad.title}`}>
+      {photos[photoIndex] && <img src={photos[photoIndex]} alt={`Foto ${photoIndex + 1} de ${ad.title}`} loading="lazy" />}
       {hasMultiplePhotos && <>
         <button className="property-photo-arrow property-photo-arrow-left" type="button" onClick={() => setPhotoIndex(index => Math.max(0, index - 1))} disabled={photoIndex === 0} aria-label="Foto anterior">‹</button>
-        <button className="property-photo-arrow property-photo-arrow-right" type="button" onClick={() => setPhotoIndex(index => Math.min(ad.photos.length - 1, index + 1))} disabled={photoIndex === ad.photos.length - 1} aria-label="Próxima foto">›</button>
-        <span className="property-photo-counter" aria-live="polite">{photoIndex + 1}/{ad.photos.length}</span>
+        <button className="property-photo-arrow property-photo-arrow-right" type="button" onClick={() => setPhotoIndex(index => Math.min(photos.length - 1, index + 1))} disabled={photoIndex === photos.length - 1} aria-label="Próxima foto">›</button>
+        <span className="property-photo-counter" aria-live="polite">{photoIndex + 1}/{photos.length}</span>
       </>}
     </div>
   )
@@ -67,16 +85,32 @@ export default function Home() {
   }, [propertyAdsLoading, propertyAds.length, serviceAds.length])
 
   useEffect(() => {
-    supabase
-      .from('property_ads')
-      .select('id, type, title, location, price, description, contact, photos')
-      .eq('published', true)
-      .order('created_at', { ascending: false })
-      .then(({ data }) => {
-        setPropertyAds((data as PropertyAd[]) || [])
-        setPropertyAdsLoading(false)
+    let cancelled = false
+    const load = () => {
+      supabase
+        .from('property_ads')
+        .select('id, type, title, location, price, description, contact')
+        .eq('published', true)
+        .order('created_at', { ascending: false })
+        .then(({ data }) => {
+          if (cancelled) return
+          setPropertyAds(((data as Omit<PropertyAd, 'photos'>[]) || []).map(ad => ({ ...ad, photos: [] })))
+          setPropertyAdsLoading(false)
+        })
+      supabase.from('service_ads').select('id, name, phone, description').eq('published', true).order('created_at', { ascending: false }).limit(6).then(({ data }) => {
+        if (!cancelled) setServiceAds(data || [])
       })
-    supabase.from('service_ads').select('id, name, phone, description').eq('published', true).order('created_at', { ascending: false }).limit(6).then(({ data }) => setServiceAds(data || []))
+    }
+
+    const idle = 'requestIdleCallback' in window
+      ? window.requestIdleCallback(load, { timeout: 1200 })
+      : window.setTimeout(load, 1)
+
+    return () => {
+      cancelled = true
+      if ('requestIdleCallback' in window) window.cancelIdleCallback(idle as number)
+      else window.clearTimeout(idle as number)
+    }
   }, [])
 
   async function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -105,16 +139,11 @@ export default function Home() {
       <Header />
       <main className="home-page">
         <section className="banner">
+          <picture>
+            <source media="(max-width: 780px)" srcSet="/solemar-banner2-mobile.webp" type="image/webp" />
+            <img className="banner-photo" src="/solemar-banner2.webp" alt="" width={1600} height={829} fetchPriority="high" decoding="async" />
+          </picture>
           <h1 className="banner-title section-label">Sol e Mar</h1>
-          <div className="container">
-            <div className="hero-visual">
-              <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
-              <div className="hero-visual-caption">
-                <strong>Capim Macio, Natal/RN</strong>
-                <span>Um endereço familiar perto do mar</span>
-              </div>
-            </div>
-          </div>
         </section>
 
         <section id="sobre" className="home-values-section">
@@ -147,7 +176,7 @@ export default function Home() {
             <div className="property-list-grid">
               {propertyAds.map(ad => (
                 <article className="property-ad-card" key={ad.id}>
-                  {ad.photos.length > 0 && <PropertyPhotoGallery ad={ad} />}
+                  <PropertyPhotoGallery ad={ad} />
                   <div>
                     <span className="card-tag">{ad.type}</span>
                     <h3>{ad.title}</h3>
