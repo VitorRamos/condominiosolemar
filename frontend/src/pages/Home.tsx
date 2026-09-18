@@ -105,16 +105,11 @@ export default function Home() {
       <Header />
       <main className="home-page">
         <section className="banner">
+          <picture>
+            <source media="(max-width: 780px)" srcSet="/solemar-banner2-mobile.webp" type="image/webp" />
+            <img className="banner-photo" src="/solemar-banner2.webp" alt="" width={1600} height={829} fetchPriority="high" decoding="async" />
+          </picture>
           <h1 className="banner-title section-label">Sol e Mar</h1>
-          <div className="container">
-            <div className="hero-visual">
-              <img src="/imagem1.webp" alt="Área interna do Condomínio Sol e Mar" />
-              <div className="hero-visual-caption">
-                <strong>Capim Macio, Natal/RN</strong>
-                <span>Um endereço familiar perto do mar</span>
-              </div>
-            </div>
-          </div>
         </section>
 
         <section id="sobre" className="home-values-section">
