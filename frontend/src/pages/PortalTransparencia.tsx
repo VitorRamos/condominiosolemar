@@ -668,6 +668,8 @@ export default function PortalTransparencia() {
           </section>
         )}
 
+        {importStatus && <div className="success transparency-import-status">{importStatus}</div>}
+
         <section className="transparency-summary" aria-label="Resumo financeiro">
           <div><span>Entradas</span><strong className="amount-positive">{formatCurrency(totals.Entrada)}</strong></div>
           <div><span>Saídas</span><strong className="amount-negative">{formatCurrency(totals.Saída)}</strong></div>
@@ -676,7 +678,6 @@ export default function PortalTransparencia() {
 
         <ExpensePieChart items={expenseSlices} periodLabel={`${monthNames[month - 1]} de ${year}`} />
 
-        {importStatus && <div className="success">{importStatus}</div>}
         {error && <div className="error" role="alert">{error}</div>}
 
         <section className="transparency-section">
