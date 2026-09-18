@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
-import { isPortariaEmail } from '../services/portaria'
 import { supabase } from '../services/supabase'
 
 type Profile = {
@@ -85,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) throw error
   }
 
-  const isPortaria = profile?.role === 'PORTARIA' || isPortariaEmail(session?.user.email)
+  const isPortaria = profile?.role === 'PORTARIA'
 
   return (
     <AuthContext.Provider value={{
